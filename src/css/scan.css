@@ -33,9 +33,17 @@ body {
   padding: 9px;
   min-height: 56px;
   background-color: #e6e6e6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
 }
 
 .scanCanvas {
+  -webkit-box-shadow:inset 0 0 0 1px #e6e6e6;
+  -moz-box-shadow:inset 0 0 0 1px #e6e6e6;
+  box-shadow:inset 0 0 0 1px #e6e6e6;
+  border-radius: 6px;
 }
 
 .scanBtn {
@@ -49,6 +57,7 @@ body {
   outline: none;
   cursor: pointer;
   padding: 12px;
+  border-radius: 6px;
 }
 
 .myHref:hover {
@@ -59,7 +68,7 @@ body {
 }
 
 .myHref:active {
-  color: red;
+  color: #2c1f9e;
   text-decoration: none;
   outline: none;
 }
