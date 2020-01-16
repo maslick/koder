@@ -1,6 +1,6 @@
 {
   "short_name": "QR code scanner",
-  "name": "Simple QR code scanner",
+  "name": "QR code scanner",
   "icons": [
     {
       "src": "favicon.ico",
