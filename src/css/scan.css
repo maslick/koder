@@ -59,7 +59,11 @@ body {
 }
 
 .scanBtn {
-  margin-top: 20px;
+  margin-top: 15px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .myHref {
