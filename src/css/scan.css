@@ -38,7 +38,7 @@ body {
 }
 
 .barcode {
-  margin: 10px auto;
+  margin: 0 0 10px 0;
   width: 320px;
   text-align: center;
   word-break: break-word;
