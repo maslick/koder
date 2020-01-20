@@ -1,6 +1,8 @@
 {
   "short_name": "QR scanner",
   "name": "QR code scanner",
+  "description": "simple QR code scanner",
+  "lang": "en-GB",
   "icons": [
     {
       "src": "favicon.ico",
@@ -14,7 +16,8 @@
     }
   ],
   "start_url": ".",
-  "display": "standalone",
+  "background_color": "#ffffff",
   "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "display": "standalone",
+  "orientation": "portrait"
 }

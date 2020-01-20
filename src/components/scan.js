@@ -1,6 +1,6 @@
 import React from "react";
-import jsQR from "jsqr";
 import "../css/scan.css";
+import PropTypes from 'prop-types';
 
 const BTN_TXT = {
   START: "START",
@@ -25,10 +25,30 @@ class Scan extends React.Component {
     this.showFPS = this.props.fps !== false;
     this.decodeQR = this.props.decode !== false;
     this.allowBeep = this.props.beep !== false;
+    this.drawDecodedArea = this.props.drawDecodedArea !== false;
 
-    this.debounceCounter = 0;  // initial counter
-    this.divider = 11;         // scan code every 11th video frame
+    this.qrworker = null;
+    this.oldTime = 0;
   }
+
+  initWorker = () => {
+    this.qrworker = new Worker("worker.js");
+    this.qrworker.onmessage = ev => {
+      if (ev.data != null) {
+        this.qrworker.terminate();
+        const result = ev.data;
+        if (this.drawDecodedArea) {
+          this.drawLine(result.location.topLeftCorner, result.location.topRightCorner, "#FF3B58");
+          this.drawLine(result.location.topRightCorner, result.location.bottomRightCorner, "#FF3B58");
+          this.drawLine(result.location.bottomRightCorner, result.location.bottomLeftCorner, "#FF3B58");
+          this.drawLine(result.location.bottomLeftCorner, result.location.topLeftCorner, "#FF3B58");
+        }
+        this.stopScan();
+        this.setState({barcode: result.data});
+        if (this.allowBeep) this.beep();
+      }
+    };
+  };
 
   drawLine = (begin, end, color) => {
     this.canvas.beginPath();
@@ -40,8 +60,8 @@ class Scan extends React.Component {
   };
 
   startScan = () => {
+    this.initWorker();
     this.fpsTimestamp = new Date();
-    this.debounceCounter = 0;
 
     this.setState({
       scanning: true,
@@ -83,30 +103,19 @@ class Scan extends React.Component {
       const dy = 0;
 
       this.canvas.drawImage(this.video, sx, sy, sw, sh, dx, dy, dw, dh);
-      if (this.decodeQR) this.recogniseQRcode();
+      if (this.decodeQR) this.recogniseQRcode(time);
       if (this.showFPS) this.drawFPS(fps);
     }
     if (this.state.scanning) requestAnimationFrame(this.tick);
   };
 
-  recogniseQRcode = () => {
-    if (this.debounceCounter%this.divider === 0) {
+  recogniseQRcode = (time) => {
+    if (time - this.oldTime > 600) {
+      console.log("recognizing...");
+      this.oldTime = time;
       let imageData = this.canvas.getImageData(0, 0, this.canvasElement.width, this.canvasElement.height);
-      let code = jsQR(imageData.data, imageData.width, imageData.height, {
-        inversionAttempts: "dontInvert",
-      });
-      if (code) {
-        this.drawLine(code.location.topLeftCorner, code.location.topRightCorner, "#FF3B58");
-        this.drawLine(code.location.topRightCorner, code.location.bottomRightCorner, "#FF3B58");
-        this.drawLine(code.location.bottomRightCorner, code.location.bottomLeftCorner, "#FF3B58");
-        this.drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#FF3B58");
-        this.stopScan();
-        this.setState({barcode: code.data});
-        if (this.allowBeep) this.beep();
-        return;
-      }
+      this.qrworker.postMessage({data: imageData.data, width: imageData.width, height: imageData.height});
     }
-    this.debounceCounter++;
   };
 
   beep = (freq = 750, duration = 150, vol = 5) => {
@@ -164,5 +173,19 @@ class Scan extends React.Component {
     if (this.state.scanning === true) this.stopScan();
   }
 }
+
+Scan.propTypes = {
+  beep: PropTypes.bool,
+  fps: PropTypes.bool,
+  decode: PropTypes.bool,
+  drawDecodedArea: PropTypes.bool
+};
+
+Scan.defaultProps = {
+  beep: true,
+  fps: true,
+  decode: true,
+  drawDecodedArea: false
+};
 
 export default Scan;

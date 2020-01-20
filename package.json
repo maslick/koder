@@ -10,8 +10,7 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-scripts": "3.3.0",
-    "prop-types": "latest",
-    "jsqr": "^1.2.0"
+    "prop-types": "latest"
   },
   "scripts": {
     "start": "HTTPS=true PORT=8080 HOST=0.0.0.0 react-scripts start",
