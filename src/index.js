@@ -5,7 +5,7 @@ import Scan from "./components/scan";
 
 ReactDom.render((
         <div className="main">
-          <Scan beep={true} fps={true}/>
+          <Scan/>
         </div>
 ), document.getElementById("app"));
 

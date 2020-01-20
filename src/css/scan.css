@@ -7,6 +7,11 @@
 html,
 body {
   overscroll-behavior-y: contain;
+  height: 100%;
+}
+
+#app {
+  height: 100%;
 }
 
 body {
@@ -17,12 +22,19 @@ body {
 
 .main {
   font-family: monospace;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
 .scan {
   margin: 0 auto;
   text-align: center;
-  padding-top: 60px;
 }
 
 .barcode {
@@ -71,10 +83,4 @@ body {
   background-color: #3223b3;
   text-decoration: none;
   outline: none;
-}
-
-@media only screen and (max-width: 500px) {
-  .scan {
-    padding-top: 10px;
-  }
 }
