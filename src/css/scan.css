@@ -33,7 +33,7 @@ body {
 }
 
 .scan {
-  margin: 0 auto;
+  margin: 15px auto;
   text-align: center;
 }
 
@@ -43,7 +43,7 @@ body {
   text-align: center;
   word-break: break-word;
   padding: 9px;
-  min-height: 56px;
+  min-height: 60px;
   background-color: #e6e6e6;
   display: flex;
   justify-content: center;
