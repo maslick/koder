@@ -34,6 +34,7 @@ class Scan extends React.Component {
 
   initWorker = () => {
     this.qrworker = new Worker(this.workerType + "Worker.js");
+
     this.qrworker.onmessage = ev => {
       if (ev.data != null) {
         this.qrworker.terminate();
