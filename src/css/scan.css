@@ -74,6 +74,7 @@ body {
   cursor: pointer;
   padding: 12px;
   border-radius: 6px;
+  margin-right: 10px;
 }
 
 .myHref:hover {

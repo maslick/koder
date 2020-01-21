@@ -19,10 +19,10 @@ class Scan extends React.Component {
     this.video = document.createElement("video");
     this.state = {
       btnText: BTN_TXT.START,
-      scanning: false
+      scanning: false,
+      fpsOn: this.props.fps !== false
     };
 
-    this.showFPS = this.props.fps !== false;
     this.decodeQR = this.props.decode !== false;
     this.allowBeep = this.props.beep !== false;
     this.drawDecodedArea = this.props.drawDecodedArea !== false;
@@ -105,7 +105,7 @@ class Scan extends React.Component {
 
       this.canvas.drawImage(this.video, sx, sy, sw, sh, dx, dy, dw, dh);
       if (this.decodeQR) this.recogniseQRcode(time);
-      if (this.showFPS) this.drawFPS(fps);
+      if (this.state.fpsOn) this.drawFPS(fps);
     }
     if (this.state.scanning) requestAnimationFrame(this.tick);
   };
@@ -153,7 +153,16 @@ class Scan extends React.Component {
   onBtnClickHandler = (e) => {
     e.preventDefault();
     if (this.state.scanning) this.stopScan(); else this.startScan();
+  };
 
+  onFPSClickHandler = (e) => {
+    e.preventDefault();
+    this.setState({fpsOn: !this.state.fpsOn});
+  };
+
+  fpsStyle = () => {
+    if (this.state.fpsOn) return { backgroundColor: "green" };
+    else return { backgroundColor: "" };
   };
 
   render() {
@@ -165,6 +174,7 @@ class Scan extends React.Component {
           <canvas id="canvas" className="scanCanvas"/>
           <div className="scanBtn">
             <a href="!#" className="myHref" onClick={this.onBtnClickHandler}>{this.state.btnText}</a>
+            <a href="!#" className="myHref" onClick={this.onFPSClickHandler} style={this.fpsStyle()}>FPS</a>
           </div>
         </div>
     );
@@ -185,7 +195,7 @@ Scan.propTypes = {
 
 Scan.defaultProps = {
   beep: true,
-  fps: true,
+  fps: false,
   decode: true,
   drawDecodedArea: false,
   worker: "wasm"
