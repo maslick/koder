@@ -160,6 +160,11 @@ class Scan extends React.Component {
     this.setState({fpsOn: !this.state.fpsOn});
   };
 
+  startStyle = () => {
+    if (this.state.scanning) return { backgroundColor: "red" };
+    else return { backgroundColor: "" };
+  };
+
   fpsStyle = () => {
     if (this.state.fpsOn) return { backgroundColor: "green" };
     else return { backgroundColor: "" };
@@ -173,7 +178,7 @@ class Scan extends React.Component {
           </div>
           <canvas id="canvas" className="scanCanvas"/>
           <div className="scanBtn">
-            <a href="!#" className="myHref" onClick={this.onBtnClickHandler}>{this.state.btnText}</a>
+            <a href="!#" className="myHref" onClick={this.onBtnClickHandler} style={this.startStyle()}>{this.state.btnText}</a>
             <a href="!#" className="myHref" onClick={this.onFPSClickHandler} style={this.fpsStyle()}>FPS</a>
           </div>
         </div>
