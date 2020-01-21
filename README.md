@@ -8,3 +8,9 @@ sudo ln -s /etc/nginx/sites-available/koder-react.conf /etc/nginx/sites-enabled/
 sudo nginx -t
 sudo systemctl restart nginx
 ```
+
+## Build Zbar WASM
+```
+docker run -v $(pwd):/app maslick/emscripten-zbar-sdk make
+docker run -v $(pwd):/app maslick/emscripten-zbar-sdk make clean
+```
