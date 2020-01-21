@@ -26,13 +26,14 @@ class Scan extends React.Component {
     this.decodeQR = this.props.decode !== false;
     this.allowBeep = this.props.beep !== false;
     this.drawDecodedArea = this.props.drawDecodedArea !== false;
+    this.workerType = this.props.worker;
 
     this.qrworker = null;
     this.oldTime = 0;
   }
 
   initWorker = () => {
-    this.qrworker = new Worker("worker.js");
+    this.qrworker = new Worker(this.workerType + "Worker.js");
     this.qrworker.onmessage = ev => {
       if (ev.data != null) {
         this.qrworker.terminate();
@@ -178,14 +179,16 @@ Scan.propTypes = {
   beep: PropTypes.bool,
   fps: PropTypes.bool,
   decode: PropTypes.bool,
-  drawDecodedArea: PropTypes.bool
+  drawDecodedArea: PropTypes.bool,
+  worker: PropTypes.string
 };
 
 Scan.defaultProps = {
   beep: true,
   fps: true,
   decode: true,
-  drawDecodedArea: false
+  drawDecodedArea: false,
+  worker: "wasm"
 };
 
 export default Scan;
