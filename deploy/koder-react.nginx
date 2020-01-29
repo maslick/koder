@@ -15,6 +15,14 @@ server {
     location / {
         root /home/maslick/koder-react/build;
         try_files $uri $uri/ /index.html =404;
+
+        if ($request_uri ~* ".(ico|css|js|gif|jpeg|png|woff|json|wasm)$") {
+            expires 30d;
+            access_log off;
+            add_header Pragma public;
+            add_header Cache-Control "public";
+            break;
+        }
     }
 
     listen 443 ssl http2; # managed by Certbot
