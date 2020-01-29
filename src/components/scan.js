@@ -1,7 +1,7 @@
 import React from "react";
 import "../css/scan.css";
 import PropTypes from 'prop-types';
-import {beep} from "../helpers";
+import {beep, WORKER_TYPE} from "../helpers";
 
 const BTN_TXT = {
   START: "START",
@@ -41,7 +41,7 @@ class Scan extends React.Component {
       if (ev.data != null) {
         this.qrworker.terminate();
         const result = ev.data;
-        if (this.drawDecodedArea) {
+        if (this.drawDecodedArea && this.workerType === WORKER_TYPE.JS) {
           this.drawLine(result.location.topLeftCorner, result.location.topRightCorner, "#FF3B58");
           this.drawLine(result.location.topRightCorner, result.location.bottomRightCorner, "#FF3B58");
           this.drawLine(result.location.bottomRightCorner, result.location.bottomLeftCorner, "#FF3B58");
@@ -115,7 +115,6 @@ class Scan extends React.Component {
 
   recogniseQRcode = (time) => {
     if (time - this.oldTime > this.scanRate) {
-      console.log("recognizing...");
       this.oldTime = time;
       let imageData = this.canvas.getImageData(0, 0, this.canvasElement.width, this.canvasElement.height);
       this.qrworker.postMessage({data: imageData.data, width: imageData.width, height: imageData.height});

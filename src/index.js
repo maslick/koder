@@ -7,7 +7,7 @@ import {WORKER_TYPE} from "./helpers";
 
 ReactDom.render((
     <div className="main">
-      <Scan worker={WORKER_TYPE.QR} scanRate={500}/>
+      <Scan worker={WORKER_TYPE.QR} scanRate={250}/>
     </div>
 ), document.getElementById("app"));
 
