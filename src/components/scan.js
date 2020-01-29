@@ -1,6 +1,7 @@
 import React from "react";
 import "../css/scan.css";
 import PropTypes from 'prop-types';
+import {beep} from "../helpers";
 
 const BTN_TXT = {
   START: "START",
@@ -23,10 +24,11 @@ class Scan extends React.Component {
       fpsOn: this.props.fps !== false
     };
 
-    this.decodeQR = this.props.decode !== false;
-    this.allowBeep = this.props.beep !== false;
-    this.drawDecodedArea = this.props.drawDecodedArea !== false;
+    this.decodeQR = this.props.decode;
+    this.allowBeep = this.props.beep;
+    this.drawDecodedArea = this.props.drawDecodedArea;
     this.workerType = this.props.worker;
+    this.scanRate = this.props.scanRate;
 
     this.qrworker = null;
     this.oldTime = 0;
@@ -47,7 +49,7 @@ class Scan extends React.Component {
         }
         this.stopScan();
         this.setState({barcode: result.data});
-        if (this.allowBeep) this.beep();
+        if (this.allowBeep) beep();
       }
     };
   };
@@ -112,30 +114,12 @@ class Scan extends React.Component {
   };
 
   recogniseQRcode = (time) => {
-    if (time - this.oldTime > 600) {
+    if (time - this.oldTime > this.scanRate) {
       console.log("recognizing...");
       this.oldTime = time;
       let imageData = this.canvas.getImageData(0, 0, this.canvasElement.width, this.canvasElement.height);
       this.qrworker.postMessage({data: imageData.data, width: imageData.width, height: imageData.height});
     }
-  };
-
-  beep = (freq = 750, duration = 150, vol = 5) => {
-    const AudioContext = window.AudioContext || window.webkitAudioContext || false;
-    if (!AudioContext) {
-      console.warn("Sorry, but the Web Audio API is not supported by your browser");
-      return;
-    }
-    const context = new AudioContext();
-    const oscillator = context.createOscillator();
-    const gain = context.createGain();
-    oscillator.connect(gain);
-    oscillator.frequency.value = freq;
-    oscillator.type = "square";
-    gain.connect(context.destination);
-    gain.gain.value = vol * 0.01;
-    oscillator.start(context.currentTime);
-    oscillator.stop(context.currentTime + duration * 0.001);
   };
 
   drawFPS = (fps) => {
@@ -196,7 +180,8 @@ Scan.propTypes = {
   fps: PropTypes.bool,
   decode: PropTypes.bool,
   drawDecodedArea: PropTypes.bool,
-  worker: PropTypes.string
+  worker: PropTypes.string,
+  scanRate: PropTypes.number
 };
 
 Scan.defaultProps = {
@@ -204,7 +189,8 @@ Scan.defaultProps = {
   fps: false,
   decode: true,
   drawDecodedArea: false,
-  worker: "wasm"
+  worker: "wasmBarcode",
+  scanRate: 500
 };
 
 export default Scan;
