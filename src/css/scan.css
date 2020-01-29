@@ -6,7 +6,6 @@
 
 html,
 body {
-  overscroll-behavior-y: contain;
   height: 100%;
 }
 

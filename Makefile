@@ -1,11 +1,12 @@
-INPUT_FILE = zbar/qr.cpp
-OUTPUT_DIR = public/wasm
-ZBAR_NAME = zbar-0.10
+INPUT_FILE ?= zbar/qr.cpp
+OUTPUT_DIR ?= public/wasm
+OUTPUT_FILE ?= zbar
+ZBAR_NAME ?= zbar-0.10
 
 
 build: $(INPUT_FILE)
 	mkdir -p ${OUTPUT_DIR}
-	em++ -Os -Wc++11-extensions -o ${OUTPUT_DIR}/zbar.js \
+	em++ -Os -Wc++11-extensions -o ${OUTPUT_DIR}/${OUTPUT_FILE}.js \
 		${INPUT_FILE} -I /src/${ZBAR_NAME}/include/ \
 		/src/${ZBAR_NAME}/zbar/*.o /src/${ZBAR_NAME}/zbar/*/*.o \
 		-s EXTRA_EXPORTED_RUNTIME_METHODS='["cwrap"]' \
@@ -15,4 +16,4 @@ build: $(INPUT_FILE)
 		-s WASM=1
 
 clean:
-	rm ${OUTPUT_DIR}/zbar.*
+	rm ${OUTPUT_DIR}/${OUTPUT_FILE}.*

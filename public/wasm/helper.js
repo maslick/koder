@@ -8,12 +8,12 @@ const utf8BufferToString = (buffer, addr) => {
   return decodeURIComponent(escape(encodedString));
 };
 
-const Scanner = mixin => {
-  const mod = Module(mixin);
+const Scanner = config => {
+  const mod = Module(config);
   const api = {
     createBuffer: mod.cwrap('createBuffer', 'number', ['number']),
     deleteBuffer: mod.cwrap('deleteBuffer', '', ['number']),
-    scanQrcode: mod.cwrap('scanQrcode', 'number', [
+    scanCode: mod.cwrap('scanCode', 'number', [
       'number',
       'number',
       'number'
@@ -21,11 +21,11 @@ const Scanner = mixin => {
     getScanResults: mod.cwrap('getScanResults', 'number', [])
   };
   const scanner = {
-    scanQrcode: (imgData, width, height) => {
+    scanCode: (imgData, width, height) => {
       const buf = api.createBuffer(width * height * 4);
       mod.HEAP8.set(imgData, buf);
       const results = [];
-      if (api.scanQrcode(buf, width, height)) {
+      if (api.scanCode(buf, width, height)) {
         const res_addr = api.getScanResults();
         results.push(utf8BufferToString(mod.HEAP8, res_addr));
         api.deleteBuffer(res_addr);

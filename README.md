@@ -3,8 +3,8 @@ QR code scanner
 
 ## Nginx installation 
 ```
-sudo cp deploy/koder-react.conf /etc/nginx/sites-available/koder-react.conf
-sudo ln -s /etc/nginx/sites-available/koder-react.conf /etc/nginx/sites-enabled/
+sudo cp deploy/koder-react.nginx /etc/nginx/sites-available/koder-react.nginx
+sudo ln -s /etc/nginx/sites-available/koder-react.nginx /etc/nginx/sites-enabled/
 sudo nginx -t
 sudo systemctl restart nginx
 ```
@@ -13,4 +13,14 @@ sudo systemctl restart nginx
 ```
 docker run -v $(pwd):/app maslick/emscripten-zbar-sdk make
 docker run -v $(pwd):/app maslick/emscripten-zbar-sdk make clean
+
+docker run -e INPUT_FILE=zbar/qr.cpp -e OUTPUT_FILE=qr -v $(pwd):/app maslick/emscripten-zbar-sdk make
+docker run -e INPUT_FILE=zbar/barcode.cpp -e OUTPUT_FILE=barcode -v $(pwd):/app maslick/emscripten-zbar-sdk make
+
+docker run \
+  -e INPUT_FILE=zbar/barcode.cpp \
+  -e OUTPUT_FILE=barcode \
+  -e OUTPUT_DIR=test \
+  -v $(pwd):/app \
+  maslick/emscripten-zbar-sdk make
 ```

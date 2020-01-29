@@ -1,6 +1,7 @@
 import React from "react";
 import "../css/scan.css";
 import PropTypes from 'prop-types';
+import {beep, WORKER_TYPE} from "../helpers";
 
 const BTN_TXT = {
   START: "START",
@@ -23,10 +24,11 @@ class Scan extends React.Component {
       fpsOn: this.props.fps !== false
     };
 
-    this.decodeQR = this.props.decode !== false;
-    this.allowBeep = this.props.beep !== false;
-    this.drawDecodedArea = this.props.drawDecodedArea !== false;
+    this.decodeQR = this.props.decode;
+    this.allowBeep = this.props.beep;
+    this.drawDecodedArea = this.props.drawDecodedArea;
     this.workerType = this.props.worker;
+    this.scanRate = this.props.scanRate;
 
     this.qrworker = null;
     this.oldTime = 0;
@@ -39,7 +41,7 @@ class Scan extends React.Component {
       if (ev.data != null) {
         this.qrworker.terminate();
         const result = ev.data;
-        if (this.drawDecodedArea) {
+        if (this.drawDecodedArea && this.workerType === WORKER_TYPE.JS) {
           this.drawLine(result.location.topLeftCorner, result.location.topRightCorner, "#FF3B58");
           this.drawLine(result.location.topRightCorner, result.location.bottomRightCorner, "#FF3B58");
           this.drawLine(result.location.bottomRightCorner, result.location.bottomLeftCorner, "#FF3B58");
@@ -47,7 +49,7 @@ class Scan extends React.Component {
         }
         this.stopScan();
         this.setState({barcode: result.data});
-        if (this.allowBeep) this.beep();
+        if (this.allowBeep) beep();
       }
     };
   };
@@ -75,6 +77,9 @@ class Scan extends React.Component {
       this.video.setAttribute("playsinline", "true");
       this.video.play();
       requestAnimationFrame(this.tick);
+    }).catch(err => {
+      this.stopScan();
+      alert(err);
     });
   };
 
@@ -85,8 +90,10 @@ class Scan extends React.Component {
       boxShadow: "0 4px 8px 0 rgba(0, 0, 0, .2), 0 6px 20px 0 rgba(0, 0, 0, .19)"
     });
     this.video.pause();
-    this.video.srcObject.getVideoTracks().forEach(track => track.stop());
-    this.video.srcObject = null;
+    if (this.video.srcObject) {
+      this.video.srcObject.getVideoTracks().forEach(track => track.stop());
+      this.video.srcObject = null;
+    }
   };
 
   tick = (time) => {
@@ -112,30 +119,11 @@ class Scan extends React.Component {
   };
 
   recogniseQRcode = (time) => {
-    if (time - this.oldTime > 600) {
-      console.log("recognizing...");
+    if (time - this.oldTime > this.scanRate) {
       this.oldTime = time;
       let imageData = this.canvas.getImageData(0, 0, this.canvasElement.width, this.canvasElement.height);
       this.qrworker.postMessage({data: imageData.data, width: imageData.width, height: imageData.height});
     }
-  };
-
-  beep = (freq = 750, duration = 150, vol = 5) => {
-    const AudioContext = window.AudioContext || window.webkitAudioContext || false;
-    if (!AudioContext) {
-      console.warn("Sorry, but the Web Audio API is not supported by your browser");
-      return;
-    }
-    const context = new AudioContext();
-    const oscillator = context.createOscillator();
-    const gain = context.createGain();
-    oscillator.connect(gain);
-    oscillator.frequency.value = freq;
-    oscillator.type = "square";
-    gain.connect(context.destination);
-    gain.gain.value = vol * 0.01;
-    oscillator.start(context.currentTime);
-    oscillator.stop(context.currentTime + duration * 0.001);
   };
 
   drawFPS = (fps) => {
@@ -196,7 +184,8 @@ Scan.propTypes = {
   fps: PropTypes.bool,
   decode: PropTypes.bool,
   drawDecodedArea: PropTypes.bool,
-  worker: PropTypes.string
+  worker: PropTypes.string,
+  scanRate: PropTypes.number
 };
 
 Scan.defaultProps = {
@@ -204,7 +193,8 @@ Scan.defaultProps = {
   fps: false,
   decode: true,
   drawDecodedArea: false,
-  worker: "wasm"
+  worker: "wasmBarcode",
+  scanRate: 500
 };
 
 export default Scan;
