@@ -77,6 +77,9 @@ class Scan extends React.Component {
       this.video.setAttribute("playsinline", "true");
       this.video.play();
       requestAnimationFrame(this.tick);
+    }).catch(err => {
+      this.stopScan();
+      alert(err);
     });
   };
 
@@ -87,8 +90,10 @@ class Scan extends React.Component {
       boxShadow: "0 4px 8px 0 rgba(0, 0, 0, .2), 0 6px 20px 0 rgba(0, 0, 0, .19)"
     });
     this.video.pause();
-    this.video.srcObject.getVideoTracks().forEach(track => track.stop());
-    this.video.srcObject = null;
+    if (this.video.srcObject) {
+      this.video.srcObject.getVideoTracks().forEach(track => track.stop());
+      this.video.srcObject = null;
+    }
   };
 
   tick = (time) => {
