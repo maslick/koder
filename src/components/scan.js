@@ -21,7 +21,8 @@ class Scan extends React.Component {
     this.state = {
       btnText: BTN_TXT.START,
       scanning: false,
-      fpsOn: this.props.fps !== false
+      fpsOn: this.props.fps,
+      bw: this.props.bw
     };
 
     this.decodeQR = this.props.decode;
@@ -112,10 +113,23 @@ class Scan extends React.Component {
       const dy = 0;
 
       this.canvas.drawImage(this.video, sx, sy, sw, sh, dx, dy, dw, dh);
+      if (this.state.bw) this.monochromize();
       if (this.decodeQR) this.recogniseQRcode(time);
       if (this.state.fpsOn) this.drawFPS(fps);
     }
     if (this.state.scanning) requestAnimationFrame(this.tick);
+  };
+
+  monochromize = () => {
+    let imgd = this.canvas.getImageData(0, 0, this.canvasElement.width, this.canvasElement.height);
+    let pix = imgd.data;
+    for (let i = 0; i < pix.length; i += 4) {
+      let gray = pix[i] * 0.3 + pix[i + 1] * 0.59 + pix[i + 2] * 0.11;
+      pix[i] = gray;
+      pix[i + 1] = gray;
+      pix[i + 2] = gray;
+    }
+    this.canvas.putImageData(imgd, 0, 0);
   };
 
   recogniseQRcode = (time) => {
@@ -149,6 +163,11 @@ class Scan extends React.Component {
     this.setState({fpsOn: !this.state.fpsOn});
   };
 
+  onBWClickHandler = (e) => {
+    e.preventDefault();
+    this.setState({bw: !this.state.bw});
+  };
+
   startStyle = () => {
     if (this.state.scanning) return { backgroundColor: "red" };
     else return { backgroundColor: "" };
@@ -156,6 +175,11 @@ class Scan extends React.Component {
 
   fpsStyle = () => {
     if (this.state.fpsOn) return { backgroundColor: "green" };
+    else return { backgroundColor: "" };
+  };
+
+  bwStyle = () => {
+    if (this.state.bw) return { backgroundColor: "green" };
     else return { backgroundColor: "" };
   };
 
@@ -169,6 +193,7 @@ class Scan extends React.Component {
           <div className="scanBtn">
             <a href="!#" className="myHref" onClick={this.onBtnClickHandler} style={this.startStyle()}>{this.state.btnText}</a>
             <a href="!#" className="myHref" onClick={this.onFPSClickHandler} style={this.fpsStyle()}>FPS</a>
+            <a href="!#" className="myHref" onClick={this.onBWClickHandler} style={this.bwStyle()}>B/W</a>
           </div>
         </div>
     );
@@ -185,7 +210,8 @@ Scan.propTypes = {
   decode: PropTypes.bool,
   drawDecodedArea: PropTypes.bool,
   worker: PropTypes.string,
-  scanRate: PropTypes.number
+  scanRate: PropTypes.number,
+  bw: PropTypes.bool
 };
 
 Scan.defaultProps = {
@@ -194,7 +220,8 @@ Scan.defaultProps = {
   decode: true,
   drawDecodedArea: false,
   worker: "wasmBarcode",
-  scanRate: 500
+  scanRate: 500,
+  bw: true
 };
 
 export default Scan;
