@@ -33,6 +33,9 @@ class Scan extends React.Component {
 
     this.qrworker = null;
     this.oldTime = 0;
+
+    this.beamPosition = 0;
+    this.beamDirectionBottom = true;
   }
 
   initWorker = () => {
@@ -114,6 +117,7 @@ class Scan extends React.Component {
 
       this.canvas.drawImage(this.video, sx, sy, sw, sh, dx, dy, dw, dh);
       if (this.state.bw) this.monochromize();
+      this.drawLaserBeam();
       if (this.decodeQR) this.recogniseQRcode(time);
       if (this.state.fpsOn) this.drawFPS(fps);
     }
@@ -130,6 +134,15 @@ class Scan extends React.Component {
       pix[i + 2] = gray;
     }
     this.canvas.putImageData(imgd, 0, 0);
+  };
+
+  drawLaserBeam = () => {
+    if (this.beamPosition <= 0) this.beamDirectionBottom = true;
+    if (this.beamPosition >= CANVAS_SIZE.HEIGHT) this.beamDirectionBottom = false;
+    if (this.beamDirectionBottom) this.beamPosition+=3;
+    else this.beamPosition-=3;
+    this.canvas.fillStyle = "rgba(255,26,26,0.4)";
+    this.canvas.fillRect(0, this.beamPosition, CANVAS_SIZE.WIDTH, 4);
   };
 
   recogniseQRcode = (time) => {
