@@ -27,7 +27,8 @@ class Scan extends React.Component {
       fpsOn: this.props.fps,
       bw: this.props.bw,
       beam: this.props.beam,
-      crosshair: this.props.crosshair
+      crosshair: this.props.crosshair,
+      resultOpen: false
     };
 
     this.decodeQR = this.props.decode;
@@ -57,7 +58,7 @@ class Scan extends React.Component {
           this.drawLine(result.location.bottomLeftCorner, result.location.topLeftCorner, "#FF3B58");
         }
         this.stopScan();
-        this.setState({barcode: result.data});
+        this.setState({barcode: result.data, resultOpen: true});
         if (this.allowBeep) beep();
       }
     };
@@ -226,19 +227,38 @@ class Scan extends React.Component {
   render() {
     return (
         <div className="scan">
-          <div className="barcode">
-            {this.state.barcode}
-          </div>
-          <canvas id="canvas" className="scanCanvas"/>
-          <div className="scanBtn">
-            <a href="!#" className="myHref" onClick={this.onBtnClickHandler} style={this.startStyle()}>{this.state.btnText}</a>
-            <a href="!#" className="myHref" onClick={this.onFPSClickHandler} style={this.fpsStyle()}>FPS</a>
-            <a href="!#" className="myHref" onClick={this.onBWClickHandler} style={this.bwStyle()}>B/W</a>
-            <a href="!#" className="myHref" onClick={this.onStyleHandler} style={this.styleStyle()}>BEAM</a>
-          </div>
+          {this.renderResult()}
+          {this.renderCanvas()}
+          {this.renderButtons()}
         </div>
     );
   }
+
+  renderResult = () => {
+    if (this.state.resultOpen) {
+      return <div className="resultModal">
+        <div className="result">
+          {this.state.barcode}
+        </div>
+        <div>
+          <button className="btn btn-info ok_btn" onClick={() => this.setState({resultOpen: false})}>ok</button>
+        </div>
+      </div>;
+    }
+  };
+
+  renderCanvas = () => {
+    return <canvas id="canvas" className="scanCanvas"/>
+  };
+
+  renderButtons = () => {
+    return <div className="scanBtn">
+      <a href="!#" className="myHref" onClick={this.onBtnClickHandler} style={this.startStyle()}>{this.state.btnText}</a>
+      <a href="!#" className="myHref" onClick={this.onFPSClickHandler} style={this.fpsStyle()}>FPS</a>
+      <a href="!#" className="myHref" onClick={this.onBWClickHandler} style={this.bwStyle()}>B/W</a>
+      <a href="!#" className="myHref" onClick={this.onStyleHandler} style={this.styleStyle()}>BEAM</a>
+    </div>;
+  };
 
   componentWillUnmount() {
     if (this.state.scanning === true) this.stopScan();
