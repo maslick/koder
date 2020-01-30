@@ -22,7 +22,9 @@ class Scan extends React.Component {
       btnText: BTN_TXT.START,
       scanning: false,
       fpsOn: this.props.fps,
-      bw: this.props.bw
+      bw: this.props.bw,
+      beam: this.props.beam,
+      crosshair: this.props.crosshair
     };
 
     this.decodeQR = this.props.decode;
@@ -90,7 +92,7 @@ class Scan extends React.Component {
   stopScan = () => {
     this.setState({
       scanning: false,
-      btnText: BTN_TXT.AGAIN,
+      btnText: BTN_TXT.START,
       boxShadow: "0 4px 8px 0 rgba(0, 0, 0, .2), 0 6px 20px 0 rgba(0, 0, 0, .19)"
     });
     this.video.pause();
@@ -117,7 +119,8 @@ class Scan extends React.Component {
 
       this.canvas.drawImage(this.video, sx, sy, sw, sh, dx, dy, dw, dh);
       if (this.state.bw) this.monochromize();
-      this.drawLaserBeam();
+      if (this.state.beam) this.drawLaserBeam();
+      if (this.state.crosshair) this.drawCrosshair();
       if (this.decodeQR) this.recogniseQRcode(time);
       if (this.state.fpsOn) this.drawFPS(fps);
     }
@@ -143,6 +146,16 @@ class Scan extends React.Component {
     else this.beamPosition-=3;
     this.canvas.fillStyle = "rgba(255,26,26,0.4)";
     this.canvas.fillRect(0, this.beamPosition, CANVAS_SIZE.WIDTH, 4);
+  };
+
+  drawCrosshair = () => {
+    this.canvas.fillStyle = "rgba(255,255,255,0.4)";
+    const shape1 = new Path2D("M97.5 163.5039c0-2.71093 2.04297-4.7539 4.7539-4.7539H128.75V140h-26.10547C89.57813 140 78.75 150.4375 78.75 163.5039V190H97.5v-26.4961zM217.64844 140H191.25v18.75h26.25781c2.71094 0 4.99219 2.04297 4.99219 4.7539V190h18.75v-26.4961c0-13.0664-10.53516-23.5039-23.60156-23.5039zM222.5 266.10547c0 2.71094-2.04297 4.7539-4.7539 4.7539H191.25V290h26.4961c13.0664 0 23.5039-10.82813 23.5039-23.89453V240H222.5v26.10547zM102.2539 270.85938c-2.71093 0-4.7539-2.04297-4.7539-4.75391V240H78.75v26.10547C78.75 279.17187 89.57813 290 102.64453 290H128.75v-19.14063h-26.4961z");
+    const shape2 = new Path2D("M79.375 148.55508c0-3.52422 2.65586-6.18008 6.18008-6.18008H120V118H86.06289C69.07656 118 55 131.56875 55 148.55508V183h24.375v-34.44492zM235.31797 118H201v24.375h34.13516c3.52421 0 6.48984 2.65586 6.48984 6.18008V183H266v-34.44492C266 131.56875 252.3043 118 235.31797 118zM241.625 281.93711c0 3.52422-2.65586 6.18008-6.18008 6.18008H201V313h34.44492C252.43125 313 266 298.92344 266 281.93711V248h-24.375v33.93711zM85.55508 288.11719c-3.52422 0-6.18008-2.65586-6.18008-6.18008V248H55v33.93711C55 298.92344 69.07656 313 86.06289 313H120v-24.88281H85.55508z");
+    const shape3 = new Path2D("M78.75 140.5039c0-2.71093 2.04297-4.7539 4.7539-4.7539H110V117H83.89453C70.82813 117 60 127.4375 60 140.5039V167h18.75v-26.4961zM236.39844 117H210v18.75h26.25781c2.71094 0 4.99219 2.04297 4.99219 4.7539V167H260v-26.4961C260 127.4375 249.46484 117 236.39844 117zM241.25 293.10547c0 2.71094-2.04297 4.7539-4.7539 4.7539H210V317h26.4961C249.5625 317 260 306.17187 260 293.10547V267h-18.75v26.10547zM83.5039 297.85938c-2.71093 0-4.7539-2.04297-4.7539-4.75391V267H60v26.10547C60 306.17187 70.82813 317 83.89453 317H110v-19.14063H83.5039z");
+    const shape4 = new Path2D("M83.07692 145.92837c0-3.33558 2.51539-5.85145 5.85145-5.85145h32.6101V117H89.40912C73.32548 117 60 129.84471 60 145.92837v32.6101h23.07692v-32.6101zM230.95144 117h-32.4899v23.07692h32.31682c3.33558 0 6.14472 2.51539 6.14472 5.85145v32.6101H260v-32.6101C260 129.8447 247.0351 117 230.95144 117zM236.92308 287.59087c0 3.33557-2.51539 5.85144-5.85145 5.85144h-32.6101V317h32.6101C247.1553 317 260 303.67452 260 287.59087v-32.12933h-23.07692v32.12932zM88.92837 293.4423c-3.33606 0-5.85145-2.51538-5.85145-5.85143v-32.12933H60v32.12932C60 303.67453 73.32548 317 89.40913 317h32.12933v-23.5577h-32.6101z");
+    const shape5 = new Path2D("M77.125 148.02567c0-3.5774 2.73862-6.27567 6.37076-6.27567H119V117H84.0192C66.50812 117 52 130.77595 52 148.02567V183h25.125v-34.97433zM237.37338 117H202v24.75h35.18494c3.63161 0 6.69006 2.69775 6.69006 6.27567V183H269v-34.97433C269 130.77595 254.88446 117 237.37338 117zM243.875 285.4587c0 3.5774-2.73863 6.27567-6.37076 6.27567H202V317h35.50424C255.01532 317 269 302.70842 269 285.4587V251h-25.125v34.4587zM83.49576 291.73438c-3.63213 0-6.37076-2.69776-6.37076-6.27568V251H52v34.4587C52 302.70842 66.50812 317 84.0192 317H119v-25.26563H83.49576z");
+    this.canvas.fill(shape5);
   };
 
   recogniseQRcode = (time) => {
@@ -181,9 +194,15 @@ class Scan extends React.Component {
     this.setState({bw: !this.state.bw});
   };
 
+  onStyleHandler = (e) => {
+    e.preventDefault();
+    this.setState({beam: !this.state.beam, crosshair: !this.state.crosshair});
+  };
+
   startStyle = () => {
-    if (this.state.scanning) return { backgroundColor: "red" };
-    else return { backgroundColor: "" };
+    const style = {width: 70, textAlign: "center"};
+    if (this.state.scanning) return { backgroundColor: "red", ...style };
+    else return { backgroundColor: "", ...style };
   };
 
   fpsStyle = () => {
@@ -193,6 +212,11 @@ class Scan extends React.Component {
 
   bwStyle = () => {
     if (this.state.bw) return { backgroundColor: "green" };
+    else return { backgroundColor: "" };
+  };
+
+  styleStyle = () => {
+    if (this.state.beam) return { backgroundColor: "green" };
     else return { backgroundColor: "" };
   };
 
@@ -207,6 +231,7 @@ class Scan extends React.Component {
             <a href="!#" className="myHref" onClick={this.onBtnClickHandler} style={this.startStyle()}>{this.state.btnText}</a>
             <a href="!#" className="myHref" onClick={this.onFPSClickHandler} style={this.fpsStyle()}>FPS</a>
             <a href="!#" className="myHref" onClick={this.onBWClickHandler} style={this.bwStyle()}>B/W</a>
+            <a href="!#" className="myHref" onClick={this.onStyleHandler} style={this.styleStyle()}>BEAM</a>
           </div>
         </div>
     );
@@ -224,7 +249,9 @@ Scan.propTypes = {
   drawDecodedArea: PropTypes.bool,
   worker: PropTypes.string,
   scanRate: PropTypes.number,
-  bw: PropTypes.bool
+  bw: PropTypes.bool,
+  beam: PropTypes.bool,
+  crosshair: PropTypes.bool
 };
 
 Scan.defaultProps = {
@@ -234,7 +261,9 @@ Scan.defaultProps = {
   drawDecodedArea: false,
   worker: "wasmBarcode",
   scanRate: 500,
-  bw: true
+  bw: true,
+  beam: true,
+  crosshair: false
 };
 
 export default Scan;
