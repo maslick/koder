@@ -80,7 +80,6 @@ body {
   width: 320px;
   transform: translateY(-50%);
   top: 50%;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,.2), 0 6px 20px 0 rgba(0,0,0,.19);
   height: 520px;
   background-color: white;
   border-radius: 15px;
@@ -91,7 +90,7 @@ body {
   justify-content: center;
   align-items: center;
   word-break: break-word;
-  padding: 185px 20px 220px;
+  padding: 185px 20px 22px;
 }
 
 .btn {
