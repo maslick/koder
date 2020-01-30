@@ -196,8 +196,9 @@ class Scan extends React.Component {
   };
 
   startStyle = () => {
-    if (this.state.scanning) return { backgroundColor: "red" };
-    else return { backgroundColor: "" };
+    const style = {width: 64, textAlign: "center"};
+    if (this.state.scanning) return { backgroundColor: "red", ...style };
+    else return { backgroundColor: "", ...style };
   };
 
   fpsStyle = () => {
