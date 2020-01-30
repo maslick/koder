@@ -73,7 +73,7 @@ body {
   cursor: pointer;
   padding: 12px;
   border-radius: 6px;
-  margin-right: 10px;
+  margin: 0 5px;
 }
 
 .myHref:hover {
