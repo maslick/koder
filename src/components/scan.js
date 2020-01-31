@@ -14,6 +14,13 @@ const CANVAS_SIZE = {
   HEIGHT: 430
 };
 
+const sw = CANVAS_SIZE.WIDTH;
+const sh = CANVAS_SIZE.HEIGHT;
+const dw = sw;
+const dh = sh;
+const dx = 0;
+const dy = 0;
+
 const crossHairSvg = "M77.125 148.02567c0-3.5774 2.73862-6.27567 6.37076-6.27567H119V117H84.0192C66.50812 117 52 130.77595 52 148.02567V183h25.125v-34.97433zM237.37338 117H202v24.75h35.18494c3.63161 0 6.69006 2.69775 6.69006 6.27567V183H269v-34.97433C269 130.77595 254.88446 117 237.37338 117zM243.875 285.4587c0 3.5774-2.73863 6.27567-6.37076 6.27567H202V317h35.50424C255.01532 317 269 302.70842 269 285.4587V251h-25.125v34.4587zM83.49576 291.73438c-3.63213 0-6.37076-2.69776-6.37076-6.27568V251H52v34.4587C52 302.70842 66.50812 317 84.0192 317H119v-25.26563H83.49576z";
 const crossHairWidth = 217, crossHairHeight = 200, x0 = 53, y0 = 117;
 
@@ -96,15 +103,8 @@ class Scan extends React.Component {
       let fps = 1000 / (time - this.fpsTimestamp);
       this.fpsTimestamp = time;
 
-      const sw = CANVAS_SIZE.WIDTH;
-      const sh = CANVAS_SIZE.HEIGHT;
       const sx = (this.video.videoWidth - CANVAS_SIZE.WIDTH) / 2;
       const sy = (this.video.videoHeight - CANVAS_SIZE.HEIGHT) / 2;
-
-      const dw = sw;
-      const dh = sh;
-      const dx = 0;
-      const dy = 0;
 
       this.canvas.drawImage(this.video, sx, sy, sw, sh, dx, dy, dw, dh);
       if (this.state.bw) this.monochromize();
@@ -151,7 +151,8 @@ class Scan extends React.Component {
         imageData = this.canvas.getImageData(x0, y0, crossHairWidth, crossHairHeight);
       else
         imageData = this.canvas.getImageData(0, 0, this.canvasElement.width, this.canvasElement.height);
-      this.qrworker.postMessage({data: imageData.data, width: imageData.width, height: imageData.height});
+      this.qrworker.postMessage({width: imageData.width, height: imageData.height});
+      this.qrworker.postMessage(imageData, [imageData.data.buffer]);
     }
   };
 
@@ -288,8 +289,7 @@ Scan.propTypes = {
   scanRate: PropTypes.number,
   bw: PropTypes.bool,
   beam: PropTypes.bool,
-  crosshair: PropTypes.bool,
-  workerType: PropTypes.string
+  crosshair: PropTypes.bool
 };
 
 Scan.defaultProps = {
@@ -298,7 +298,7 @@ Scan.defaultProps = {
   decode: true,
   worker: WORKER_TYPE.QR,
   scanRate: 250,
-  bw: true,
+  bw: false,
   beam: false,
   crosshair: true
 };

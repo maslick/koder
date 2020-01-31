@@ -2,11 +2,23 @@ importScripts("wasm/qr.js");
 importScripts("wasm/helper.js");
 
 const scanner = Scanner({locateFile: file => 'wasm/' + file});
+let width = 0, height = 0;
 
 self.addEventListener('message', event => {
-  const {data, width, height} = event.data;
+  if ('width' in event.data && 'height' in event.data) {
+    this.width = event.data.width;
+    this.height = event.data.height;
+  }
+
+  const {data} = event.data;
+  if (!data) return;
   const scanRes = scanner.then(s => {
-    const scanRes = s.scanCode(data, width, height);
-    if (scanRes.length) postMessage({data: scanRes[scanRes.length-1]});
-  });
+    const t0 = new Date().getTime();
+    const scanRes = s.scanCode(data, this.width, this.height);
+    const t1 = new Date().getTime();
+    if (scanRes.length) {
+      console.log(`Scanned in ${t1-t0} ms`);
+      postMessage({data: scanRes[scanRes.length - 1]});
+    }
+  })
 });
