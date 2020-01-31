@@ -33,7 +33,6 @@ class Scan extends React.Component {
       scanning: false,
       fpsOn: this.props.fps,
       bw: this.props.bw,
-      beam: this.props.beam,
       crosshair: this.props.crosshair,
       resultOpen: false,
       worker: this.props.worker
@@ -45,9 +44,6 @@ class Scan extends React.Component {
 
     this.qrworker = null;
     this.oldTime = 0;
-
-    this.beamPosition = 0;
-    this.beamDirectionBottom = true;
   }
 
   initWorker = () => {
@@ -108,7 +104,6 @@ class Scan extends React.Component {
 
       this.canvas.drawImage(this.video, sx, sy, sw, sh, dx, dy, dw, dh);
       if (this.state.bw) this.monochromize();
-      if (this.state.beam) this.drawLaserBeam();
       if (this.state.crosshair) this.drawCrosshair();
       if (this.decodeQR) this.recogniseQRcode(time);
       if (this.state.fpsOn) this.drawFPS(fps);
@@ -126,15 +121,6 @@ class Scan extends React.Component {
       pix[i + 2] = gray;
     }
     this.canvas.putImageData(imgd, 0, 0);
-  };
-
-  drawLaserBeam = () => {
-    if (this.beamPosition <= 0) this.beamDirectionBottom = true;
-    if (this.beamPosition >= CANVAS_SIZE.HEIGHT) this.beamDirectionBottom = false;
-    if (this.beamDirectionBottom) this.beamPosition+=3;
-    else this.beamPosition-=3;
-    this.canvas.fillStyle = "rgba(255,26,26,0.4)";
-    this.canvas.fillRect(0, this.beamPosition, CANVAS_SIZE.WIDTH, 4);
   };
 
   drawCrosshair = () => {
@@ -184,11 +170,6 @@ class Scan extends React.Component {
     this.setState({bw: !this.state.bw});
   };
 
-  onStyleHandler = (e) => {
-    e.preventDefault();
-    this.setState({beam: !this.state.beam, crosshair: !this.state.crosshair});
-  };
-
   onWorkerHandler = (e) => {
     e.preventDefault();
     let w = WORKER_TYPE.QR;
@@ -211,11 +192,6 @@ class Scan extends React.Component {
 
   bwStyle = () => {
     if (this.state.bw) return { backgroundColor: "green" };
-    else return { backgroundColor: "" };
-  };
-
-  styleStyle = () => {
-    if (this.state.beam) return { backgroundColor: "green" };
     else return { backgroundColor: "" };
   };
 
@@ -271,7 +247,6 @@ class Scan extends React.Component {
       <a href="!#" className="myHref" onClick={this.onBtnClickHandler} style={this.startStyle()}>{this.state.btnText}</a>
       <a href="!#" className="myHref" onClick={this.onFPSClickHandler} style={this.fpsStyle()}>FPS</a>
       <a href="!#" className="myHref" onClick={this.onBWClickHandler} style={this.bwStyle()}>B/W</a>
-      <a href="!#" className="myHref" onClick={this.onStyleHandler} style={this.styleStyle()}>BEAM</a>
       <a href="!#" className="myHref" onClick={this.onWorkerHandler} style={this.workerStyle()}>{this.state.worker === WORKER_TYPE.QR ? "QR": "BAR"}</a>
     </div>;
   };
@@ -288,7 +263,6 @@ Scan.propTypes = {
   worker: PropTypes.string,
   scanRate: PropTypes.number,
   bw: PropTypes.bool,
-  beam: PropTypes.bool,
   crosshair: PropTypes.bool
 };
 
@@ -299,7 +273,6 @@ Scan.defaultProps = {
   worker: WORKER_TYPE.QR,
   scanRate: 250,
   bw: false,
-  beam: false,
   crosshair: true
 };
 
