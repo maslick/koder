@@ -236,10 +236,15 @@ class Scan extends React.Component {
               {this.state.barcode}
             </div>
             <div style={{marginTop: 231}}>
-              <a href="!#" style={{padding: 12}} className="myHref" onClick={() => this.setState({resultOpen: false})}>BACK</a>
+              <a href="!#" style={{padding: 12}} className="myHref" onClick={this.onClickBackHandler}>BACK</a>
             </div>
           </div>);
     }
+  };
+
+  onClickBackHandler = (e) => {
+    e.preventDefault();
+    this.setState({resultOpen: false});
   };
 
   renderCanvas = () => {
