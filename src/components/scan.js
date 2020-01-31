@@ -80,9 +80,10 @@ class Scan extends React.Component {
     this.setState({
       scanning: true,
       btnText: BTN_TXT.STOP,
-      barcode: ""
+      barcode: "",
+      resultOpen: false
     });
-    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(stream => {
+    navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: "environment" } }).then(stream => {
       this.video.srcObject = stream;
       this.video.setAttribute("playsinline", "true");
       this.video.play();
@@ -226,24 +227,34 @@ class Scan extends React.Component {
 
   render() {
     return (
-        <div className="scan">
+        <div>
+          {this.renderScan()}
           {this.renderResult()}
+        </div>
+
+    );
+  }
+
+  renderScan = () => {
+    return (
+        <div className="scan">
           {this.renderCanvas()}
           {this.renderButtons()}
         </div>
     );
-  }
+  };
 
   renderResult = () => {
     if (this.state.resultOpen) {
-      return <div className="resultModal">
-        <div className="result">
-          {this.state.barcode}
-        </div>
-        <div>
-          <button className="btn btn-info ok_btn" onClick={() => this.setState({resultOpen: false})}>ok</button>
-        </div>
-      </div>;
+      return (
+          <div className="resultModal">
+            <div className="result">
+              {this.state.barcode}
+            </div>
+            <div style={{marginTop: 231}}>
+              <a href="!#" className="myHref" onClick={() => this.setState({resultOpen: false})}>BACK</a>
+            </div>
+          </div>);
     }
   };
 
