@@ -36,20 +36,6 @@ body {
   text-align: center;
 }
 
-.barcode {
-  margin: 0 auto 10px auto;
-  width: 320px;
-  text-align: center;
-  word-break: break-word;
-  padding: 9px;
-  min-height: 60px;
-  background-color: #e6e6e6;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 6px;
-}
-
 .scanCanvas {
   -webkit-box-shadow:inset 0 0 0 1px #e6e6e6;
   -moz-box-shadow:inset 0 0 0 1px #e6e6e6;
@@ -71,9 +57,9 @@ body {
   text-decoration: none;
   outline: none;
   cursor: pointer;
-  padding: 12px;
+  padding: 10px;
   border-radius: 6px;
-  margin-right: 10px;
+  margin: 0 5px;
 }
 
 .myHref:hover {
@@ -87,4 +73,30 @@ body {
   background-color: #3223b3;
   text-decoration: none;
   outline: none;
+}
+
+.resultModal {
+  position: absolute;
+  width: 320px;
+  transform: translateY(-100%);
+  height: 520px;
+  background-color: white;
+  text-align: center;
+}
+
+.result {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  word-break: break-word;
+  padding: 185px 20px 22px;
+}
+
+.ok_btn {
+  width: 100px;
+  color: #f6f6f6;
+  margin: 10px 0;
+  outline: none;
+  font-family: monospace;
+  font-size: 15px;
 }
