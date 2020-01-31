@@ -28,12 +28,12 @@ class Scan extends React.Component {
       bw: this.props.bw,
       beam: this.props.beam,
       crosshair: this.props.crosshair,
-      resultOpen: false
+      resultOpen: false,
+      worker: this.props.worker
     };
 
     this.decodeQR = this.props.decode;
     this.allowBeep = this.props.beep;
-    this.workerType = this.props.worker;
     this.scanRate = this.props.scanRate;
 
     this.qrworker = null;
@@ -44,7 +44,7 @@ class Scan extends React.Component {
   }
 
   initWorker = () => {
-    this.qrworker = new Worker(this.workerType + "Worker.js");
+    this.qrworker = new Worker(this.state.worker + "Worker.js");
 
     this.qrworker.onmessage = ev => {
       if (ev.data != null) {
@@ -188,6 +188,15 @@ class Scan extends React.Component {
     this.setState({beam: !this.state.beam, crosshair: !this.state.crosshair});
   };
 
+  onWorkerHandler = (e) => {
+    e.preventDefault();
+    let w = WORKER_TYPE.QR;
+    if (this.state.worker === WORKER_TYPE.QR) w = WORKER_TYPE.BARCODE;
+    else if (this.state.worker === WORKER_TYPE.BARCODE) w = WORKER_TYPE.QR;
+    this.setState({worker: w});
+    this.stopScan();
+  };
+
   startStyle = () => {
     const style = {width: 64, textAlign: "center"};
     if (this.state.scanning) return { backgroundColor: "red", ...style };
@@ -206,6 +215,11 @@ class Scan extends React.Component {
 
   styleStyle = () => {
     if (this.state.beam) return { backgroundColor: "green" };
+    else return { backgroundColor: "" };
+  };
+
+  workerStyle = () => {
+    if (this.state.worker === WORKER_TYPE.QR) return { backgroundColor: "green" };
     else return { backgroundColor: "" };
   };
 
@@ -257,6 +271,7 @@ class Scan extends React.Component {
       <a href="!#" className="myHref" onClick={this.onFPSClickHandler} style={this.fpsStyle()}>FPS</a>
       <a href="!#" className="myHref" onClick={this.onBWClickHandler} style={this.bwStyle()}>B/W</a>
       <a href="!#" className="myHref" onClick={this.onStyleHandler} style={this.styleStyle()}>BEAM</a>
+      <a href="!#" className="myHref" onClick={this.onWorkerHandler} style={this.workerStyle()}>{this.state.worker === WORKER_TYPE.QR ? "QR": "BAR"}</a>
     </div>;
   };
 
@@ -273,7 +288,8 @@ Scan.propTypes = {
   scanRate: PropTypes.number,
   bw: PropTypes.bool,
   beam: PropTypes.bool,
-  crosshair: PropTypes.bool
+  crosshair: PropTypes.bool,
+  workerType: PropTypes.string
 };
 
 Scan.defaultProps = {
