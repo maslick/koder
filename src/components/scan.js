@@ -33,7 +33,6 @@ class Scan extends React.Component {
 
     this.decodeQR = this.props.decode;
     this.allowBeep = this.props.beep;
-    this.drawDecodedArea = this.props.drawDecodedArea;
     this.workerType = this.props.worker;
     this.scanRate = this.props.scanRate;
 
@@ -51,26 +50,11 @@ class Scan extends React.Component {
       if (ev.data != null) {
         this.qrworker.terminate();
         const result = ev.data;
-        if (this.drawDecodedArea && this.workerType === WORKER_TYPE.JS) {
-          this.drawLine(result.location.topLeftCorner, result.location.topRightCorner, "#FF3B58");
-          this.drawLine(result.location.topRightCorner, result.location.bottomRightCorner, "#FF3B58");
-          this.drawLine(result.location.bottomRightCorner, result.location.bottomLeftCorner, "#FF3B58");
-          this.drawLine(result.location.bottomLeftCorner, result.location.topLeftCorner, "#FF3B58");
-        }
         this.stopScan();
         this.setState({barcode: result.data, resultOpen: true});
         if (this.allowBeep) beep();
       }
     };
-  };
-
-  drawLine = (begin, end, color) => {
-    this.canvas.beginPath();
-    this.canvas.moveTo(begin.x, begin.y);
-    this.canvas.lineTo(end.x, end.y);
-    this.canvas.lineWidth = 4;
-    this.canvas.strokeStyle = color;
-    this.canvas.stroke();
   };
 
   startScan = () => {
@@ -280,7 +264,6 @@ Scan.propTypes = {
   beep: PropTypes.bool,
   fps: PropTypes.bool,
   decode: PropTypes.bool,
-  drawDecodedArea: PropTypes.bool,
   worker: PropTypes.string,
   scanRate: PropTypes.number,
   bw: PropTypes.bool,
@@ -292,7 +275,6 @@ Scan.defaultProps = {
   beep: true,
   fps: false,
   decode: true,
-  drawDecodedArea: false,
   worker: WORKER_TYPE.QR,
   scanRate: 250,
   bw: true,
