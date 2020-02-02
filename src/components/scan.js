@@ -32,6 +32,10 @@ class Scan extends React.Component {
   constructor(props) {
     super(props);
     this.video = document.createElement("video");
+    this.video.onplaying = () => {
+      sx = (this.video.videoWidth - CANVAS_SIZE.WIDTH) / 2;
+      sy = (this.video.videoHeight - CANVAS_SIZE.HEIGHT) / 2;
+    };
     this.state = {
       btnText: BTN_TXT.START,
       scanning: false,
@@ -83,10 +87,6 @@ class Scan extends React.Component {
       this.stopScan();
       alert(err);
     });
-    this.video.onplaying = () => {
-      sx = (this.video.videoWidth - CANVAS_SIZE.WIDTH) / 2;
-      sy = (this.video.videoHeight - CANVAS_SIZE.HEIGHT) / 2;
-    };
   };
 
   stopScan = () => {
