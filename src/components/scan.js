@@ -114,7 +114,7 @@ class Scan extends React.Component {
       if (this.state.bw) this.monochromize();
       if (this.state.crosshair) this.drawCrosshair();
       if (this.state.fpsOn) this.drawFPS(fps);
-      requestAnimationFrame(this.tick);
+      if (this.state.scanning) requestAnimationFrame(this.tick);
       if (this.decodeQR) this.recogniseQRcode(time);
     }
     else if (this.state.scanning) requestAnimationFrame(this.tick);
