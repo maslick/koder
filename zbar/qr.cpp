@@ -61,5 +61,5 @@ const char* getScanResults() {
 int main(int argc, char** argv) {
     scanner.set_config(zbar::ZBAR_NONE, zbar::ZBAR_CFG_ENABLE, 0);
     scanner.set_config(zbar::ZBAR_QRCODE, zbar::ZBAR_CFG_ENABLE, 1);
-    std::cout << "QR scanner initialized" << std::endl;
+    std::cout << "QR scanner initialized (test)" << std::endl;
 }
