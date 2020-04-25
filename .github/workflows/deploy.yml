@@ -12,9 +12,10 @@ jobs:
       - uses: actions/setup-node@master
         with:
           node-version: 12
-      - run: |
-          docker run -e INPUT_FILE=zbar/qr.cpp -e OUTPUT_FILE=qr -v $(pwd):/app maslick/emscripten-zbar-sdk make
-          docker run -e INPUT_FILE=zbar/barcode.cpp -e OUTPUT_FILE=barcode -v $(pwd):/app maslick/emscripten-zbar-sdk make
+      - run: docker run -e INPUT_FILE=zbar/qr.cpp -e OUTPUT_FILE=qr -v $(pwd):/app maslick/emscripten-zbar-sdk make
+        name: build QR wasm
+      - run: docker run -e INPUT_FILE=zbar/barcode.cpp -e OUTPUT_FILE=barcode -v $(pwd):/app maslick/emscripten-zbar-sdk make
+        name: build BAR wasm
       - run: yarn install --frozen-lockfile
       - run: npm run build
       - uses: w9jds/firebase-action@master
