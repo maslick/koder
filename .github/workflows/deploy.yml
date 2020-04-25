@@ -12,6 +12,7 @@ jobs:
       - uses: actions/setup-node@master
         with:
           node-version: 12
+        name: install node
       - run: docker run -e INPUT_FILE=zbar/qr.cpp -e OUTPUT_FILE=qr -v $(pwd):/app maslick/emscripten-zbar-sdk make
         name: build QR wasm
       - run: docker run -e INPUT_FILE=zbar/barcode.cpp -e OUTPUT_FILE=barcode -v $(pwd):/app maslick/emscripten-zbar-sdk make
@@ -25,3 +26,4 @@ jobs:
           args: deploy --only hosting
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        name: push to Firebase
