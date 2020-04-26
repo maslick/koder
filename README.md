@@ -1,6 +1,9 @@
 # koder-react
 QR code scanner
 
+
+[![Build Status](https://github.com/maslick/koder-react/workflows/Deploy%20to%20Firebase%20Hosting/badge.svg)](https://github.com/maslick/koder-react/actions?query=workflow%3A%22Deploy+to+Firebase+Hosting%22)
+
 ## Nginx installation 
 ```
 sudo cp deploy/koder-react.nginx /etc/nginx/sites-available/koder-react.nginx
