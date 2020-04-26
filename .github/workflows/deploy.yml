@@ -1,4 +1,4 @@
-name: Deploy to Firebase Hosting
+name: build
 
 on:
   push:
@@ -30,3 +30,14 @@ jobs:
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         name: push to Firebase
+      - uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            Success!
+            A ${{ github.event_name }} event triggered the pipeline.
+            Ref: ${{ github.ref }}
+            Commit hash: ${{ github.sha }}
+            See https://github.com/maslick/koder-react/actions for more details
+        name: send Telegram message
