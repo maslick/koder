@@ -2,7 +2,7 @@
 QR code scanner
 
 
-[![Build Status](https://github.com/maslick/koder-react/workflows/Deploy%20to%20Firebase%20Hosting/badge.svg)](https://github.com/maslick/koder-react/actions?query=workflow%3A%22Deploy+to+Firebase+Hosting%22)
+[![Build Status](https://github.com/maslick/koder-react/workflows/build/badge.svg)](https://github.com/maslick/koder-react/actions?query=workflow%3Abuild)
 
 ## Nginx installation 
 ```
