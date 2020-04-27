@@ -1,7 +1,6 @@
 # koder-react
 QR code scanner
 
-
 [![Build Status](https://github.com/maslick/koder-react/workflows/build/badge.svg)](https://github.com/maslick/koder-react/actions?query=workflow%3Abuild)
 
 ## Nginx installation 
