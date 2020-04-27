@@ -73,7 +73,7 @@ jobs:
       - name: download js bundle artifact
         uses: actions/download-artifact@v1
         with:
-          name: wasms
+          name: bundle
       - name: copy artifacts
         run: mv bundle to build/
       - name: push to Firebase
