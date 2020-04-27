@@ -75,7 +75,7 @@ jobs:
         with:
           name: bundle
       - name: copy artifacts
-        run: mv bundle to build/
+        run: mv bundle build
       - name: push to Firebase
         uses: w9jds/firebase-action@master
         with:
