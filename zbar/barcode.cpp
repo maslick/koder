@@ -65,6 +65,5 @@ int main(int argc, char** argv) {
     scanner.set_config(zbar::ZBAR_EAN8, zbar::ZBAR_CFG_ENABLE, 1);
     scanner.set_config(zbar::ZBAR_EAN13, zbar::ZBAR_CFG_ENABLE, 1);
     scanner.set_config(zbar::ZBAR_I25, zbar::ZBAR_CFG_ENABLE, 1);
-    scanner.set_config(zbar::ZBAR_PDF417, zbar::ZBAR_CFG_ENABLE, 1);
     std::cout << "Barcode scanner initialized" << std::endl;
 }
