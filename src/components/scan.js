@@ -1,7 +1,7 @@
 import React from "react";
 import "../css/scan.css";
 import PropTypes from 'prop-types';
-import {beep, parseUpnQr, WORKER_TYPE} from "../helpers";
+import {beep, isUrl, parseUpnQr, WORKER_TYPE} from "../helpers";
 import {decode} from "upnqr";
 
 const BTN_TXT = {
@@ -44,7 +44,8 @@ class Scan extends React.Component {
       bw: this.props.bw,
       crosshair: this.props.crosshair,
       resultOpen: false,
-      worker: this.props.worker
+      worker: this.props.worker,
+      url: false
     };
 
     this.decodeQR = this.props.decode;
@@ -65,7 +66,7 @@ class Scan extends React.Component {
         this.stopScan();
         let res = result.data;
         if (res.includes("UPNQR")) res = parseUpnQr(decode(res));
-        this.setState({barcode: res, resultOpen: true});
+        this.setState({barcode: res, resultOpen: true, url: isUrl(res)});
         if (this.allowBeep) beep();
       }
     };
@@ -214,36 +215,43 @@ class Scan extends React.Component {
 
   render() {
     return (
-        <div>
-          {this.renderScan()}
-          {this.renderResult()}
-        </div>
+      <div>
+        {this.renderScan()}
+        {this.renderResult()}
+      </div>
 
     );
   }
 
   renderScan = () => {
     return (
-        <div className="scan">
-          {this.renderCanvas()}
-          {this.renderButtons()}
-        </div>
+      <div className="scan">
+        {this.renderCanvas()}
+        {this.renderButtons()}
+      </div>
     );
   };
 
   renderResult = () => {
     if (this.state.resultOpen) {
       return (
-          <div className="resultModal">
-            <div className="result">
-              {this.state.barcode}
-            </div>
-            <div style={{marginTop: 40}}>
-              <a href="!#" style={{padding: 12}} className="myHref" onClick={this.onClickBackHandler}>BACK</a>
-            </div>
-          </div>);
+        <div className="resultModal">
+          <div className="result">
+            {this.renderUrl()}
+          </div>
+          <div style={{marginTop: 40}}>
+            <a href="!#" style={{padding: 12}} className="myHref" onClick={this.onClickBackHandler}>BACK</a>
+          </div>
+        </div>);
     }
   };
+
+  renderUrl = () => {
+    if (this.state.url)
+      return <a href={this.state.barcode}>{this.state.barcode}</a>;
+    else
+      return this.state.barcode;
+  }
 
   onClickBackHandler = (e) => {
     e.preventDefault();
