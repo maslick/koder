@@ -235,7 +235,7 @@ class Scan extends React.Component {
             <div className="result">
               {this.state.barcode}
             </div>
-            <div style={{marginTop: 231}}>
+            <div style={{marginTop: 40}}>
               <a href="!#" style={{padding: 12}} className="myHref" onClick={this.onClickBackHandler}>BACK</a>
             </div>
           </div>);

@@ -89,7 +89,8 @@ body {
   justify-content: center;
   align-items: center;
   word-break: break-word;
-  padding: 185px 20px 22px;
+  padding: 20px 20px;
+  white-space:pre-wrap;
 }
 
 .ok_btn {
