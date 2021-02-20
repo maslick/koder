@@ -22,4 +22,27 @@ const WORKER_TYPE = {
   JS: "jsQr"
 };
 
-export {beep, WORKER_TYPE};
+const parseUpnQr = (obj) => {
+  let res = "";
+  let date = obj.rok_placila;
+  const d = date.getDate();
+  const m = date.getMonth() + 1;
+  const y = date.getFullYear();
+  const rok = `${d}.${m}.${y}`;
+
+  res += `Plačnik: ${obj.ime_placnika}\n`;
+  res += `Naslov: ${obj.ulica_placnika}\n`;
+  res += `Kraj: ${obj.kraj_placnika}\n\n`;
+  res += `Znesek: ${obj.znesek}\n`;
+  res += `Nujno: ${obj.nujno}\n`;
+  res += `Koda namena: ${obj.koda_namena}\n`;
+  res += `Namen: ${obj.namen_placila}\n`;
+  res += `Rok plačila: ${rok}\n`;
+  res += `IBAN: ${obj.IBAN_prejemnika}\n\n`;
+  res += `Referenca: ${obj.referenca_prejemnika}\n`;
+  res += `Naslov: ${obj.ulica_prejemnika}\n`;
+  res += `Kraj: ${obj.kraj_prejemnika}`;
+  return res;
+};
+
+export {beep, WORKER_TYPE, parseUpnQr};

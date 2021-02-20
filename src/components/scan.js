@@ -1,7 +1,8 @@
 import React from "react";
 import "../css/scan.css";
 import PropTypes from 'prop-types';
-import {beep, WORKER_TYPE} from "../helpers";
+import {beep, parseUpnQr, WORKER_TYPE} from "../helpers";
+import {decode} from "upnqr";
 
 const BTN_TXT = {
   START: "START",
@@ -62,7 +63,9 @@ class Scan extends React.Component {
         this.qrworker.terminate();
         const result = ev.data;
         this.stopScan();
-        this.setState({barcode: result.data, resultOpen: true});
+        let res = result.data;
+        if (res.includes("UPNQR")) res = parseUpnQr(decode(res));
+        this.setState({barcode: res, resultOpen: true});
         if (this.allowBeep) beep();
       }
     };
