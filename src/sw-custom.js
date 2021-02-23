@@ -1,11 +1,11 @@
 if ("function" === typeof importScripts) {
-  importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.5.0/workbox-sw.js");
+  importScripts("https://storage.googleapis.com/workbox-cdn/releases/5.1.4/workbox-sw.js");
   if (workbox) {
     workbox.setConfig({debug: false});
     self.addEventListener("install", event => {
       self.skipWaiting();
     });
-    workbox.precaching.precacheAndRoute([]);
+    workbox.precaching.precacheAndRoute(self.__WB_MANIFEST);
     workbox.routing.registerRoute(
       new RegExp("https://fonts.(?:.googlepis|gstatic).com/(.*)"),
       workbox.strategies.cacheFirst({
