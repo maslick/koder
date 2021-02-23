@@ -1,7 +1,7 @@
 import React from "react";
 import "../css/scan.css";
 import PropTypes from 'prop-types';
-import {beep, isUrl, parseUpnQr, WORKER_TYPE} from "../helpers";
+import {beep, isUrl, formatUpnQr, WORKER_TYPE} from "../helpers";
 import {decode} from "upnqr";
 
 const BTN_TXT = {
@@ -65,7 +65,11 @@ class Scan extends React.Component {
         const result = ev.data;
         this.stopScan();
         let res = result.data;
-        if (res.includes("UPNQR")) res = parseUpnQr(decode(res));
+        if (res.includes("UPNQR")) try {
+          res = formatUpnQr(decode(res));
+        } catch (e) {
+          console.log(e);
+        }
         this.setState({barcode: res, resultOpen: true, url: isUrl(res)});
         if (this.allowBeep) beep();
       }
