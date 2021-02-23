@@ -177,6 +177,11 @@ class Scan extends React.Component {
     if (this.state.scanning) this.stopScan(); else this.startScan();
   };
 
+  onCrossHairClickHandler = (e) => {
+    e.preventDefault();
+    this.setState({crosshair: !this.state.crosshair});
+  };
+
   onFPSClickHandler = (e) => {
     e.preventDefault();
     this.setState({fpsOn: !this.state.fpsOn});
@@ -204,6 +209,11 @@ class Scan extends React.Component {
 
   fpsStyle = () => {
     if (this.state.fpsOn) return { backgroundColor: "green" };
+    else return { backgroundColor: "" };
+  };
+
+  xHairStyle = () => {
+    if (this.state.crosshair) return { backgroundColor: "green" };
     else return { backgroundColor: "" };
   };
 
@@ -269,6 +279,7 @@ class Scan extends React.Component {
   renderButtons = () => {
     return <div className="scanBtn">
       <a href="!#" className="myHref" onClick={this.onBtnClickHandler} style={this.startStyle()}>{this.state.btnText}</a>
+      <a href="!#" className="myHref" onClick={this.onCrossHairClickHandler} style={this.xHairStyle()}>X-hair</a>
       <a href="!#" className="myHref" onClick={this.onFPSClickHandler} style={this.fpsStyle()}>FPS</a>
       <a href="!#" className="myHref" onClick={this.onBWClickHandler} style={this.bwStyle()}>B/W</a>
       <a href="!#" className="myHref" onClick={this.onWorkerHandler} style={this.workerStyle()}>{this.state.worker === WORKER_TYPE.QR ? "QR": "BAR"}</a>
