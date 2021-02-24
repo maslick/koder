@@ -1,7 +1,7 @@
 INPUT_FILE ?= zbar/qr.cpp
 OUTPUT_DIR ?= public/wasm
 OUTPUT_FILE ?= zbar
-ZBAR_NAME ?= zbar-0.10
+ZBAR_NAME ?= zbar-0.23.90
 
 
 build: $(INPUT_FILE)
