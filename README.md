@@ -47,7 +47,7 @@ open http://localhost:8001
 ```
 
 
-## Vanilla js (qr + barcode)
+## BONUS: vanilla js example (qr + barcode)
 ```shell
 docker run \
   -e INPUT_FILE=zbar/all.cpp \
