@@ -42,7 +42,7 @@ jobs:
       - name: upload vanilla-js artifact
         uses: actions/upload-artifact@v1
         with:
-          name: wasms
+          name: vanilla-js
           path: vanilla-js
       - name: job failed
         if: failure()
