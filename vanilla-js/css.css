@@ -1,0 +1,52 @@
+body {
+  margin: 0 auto;
+  font-family: monospace;
+}
+
+.myHref {
+  color: white;
+  background-color: #2c1f9e;
+  text-decoration: none;
+  outline: none;
+  cursor: pointer;
+  padding: 12px;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+
+.myHref:hover {
+  background-color: #2c1f9e;
+  color: white;
+  outline: none;
+  text-decoration: none;
+}
+
+.myHref:active {
+  background-color: #3223b3;
+  text-decoration: none;
+  outline: none;
+}
+
+.scanBtn {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  text-align: center;
+}
+
+.barcode {
+  margin: 10px auto;
+  width: 320px;
+  text-align: center;
+  word-break: break-word;
+  padding: 9px;
+  min-height: 56px;
+  background-color: #e6e6e6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+}
+
+.canvas {
+  text-align: center;
+}
