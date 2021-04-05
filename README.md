@@ -56,6 +56,8 @@ docker run \
   -e OUTPUT_DIR=vanilla-js/wasm \
   -v $(pwd):/app \
   maslick/emscripten-zbar-sdk make vanilla-js -B
+  
+docker run -e INPUT_FILE=zbar/all.cpp -e OUTPUT_FILE=all -e OUTPUT_DIR=vanilla-js/wasm -v $(pwd):/app maslick/emscripten-zbar-sdk make vanilla-js
 
 # Serve static HTML app
 cd vanilla-js && python3 -m http.server 8001 --bind 0.0.0.0
