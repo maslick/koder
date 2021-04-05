@@ -38,7 +38,7 @@ jobs:
       - name: pull emscripten-zbar-sdk
         run: docker pull maslick/emscripten-zbar-sdk
       - name: build ALL wasm
-        run: docker run -e INPUT_FILE=zbar/all.cpp -e OUTPUT_FILE=all -e OUTPUT_DIR=vanilla-js/wasm -v $(pwd):/app maslick/emscripten-zbar-sdk make vanilla-js
+        run: docker run -e INPUT_FILE=zbar/all.cpp -e OUTPUT_FILE=all -e OUTPUT_DIR=vanilla-js/wasm -v $(pwd):/app maslick/emscripten-zbar-sdk make vanilla-js -B
       - name: upload vanilla-js artifact
         uses: actions/upload-artifact@v1
         with:
