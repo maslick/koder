@@ -3,7 +3,9 @@ QR code scanner
 
 [![Build Status](https://github.com/maslick/koder-react/workflows/build/badge.svg)](https://github.com/maslick/koder-react/actions?query=workflow%3Abuild)
 
-![screenshot](app.png)
+<p align="center" >
+  <img src="./app.png" width="400" />
+</p>
 
 ## 1. Builder image
 ```shell
