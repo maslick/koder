@@ -1,5 +1,5 @@
 # =koder=
-ReactJS QR/barcode code scanner
+WebAssembly + ReactJS QR/barcode code scanner
 
 [![Build Status](https://github.com/maslick/koder-react/workflows/build/badge.svg)](https://github.com/maslick/koder-react/actions?query=workflow%3Abuild)
 
@@ -10,7 +10,7 @@ ReactJS QR/barcode code scanner
 
 ## 🚀 Features
 * QR module written in WebAssembly
-* Uses Zbar C++ library (version 0.23.90)
+* Uses Zbar C++ library (version [0.23.90](https://github.com/mchehab/zbar))
 * Packaged as PWA (caching files with Service Worker)
 * Mobile first (can be used on a Laptop as well)
 * QR recognition logic is performed inside a Web Worker
