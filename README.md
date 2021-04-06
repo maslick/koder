@@ -1,5 +1,5 @@
-# koder-react
-QR code scanner
+# =koder=
+ReactJS QR/barcode code scanner
 
 [![Build Status](https://github.com/maslick/koder-react/workflows/build/badge.svg)](https://github.com/maslick/koder-react/actions?query=workflow%3Abuild)
 
