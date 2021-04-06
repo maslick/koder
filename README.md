@@ -12,6 +12,7 @@ QR/bar code scanner for the Browser
 * QR recognition logic is performed off the browser's Main thread (Web Worker)
 * Support for UPN QR (Slovenia only)
 * Barcode support (UPCA, UPCE, EAN8, EAN13, I25)
+* Emscripten-zbar-sdk [Docker image](https://hub.docker.com/r/maslick/emscripten-zbar-sdk)
 * ReactJS component
 * Vanilla JS example
 
