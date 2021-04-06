@@ -15,6 +15,7 @@ WebAssembly + ReactJS QR/barcode code scanner
 * Mobile first (can be used on a Laptop as well)
 * Multiplatform (iOS, Android)
 * QR recognition logic is performed inside a Web Worker
+* Support for UPN QR (Slovenia only)
 * ReactJS component
 * Vanilla JS example
 
