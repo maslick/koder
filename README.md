@@ -3,6 +3,8 @@ QR code scanner
 
 [![Build Status](https://github.com/maslick/koder-react/workflows/build/badge.svg)](https://github.com/maslick/koder-react/actions?query=workflow%3Abuild)
 
+![screenshot](app.png)
+
 ## 1. Builder image
 ```shell
 docker build -t maslick/emscripten-zbar-sdk -f docker/Dockerfile docker
