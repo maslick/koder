@@ -4,8 +4,8 @@ WebAssembly + ReactJS QR/barcode code scanner
 [![Build Status](https://github.com/maslick/koder-react/workflows/build/badge.svg)](https://github.com/maslick/koder-react/actions?query=workflow%3Abuild)
 
 <p align="center" >
-  <img src="./screenshots/app_1.png" width="400" />
-  <img src="./screenshots/app_2.png" width="400" />
+  <img src="./screenshots/app_1.png" width="400px" />
+  <img src="./screenshots/app_2.png" width="400px" />
 </p>
 
 ## 🚀 Features
