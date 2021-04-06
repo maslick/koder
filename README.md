@@ -11,8 +11,9 @@ WebAssembly + ReactJS QR/barcode code scanner
 ## 🚀 Features
 * QR module written in WebAssembly
 * Uses Zbar C++ library (version [0.23.90](https://github.com/mchehab/zbar))
-* Packaged as PWA (caching files with Service Worker)
+* Packaged as PWA (caching files with Service Worker, Add to Home Sreen)
 * Mobile first (can be used on a Laptop as well)
+* Multiplatform (iOS, Android)
 * QR recognition logic is performed inside a Web Worker
 * ReactJS component
 * Vanilla JS example
