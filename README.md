@@ -20,12 +20,14 @@ ReactJS QR/barcode code scanner
 ## 🍭 Demo
 https://qr.maslick.tech
 
-## 1. Builder image
+## ✅ Installation
+
+### 1. Builder image
 ```shell
 docker build -t maslick/emscripten-zbar-sdk -f docker/Dockerfile docker
 ```
 
-## 2. Build WASM artifacts (qr, barcode):
+### 2. Build WASM artifacts (qr, barcode):
 ```shell
 docker run -e INPUT_FILE=zbar/qr.cpp -e OUTPUT_FILE=qr -v $(pwd):/app maslick/emscripten-zbar-sdk make -B
 docker run -e INPUT_FILE=zbar/barcode.cpp -e OUTPUT_FILE=barcode -v $(pwd):/app maslick/emscripten-zbar-sdk make -B
@@ -47,7 +49,7 @@ OUTPUT_DIR=public/wasm OUTPUT_FILE=qr make clean
 OUTPUT_DIR=public/wasm OUTPUT_FILE=barcode make clean
 ```
 
-## 3. Use the resulting WASM artifacts
+### 3. Use the resulting WASM artifacts
 
 ```shell
 # Fetch dependencies
@@ -64,7 +66,7 @@ open http://localhost:8001
 ```
 
 
-## BONUS: vanilla js example (qr + barcode)
+## 💡 BONUS: vanilla js example (qr + barcode)
 ```shell
 # Build WASM artifacts
 docker run \
