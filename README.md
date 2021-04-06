@@ -14,7 +14,7 @@ WebAssembly + ReactJS QR/barcode code scanner
 * Packaged as PWA (caching files with Service Worker, Add to Home Screen)
 * Mobile first (can be used on a Laptop as well)
 * Multiplatform (iOS, Android)
-* QR recognition logic is performed inside a Web Worker
+* QR recognition logic is performed inside a Web Worker (off the browser's Main thread)
 * Support for UPN QR (Slovenia only)
 * ReactJS component
 * Vanilla JS example
