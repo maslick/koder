@@ -8,6 +8,18 @@ ReactJS QR/barcode code scanner
   <img src="./screenshots/app_2.png" width="400" />
 </p>
 
+## 🚀 Features
+* QR module written in WebAssembly
+* Uses Zbar C++ library (version 0.23.90)
+* Packaged as PWA (caching files with Service Worker)
+* Mobile first (can be used on a Laptop as well)
+* QR recognition logic is performed inside a Web Worker
+* ReactJS component
+* Vanilla JS example
+
+## 🍭 Demo
+https://qr.maslick.tech
+
 ## 1. Builder image
 ```shell
 docker build -t maslick/emscripten-zbar-sdk -f docker/Dockerfile docker
