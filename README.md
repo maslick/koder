@@ -4,14 +4,14 @@ QR/bar code scanner for the Browser
 [![Build Status](https://github.com/maslick/koder-react/workflows/build/badge.svg)](https://github.com/maslick/koder-react/actions?query=workflow%3Abuild)
 
 ## 🚀 Features
-* QR/barcode module written in WebAssembly
+* QR/barcode module implemented in WebAssembly
 * Uses Zbar C++ library (version [0.23.90](https://github.com/mchehab/zbar))
 * Packaged as PWA (caching files with Service Worker, Add to Home Screen)
 * Mobile first (can be used on a Laptop as well)
 * Multiplatform (iOS, Android)
 * QR recognition logic is performed off the browser's Main thread (i.e. Web Worker)
 * Support for UPN QR (Slovenia only)
-* Barcode support (UPCA, UPCE, EAN8, EAN13, I25)
+* Barcode support (UPC-A, UPC-E, EAN8, EAN-13, I25)
 * Emscripten-zbar-sdk [Docker image](https://hub.docker.com/r/maslick/emscripten-zbar-sdk), [Dockerfile](./docker/Dockerfile)
 * ReactJS component
 * Vanilla JS example
@@ -91,3 +91,8 @@ Clean the build artifacts:
 ```shell
 OUTPUT_DIR=vanilla-js/wasm OUTPUT_FILE=all make clean-vanilla-js
 ```
+
+## References
+* [WebAssembly at Ebay](https://tech.ebayinc.com/engineering/webassembly-at-ebay-a-real-world-use-case/)
+* [zbar.wasm](https://github.com/samsam2310/zbar.wasm)
+* [Barcode Scanner WebAssembly](https://barkeywolf.consulting/posts/barcode-scanner-webassembly/)
