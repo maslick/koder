@@ -1,5 +1,5 @@
 # =koder=
-WebAssembly + ReactJS QR/barcode code scanner
+QR/bar code scanner for the Browser
 
 [![Build Status](https://github.com/maslick/koder-react/workflows/build/badge.svg)](https://github.com/maslick/koder-react/actions?query=workflow%3Abuild)
 
