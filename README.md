@@ -8,14 +8,14 @@ QR/bar code scanner for the Browser
 * Uses Zbar C++ library (version [0.23.90](https://github.com/mchehab/zbar))
 * Packaged as PWA (caching files with Service Worker, Add to Home Screen)
 * Mobile first (can be used on a Laptop as well)
-* Multiplatform (iOS, Android)
+* Multiplatform (iOS, Android, Desktop)
 * QR recognition logic is performed off the browser's Main thread (i.e. Web Worker)
 * *koder* React component supports a [jsqr-based](https://www.npmjs.com/package/jsqr) Web Worker (see [jsQrWorker.js](./public/jsQrWorker.js))  
-* Support for UPN QR (Slovenia only)
 * Barcode support (UPC-A, UPC-E, EAN8, EAN-13, I25)
+* Support for UPN QR (Slovenia only)
 * Emscripten-zbar-sdk [Docker image](https://hub.docker.com/r/maslick/emscripten-zbar-sdk), [Dockerfile](./docker/Dockerfile)
-* ReactJS component
-* Vanilla JS example
+* ReactJS [component](./src/components/scan.js)
+* Vanilla JS [example](./vanilla-js)
 
 <p align="center" >
   <img src="./screenshots/app_1.png" width="400px" />
