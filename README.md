@@ -3,11 +3,6 @@ WebAssembly + ReactJS QR/barcode code scanner
 
 [![Build Status](https://github.com/maslick/koder-react/workflows/build/badge.svg)](https://github.com/maslick/koder-react/actions?query=workflow%3Abuild)
 
-<p align="center" >
-  <img src="./screenshots/app_1.png" width="400px" />
-  <img src="./screenshots/app_2.png" width="400px" />
-</p>
-
 ## 🚀 Features
 * QR module written in WebAssembly
 * Uses Zbar C++ library (version [0.23.90](https://github.com/mchehab/zbar))
@@ -19,6 +14,11 @@ WebAssembly + ReactJS QR/barcode code scanner
 * Barcode support (UPCA, UPCE, EAN8, EAN13, I25)
 * ReactJS component
 * Vanilla JS example
+
+<p align="center" >
+  <img src="./screenshots/app_1.png" width="400px" />
+  <img src="./screenshots/app_2.png" width="400px" />
+</p>
 
 ## 🍭 Demo
 https://qr.maslick.tech
