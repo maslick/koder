@@ -25,7 +25,7 @@ QR/bar code scanner for the Browser
 ## 🍭 Demo
 https://qr.maslick.tech
 
-## ✅ Installation
+## ⚡ Installation
 
 ### 1. Builder image
 ```shell
