@@ -95,5 +95,5 @@ OUTPUT_DIR=vanilla-js/wasm OUTPUT_FILE=all make clean-vanilla-js
 
 ## 🔭 References
 * [WebAssembly at Ebay](https://tech.ebayinc.com/engineering/webassembly-at-ebay-a-real-world-use-case/)
-* [zbar.wasm](https://github.com/samsam2310/zbar.wasm)
 * [Barcode Scanner WebAssembly](https://barkeywolf.consulting/posts/barcode-scanner-webassembly/)
+* [zbar.wasm](https://github.com/samsam2310/zbar.wasm)
