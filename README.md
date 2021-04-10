@@ -22,7 +22,7 @@ QR/bar code scanner for the Browser
   <img src="./screenshots/app_2.png" width="400px" />
 </p>
 
-## 🍭 Demo
+## :bulb: Demo
 https://qr.maslick.tech
 
 ## ⚡ Installation
@@ -71,7 +71,7 @@ open http://localhost:8001
 ```
 
 
-## 💡 BONUS: vanilla js example (qr + barcode)
+## :gem: BONUS: vanilla js example (qr + barcode)
 ```shell
 # Build WASM artifacts
 docker run \
