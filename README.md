@@ -11,7 +11,7 @@ QR/bar code scanner for the Browser
 * Multiplatform (iOS, Android, Desktop)
 * QR recognition logic is performed off the browser's Main thread (i.e. Web Worker)
 * *koder* React component supports a [jsqr](https://www.npmjs.com/package/jsqr) based Web Worker (see [jsQrWorker.js](./public/jsQrWorker.js))  
-* Barcode support (UPC-A, UPC-E, EAN-8, EAN-13, I25)
+* Barcode support (UPC-A, UPC-E, EAN-8, EAN-13, I25, CODE-128)
 * Support for UPN QR (Slovenia only)
 * Emscripten-zbar-sdk [Docker image](https://hub.docker.com/r/maslick/emscripten-zbar-sdk), [Dockerfile](./docker/Dockerfile)
 * ReactJS [component](./src/components/scan.js)
