@@ -1,6 +1,6 @@
 {
   "name": "koder-react",
-  "version": "0.2.1",
+  "version": "1.1.1",
   "homepage": "./",
   "private": true,
   "devDependencies": {
@@ -21,7 +21,7 @@
     "eject": "react-scripts eject",
     "build-sw": "node ./src/sw-build.js",
     "clean-cra-sw": "rm -f build/precache-manifest.*.js && rm -f build/service-worker.js",
-    "vanilla-js-live": "npx http-server vanilla-js/"
+    "vanilla-js-live": "npx http-server ./docs/ -p 8081 -c-1"
   },
   "eslintConfig": {
     "extends": "react-app"
