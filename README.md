@@ -23,7 +23,8 @@ QR/bar code scanner for the Browser
 </p>
 
 ## :bulb: Demo
-https://qr.maslick.tech
+* React JS: https://qr.maslick.tech
+* Vanilla JS: https://maslick.github.io/koder/
 
 ## ⚡ Installation
 
