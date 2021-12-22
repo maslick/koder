@@ -43,7 +43,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: vanilla-js
-          path: vanilla-js
+          path: docs
       - name: job failed
         if: failure()
         uses: appleboy/telegram-action@master
