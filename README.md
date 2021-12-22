@@ -15,7 +15,7 @@ QR/bar code scanner for the Browser
 * Support for UPN QR (Slovenia only)
 * Emscripten-zbar-sdk [Docker image](https://hub.docker.com/r/maslick/emscripten-zbar-sdk), [Dockerfile](./docker/Dockerfile)
 * ReactJS [component](./src/components/scan.js)
-* Vanilla JS [example](./vanilla-js)
+* Vanilla JS [example](./docs)
 
 <p align="center" >
   <img src="./screenshots/app_1.png" width="400px" />

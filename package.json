@@ -21,7 +21,7 @@
     "eject": "react-scripts eject",
     "build-sw": "node ./src/sw-build.js",
     "clean-cra-sw": "rm -f build/precache-manifest.*.js && rm -f build/service-worker.js",
-    "vanilla-js-live": "npx http-server vanilla-js/"
+    "vanilla-js-live": "npx http-server docs/"
   },
   "eslintConfig": {
     "extends": "react-app"
