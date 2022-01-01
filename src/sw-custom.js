@@ -8,10 +8,10 @@ if ("function" === typeof importScripts) {
     workbox.precaching.precacheAndRoute(self.__WB_MANIFEST);
     workbox.routing.registerRoute(
       new RegExp("https://fonts.(?:.googlepis|gstatic).com/(.*)"),
-      workbox.strategies.cacheFirst({
+      new workbox.strategies.CacheFirst({
         cacheName: "googleapis",
         plugins: [
-          new workbox.expiration.ExpirationPlugin({
+          new workbox.cacheableResponse.CacheableResponsePlugin({
             maxEntries: 30
           })
         ]
@@ -19,10 +19,10 @@ if ("function" === typeof importScripts) {
     );
     workbox.routing.registerRoute(
       /\.(?:png|gif|jpg|jpeg|svg|ico)$/,
-      workbox.strategies.cacheFirst({
+      new workbox.strategies.CacheFirst({
         cacheName: "images",
         plugins: [
-          new workbox.expiration.Plugin({
+          new workbox.cacheableResponse.CacheableResponsePlugin({
             maxEntries: 60,
             maxAgeSeconds: 30 * 24 * 60 * 60 // 30 Days
           })
@@ -31,10 +31,10 @@ if ("function" === typeof importScripts) {
     );
     workbox.routing.registerRoute(
       /\.(?:js|css|wasm|json)$/,
-      workbox.strategies.staleWhileRevalidate({
+      new workbox.strategies.StaleWhileRevalidate({
         cacheName: "static-resources",
         plugins: [
-          new workbox.expiration.Plugin({
+          new workbox.cacheableResponse.CacheableResponsePlugin({
             maxEntries: 60,
             maxAgeSeconds: 20 * 24 * 60 * 60 // 20 Days
           })
