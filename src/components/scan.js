@@ -1,7 +1,7 @@
 import React from "react";
 import "../css/scan.css";
 import PropTypes from 'prop-types';
-import {beep, formatUpnQr, WORKER_TYPE} from "../helpers";
+import {beep, fetchCovidCertDetails, formatCovidCert, formatUpnQr, WORKER_TYPE} from "../helpers";
 import {decode} from "upnqr";
 
 const BTN_TXT = {
@@ -58,7 +58,7 @@ class Scan extends React.Component {
   initWorker = () => {
     this.qrworker = new Worker(this.state.worker + "Worker.js");
 
-    this.qrworker.onmessage = ev => {
+    this.qrworker.onmessage = async ev => {
       if (ev.data != null) {
         this.qrworker.terminate();
         const result = ev.data;
@@ -68,6 +68,12 @@ class Scan extends React.Component {
           res = formatUpnQr(decode(res));
         } catch (e) {
           console.log(e);
+        }
+        if (res.includes("HC1:")) try {
+          res = formatCovidCert(await fetchCovidCertDetails(res));
+        } catch (e) {
+          console.log(e);
+          res = "This EU Digital COVID Certificate is INVALID!";
         }
         this.setState({barcode: res, resultOpen: true});
         if (this.allowBeep) beep();
