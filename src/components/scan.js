@@ -1,7 +1,7 @@
 import React from "react";
 import "../css/scan.css";
 import PropTypes from 'prop-types';
-import {beep, fetchCovidCertDetails, formatUpnQr, formatCovidCert, WORKER_TYPE} from "../helpers";
+import {beep, fetchCovidCertDetails, formatCovidCert, formatUpnQr, WORKER_TYPE} from "../helpers";
 import {decode} from "upnqr";
 
 const BTN_TXT = {
