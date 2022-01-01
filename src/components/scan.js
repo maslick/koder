@@ -1,7 +1,7 @@
 import React from "react";
 import "../css/scan.css";
 import PropTypes from 'prop-types';
-import {beep, isUrl, formatUpnQr, WORKER_TYPE} from "../helpers";
+import {beep, formatUpnQr, WORKER_TYPE} from "../helpers";
 import {decode} from "upnqr";
 
 const BTN_TXT = {
@@ -44,8 +44,7 @@ class Scan extends React.Component {
       bw: this.props.bw,
       crosshair: this.props.crosshair,
       resultOpen: false,
-      worker: this.props.worker,
-      url: false
+      worker: this.props.worker
     };
 
     this.decodeQR = this.props.decode;
@@ -70,7 +69,7 @@ class Scan extends React.Component {
         } catch (e) {
           console.log(e);
         }
-        this.setState({barcode: res, resultOpen: true, url: isUrl(res)});
+        this.setState({barcode: res, resultOpen: true});
         if (this.allowBeep) beep();
       }
     };
@@ -233,7 +232,6 @@ class Scan extends React.Component {
         {this.renderScan()}
         {this.renderResult()}
       </div>
-
     );
   }
 
@@ -261,9 +259,6 @@ class Scan extends React.Component {
   };
 
   renderUrl = () => {
-    if (this.state.url)
-      return <a href={this.state.barcode}>{this.state.barcode}</a>;
-    else
       return this.state.barcode;
   }
 
