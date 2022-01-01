@@ -49,7 +49,7 @@ const formatUpnQr = (obj) => {
   return res;
 };
 
-const formatCovidCertificate = async (code) => {
+const fetchCovidCertDetails = async (code) => {
   const base_url = "https://0bxnzxkgfe.execute-api.eu-central-1.amazonaws.com";
   const data = await fetch(base_url + "/validate", {
     headers: {
@@ -61,7 +61,7 @@ const formatCovidCertificate = async (code) => {
   return data.json();
 };
 
-const syntaxHighlight = (json) => {
+const formatCovidCert = (json) => {
   let res = "";
   res += `Name: ${json.std_name}\n`;
   res += `National name: ${json.name}\n`;
@@ -133,4 +133,4 @@ const syntaxHighlight = (json) => {
 
 
 
-export {beep, WORKER_TYPE, formatUpnQr, formatCovidCertificate, syntaxHighlight};
+export {beep, WORKER_TYPE, formatUpnQr, fetchCovidCertDetails, formatCovidCert};

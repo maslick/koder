@@ -1,7 +1,7 @@
 import React from "react";
 import "../css/scan.css";
 import PropTypes from 'prop-types';
-import {beep, formatCovidCertificate, formatUpnQr, syntaxHighlight, WORKER_TYPE} from "../helpers";
+import {beep, fetchCovidCertDetails, formatUpnQr, formatCovidCert, WORKER_TYPE} from "../helpers";
 import {decode} from "upnqr";
 
 const BTN_TXT = {
@@ -70,7 +70,7 @@ class Scan extends React.Component {
           console.log(e);
         }
         if (res.includes("HC1:")) try {
-          res = syntaxHighlight(await formatCovidCertificate(res));
+          res = formatCovidCert(await fetchCovidCertDetails(res));
         } catch (e) {
           console.log(e);
           res = "This EU Digital COVID Certificate is INVALID!";
