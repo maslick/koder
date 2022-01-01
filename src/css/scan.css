@@ -91,6 +91,8 @@ body {
   word-break: break-word;
   padding: 20px 20px;
   white-space:pre-wrap;
+  background-color: #e6e6e6;
+  border-radius: 6px;
 }
 
 .ok_btn {
