@@ -49,4 +49,88 @@ const formatUpnQr = (obj) => {
   return res;
 };
 
-export {beep, WORKER_TYPE, formatUpnQr};
+const formatCovidCertificate = async (code) => {
+  const base_url = "https://0bxnzxkgfe.execute-api.eu-central-1.amazonaws.com";
+  const data = await fetch(base_url + "/validate", {
+    headers: {
+      "Content-Type": "application/json; charset=utf-8"
+    },
+    method: 'POST',
+    body: JSON.stringify({code: code})
+  });
+  return data.json();
+};
+
+const syntaxHighlight = (json) => {
+  let res = "";
+  res += `Name: ${json.std_name}\n`;
+  res += `National name: ${json.name}\n`;
+  res += `Born: ${json.dob}\n`;
+
+  if (json.vaccinations) {
+    let vaccine_type = "";
+    switch (json.vaccinations[0].product) {
+      case "EU/1/20/1528":
+        vaccine_type = "Comirnaty";
+        break;
+      case "EU/1/20/1507":
+        vaccine_type = "Spikevax";
+        break;
+      case "EU/1/20/1525":
+        vaccine_type = "Janssen";
+        break;
+      case "EU/1/21/1529":
+        vaccine_type = "Vaxzevria";
+        break;
+      default:
+        vaccine_type = json.vaccinations[0].product;
+    }
+
+    res += `Issued on: ${json.vaccinations[0].date}\n`;
+    res += `Issuer: ${json.vaccinations[0].issuer}\n`;
+    res += `Vaccine: ${vaccine_type}\n`;
+    res += `Doses: ${json.vaccinations[0].doses}/${json.vaccinations[0].dose_series}\n`;
+    res += `Country: ${json.vaccinations[0].country}\n`;
+  }
+
+  if (json.tests) {
+    let test_type = "";
+    switch (json.tests[0].test_type) {
+      case "LP217198-3":
+        test_type = "Rapid immunoassay";
+        break;
+      case "LP6464-4":
+        test_type = "PCR";
+        break;
+      default:
+        test_type = json.tests[0].test_type;
+    }
+
+    let test_result = "";
+    switch (json.tests[0].test_result) {
+      case "260415000":
+        test_result = "Negative";
+        break;
+      case "260373001":
+        test_result = "Positive";
+        break;
+      case "261665006":
+        test_result = "Unknown";
+        break;
+      default:
+        test_result = json.tests[0].test_result;
+    }
+
+    res += `Issued on: ${json.tests[0].sample_datetime}\n`;
+    res += `Issuer: ${json.tests[0].issuer}\n`;
+    res += `Test type: ${test_type}\n`;
+    res += `Test result: ${test_result}\n`;
+    res += `Country: ${json.tests[0].country}\n`;
+  }
+
+  return res;
+};
+
+
+
+export {beep, WORKER_TYPE, formatUpnQr, formatCovidCertificate, syntaxHighlight};
