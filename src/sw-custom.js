@@ -11,7 +11,7 @@ if ("function" === typeof importScripts) {
       workbox.strategies.cacheFirst({
         cacheName: "googleapis",
         plugins: [
-          new workbox.expiration.Plugin({
+          new workbox.expiration.ExpirationPlugin({
             maxEntries: 30
           })
         ]
