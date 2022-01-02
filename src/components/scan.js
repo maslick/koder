@@ -44,7 +44,9 @@ class Scan extends React.Component {
       bw: this.props.bw,
       crosshair: this.props.crosshair,
       resultOpen: false,
-      worker: this.props.worker
+      worker: this.props.worker,
+      covidToggle: true,
+      rawCode: ""
     };
 
     this.decodeQR = this.props.decode;
@@ -64,6 +66,7 @@ class Scan extends React.Component {
         const result = ev.data;
         this.stopScan();
         let res = result.data;
+        const rawCode = res;
         if (res.includes("UPNQR")) try {
           res = formatUpnQr(decode(res));
         } catch (e) {
@@ -75,7 +78,7 @@ class Scan extends React.Component {
           console.log(e);
           res = "This EU Digital COVID Certificate is INVALID!";
         }
-        this.setState({barcode: res, resultOpen: true});
+        this.setState({barcode: res, resultOpen: true, rawCode});
         if (this.allowBeep) beep();
       }
     };
@@ -232,6 +235,11 @@ class Scan extends React.Component {
     else return { backgroundColor: "" };
   };
 
+  covidToggleStyle = () => {
+    if (this.state.covidToggle) return { backgroundColor: "green", padding: 12 };
+    else return {backgroundColor: "", padding: 12};
+  }
+
   render() {
     return (
       <div>
@@ -255,16 +263,29 @@ class Scan extends React.Component {
       return (
         <div className="resultModal">
           <div className="result">
-            {this.renderUrl()}
+            {this.renderQrCodeResult()}
           </div>
           <div style={{marginTop: 40}}>
             <a href="!#" style={{padding: 12}} className="myHref" onClick={this.onClickBackHandler}>BACK</a>
+            {this.renderCovidToggle()}
           </div>
         </div>);
     }
   };
 
-  renderUrl = () => {
+  renderCovidToggle = () => {
+    return (
+      <a href="!#" style={this.covidToggleStyle()} className="myHref" onClick={this.onCovidToggleHandler}>{this.state.covidToggle === true ? "COVID": "RAW"}</a>
+    );
+  };
+
+  onCovidToggleHandler = (e) => {
+    e.preventDefault();
+    const barcode = this.state.barcode;
+    this.setState({covidToggle: !this.state.covidToggle, barcode: this.state.rawCode, rawCode: barcode});
+  };
+
+  renderQrCodeResult = () => {
       return this.state.barcode;
   }
 
