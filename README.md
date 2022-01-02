@@ -62,14 +62,14 @@ OUTPUT_DIR=public/wasm OUTPUT_FILE=barcode make clean
 # Fetch dependencies
 yarn install --frozen-lockfile
 
-# Development mode
+# Development mode (can be accessed from any device on local wifi)
 npm run start
 open https://locahost:8080
 
-# Production mode
+# Production mode (build and serve static web app, localhost only)
 npm run build
-cd build && python3 -m http.server 8001 --bind 0.0.0.0
-open http://localhost:8001
+npm run build-and-serve
+open http://localhost:8082
 ```
 
 
