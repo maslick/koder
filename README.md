@@ -13,7 +13,7 @@ QR/bar code scanner for the Browser
 * *koder* React component supports a [jsqr](https://www.npmjs.com/package/jsqr) based Web Worker (see [jsQrWorker.js](./public/jsQrWorker.js))  
 * Barcode support (UPC-A, UPC-E, EAN-8, EAN-13, I25, CODE-128)
 * Support for UPN QR (Slovenia only)
-* :new: EU Digital Covid Certificate validator (vaccination, test)
+* :new: EU Digital Covid Certificate validator (vaccination, test), works in ``offline`` mode!
 * Emscripten-zbar-sdk [Docker image](https://hub.docker.com/r/maslick/emscripten-zbar-sdk), [Dockerfile](./docker/Dockerfile)
 * ReactJS [component](./src/components/scan.js)
 * Vanilla JS [example](./docs)
