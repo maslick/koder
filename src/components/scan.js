@@ -96,7 +96,10 @@ class Scan extends React.Component {
       scanning: true,
       btnText: BTN_TXT.STOP,
       barcode: "",
-      resultOpen: false
+      resultOpen: false,
+      covidToggle: true,
+      rawCode: "",
+      codeType: ""
     });
     navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: "environment" } }).then(stream => {
       this.video.srcObject = stream;
