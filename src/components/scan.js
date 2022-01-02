@@ -46,7 +46,8 @@ class Scan extends React.Component {
       resultOpen: false,
       worker: this.props.worker,
       covidToggle: true,
-      rawCode: ""
+      rawCode: "",
+      codeType: ""
     };
 
     this.decodeQR = this.props.decode;
@@ -67,18 +68,21 @@ class Scan extends React.Component {
         this.stopScan();
         let res = result.data;
         const rawCode = res;
+        let codeType = "RAW";
         if (res.includes("UPNQR")) try {
+          codeType = "UPNQR";
           res = formatUpnQr(decode(res));
         } catch (e) {
           console.log(e);
         }
         if (res.includes("HC1:")) try {
+          codeType = "COVID";
           res = formatCovidCert(await fetchCovidCertDetails(res));
         } catch (e) {
           console.log(e);
           res = "This EU Digital COVID Certificate is INVALID!";
         }
-        this.setState({barcode: res, resultOpen: true, rawCode});
+        this.setState({barcode: res, resultOpen: true, rawCode, codeType});
         if (this.allowBeep) beep();
       }
     };
@@ -274,8 +278,20 @@ class Scan extends React.Component {
   };
 
   renderCovidToggle = () => {
+    let caption = "";
+    switch (this.state.codeType) {
+      case "UPNQR":
+        caption = "UPNQR";
+        break;
+      case "COVID":
+        caption = "COVID";
+        break;
+      default:
+        return "";
+    }
+
     return (
-      <a href="!#" style={this.covidToggleStyle()} className="myHref" onClick={this.onCovidToggleHandler}>{this.state.covidToggle === true ? "COVID": "RAW"}</a>
+      <a href="!#" style={this.covidToggleStyle()} className="myHref" onClick={this.onCovidToggleHandler}>{this.state.covidToggle === true ? caption : "RAW"}</a>
     );
   };
 
