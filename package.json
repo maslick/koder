@@ -1,19 +1,19 @@
 {
   "name": "koder-react",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "homepage": "./",
   "private": true,
   "devDependencies": {
-    "@pathcheck/dcc-sdk": "^0.0.23",
-    "@testing-library/jest-dom": "^5.11.9",
-    "@testing-library/react": "^11.2.5",
-    "@testing-library/user-event": "^13.1.1",
-    "http-server": "^0.12.3",
-    "prop-types": "^15.7.2",
+    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.5.0",
+    "http-server": "^0.13.0",
+    "prop-types": "^15.8.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "^4.0.3",
-    "upnqr": "1.1.0"
+    "upnqr": "1.1.0",
+    "@pathcheck/dcc-sdk": "^0.0.23"
   },
   "scripts": {
     "start": "HTTPS=true PORT=8080 HOST=0.0.0.0 react-scripts start",
@@ -22,7 +22,8 @@
     "eject": "react-scripts eject",
     "build-sw": "node ./src/sw-build.js",
     "clean-cra-sw": "rm -f build/precache-manifest.*.js && rm -f build/service-worker.js",
-    "vanilla-js-live": "npx http-server ./docs/ -p 8081 -c-1"
+    "vanilla-js-live": "npx http-server ./docs/ -p 8081 -c-1",
+    "build-and-serve": "npx http-server ./build/ -p 8082 -c-1"
   },
   "eslintConfig": {
     "extends": "react-app"
