@@ -108,7 +108,7 @@ jobs:
         with:
           step: start
           token: ${{ secrets.GITHUB_TOKEN }}
-          env: prod
+          env: react.js
           ref: ${{ github.head_ref }}
       - name: checkout source code
         uses: actions/checkout@master
@@ -119,7 +119,7 @@ jobs:
       - name: copy artifacts
         run: mv bundle build
       - name: push to Firebase
-        uses: w9jds/firebase-action@master
+        uses: w9jds/firebase-action@v2.0.0
         with:
           args: deploy --only hosting
         env:
