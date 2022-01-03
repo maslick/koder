@@ -94,18 +94,24 @@ const extractVaccine = (record) => {
 };
 
 const formatCovidCert = (json) => {
+  const format_date = new Intl.DateTimeFormat('en-GB', {
+    dateStyle: 'medium',
+    timeZone: 'UTC',
+  });
+  const format_datetime = new Intl.DateTimeFormat('en-GB', {
+    dateStyle: 'medium',
+    timeStyle: 'short',
+    timeZone: 'UTC',
+  });
+  const formatISO8601Date = (ts) => format_date.format(new Date(ts));
+  const formatISO8601DateTime = (ts) => format_datetime.format(new Date(ts));
+
   let res = "";
   res += `Name: ${json.name}\n`;
   res += `National name: ${json.national_name}\n`;
-  res += `Born: ${json.dob}\n`;
+  res += `Born: ${formatISO8601Date(json.dob)}\n`;
 
   if (json.vaccination) {
-    const format = new Intl.DateTimeFormat('en-GB', {
-      dateStyle: 'medium',
-      timeZone: 'UTC',
-    });
-    const formatISO8601Timestamp = (ts) => format.format(new Date(ts));
-
     let vaccine_type = "";
     switch (json.vaccination.vaccine_type) {
       case "EU/1/20/1528":
@@ -125,20 +131,13 @@ const formatCovidCert = (json) => {
     }
 
     res += `Country: ${json.vaccination.country}\n\n`;
-    res += `Issued on: ${formatISO8601Timestamp(json.vaccination.issued_on)}\n`;
+    res += `Issued on: ${formatISO8601Date(json.vaccination.issued_on)}\n`;
     res += `Issuer: ${json.vaccination.issuer}\n\n`;
     res += `Vaccine: ${vaccine_type}\n`;
     res += `Dose: ${json.vaccination.doses}/${json.vaccination.dose_series}\n`;
   }
 
   if (json.test) {
-    const format = new Intl.DateTimeFormat('en-GB', {
-      dateStyle: 'medium',
-      timeStyle: 'short',
-      timeZone: 'UTC',
-    });
-    const formatISO8601Timestamp = (ts) => format.format(new Date(ts));
-
     let test_type = "";
     switch (json.test.test_type) {
       case "LP217198-3":
@@ -167,7 +166,7 @@ const formatCovidCert = (json) => {
     }
 
     res += `Country: ${json.test.country}\n\n`;
-    res += `Issued: ${formatISO8601Timestamp(json.test.issued_on)}\n`;
+    res += `Issued: ${formatISO8601DateTime(json.test.issued_on)}\n`;
     res += `Issuer: ${json.test.issuer}\n\n`;
     res += `Test type: ${test_type}\n`;
     res += `Test result: ${test_result}\n`;
