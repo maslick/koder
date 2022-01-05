@@ -3,6 +3,11 @@ QR/bar code scanner for the Browser
 
 [![Build Status](https://github.com/maslick/koder-react/workflows/build/badge.svg)](https://github.com/maslick/koder-react/actions?query=workflow%3Abuild)
 
+## :bulb: Demo
+* React JS: https://qr.maslick.tech
+* Vanilla JS: https://maslick.github.io/koder/
+
+
 ## 🚀 Features
 * QR/barcode module implemented in WebAssembly
 * Uses Zbar C++ library (version [0.23.90](https://github.com/mchehab/zbar))
@@ -22,10 +27,6 @@ QR/bar code scanner for the Browser
   <img src="./screenshots/app_1.png" width="400px" />
   <img src="./screenshots/app_2.png" width="400px" />
 </p>
-
-## :bulb: Demo
-* React JS: https://qr.maslick.tech
-* Vanilla JS: https://maslick.github.io/koder/
 
 ## ⚡ Installation
 
