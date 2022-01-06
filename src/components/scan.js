@@ -1,8 +1,9 @@
 import React from "react";
-import "../css/scan.css";
 import PropTypes from 'prop-types';
-import {beep, fetchCovidCertDetails, formatCovidCert, formatUpnQr, WORKER_TYPE} from "../helpers";
-import {decode} from "upnqr";
+import {beep, CODE_TYPE, WORKER_TYPE} from "../helpers";
+import {Upnqr} from "../transformers/upnqr";
+import {Covid19} from "../transformers/covid19";
+import "../css/scan.css";
 
 const BTN_TXT = {
   START: "START",
@@ -45,14 +46,16 @@ class Scan extends React.Component {
       crosshair: this.props.crosshair,
       resultOpen: false,
       worker: this.props.worker,
-      covidToggle: true,
+      transformToggle: true,
       rawCode: "",
-      codeType: ""
+      codeType: CODE_TYPE.RAW
     };
 
     this.decodeQR = this.props.decode;
     this.allowBeep = this.props.beep;
     this.scanRate = this.props.scanRate;
+    this.upnqr = this.props.upnqr;
+    this.covid19 = this.props.covid19;
 
     this.qrworker = null;
     this.oldTime = 0;
@@ -66,22 +69,29 @@ class Scan extends React.Component {
         this.qrworker.terminate();
         const result = ev.data;
         this.stopScan();
+
         let res = result.data;
         const rawCode = res;
-        let codeType = "RAW";
-        if (res.includes("UPNQR")) try {
-          codeType = "UPNQR";
-          res = formatUpnQr(decode(res));
-        } catch (e) {
-          console.log(e);
+        let codeType = CODE_TYPE.RAW;
+
+        // Transform raw to UPNQR
+        if (this.upnqr) {
+          const transformer = new Upnqr();
+          if (transformer.identified(res)) {
+            codeType = transformer.codeType();
+            res = transformer.transform(res);
+          }
         }
-        if (res.includes("HC1:")) try {
-          codeType = "COVID";
-          res = formatCovidCert(await fetchCovidCertDetails(res));
-        } catch (e) {
-          console.log(e);
-          res = "This EU Digital COVID Certificate is INVALID!";
+
+        // Transform raw to COVID19 certificate
+        if (this.covid19) {
+          const transformer = new Covid19();
+          if (transformer.identified(res)) {
+            codeType = transformer.codeType();
+            res = await transformer.transform(res);
+          }
         }
+
         this.setState({barcode: res, resultOpen: true, rawCode, codeType});
         if (this.allowBeep) beep();
       }
@@ -97,9 +107,9 @@ class Scan extends React.Component {
       btnText: BTN_TXT.STOP,
       barcode: "",
       resultOpen: false,
-      covidToggle: true,
+      transformToggle: true,
       rawCode: "",
-      codeType: ""
+      codeType: CODE_TYPE.RAW
     });
     navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: "environment" } }).then(stream => {
       this.video.srcObject = stream;
@@ -242,8 +252,8 @@ class Scan extends React.Component {
     else return { backgroundColor: "" };
   };
 
-  covidToggleStyle = () => {
-    if (this.state.covidToggle) return { backgroundColor: "green", padding: 12 };
+  transformToggleStyle = () => {
+    if (this.state.transformToggle) return { backgroundColor: "green", padding: 12 };
     else return {backgroundColor: "", padding: 12};
   }
 
@@ -274,34 +284,28 @@ class Scan extends React.Component {
           </div>
           <div style={{marginTop: 40}}>
             <a href="!#" style={{padding: 12}} className="myHref" onClick={this.onClickBackHandler}>BACK</a>
-            {this.renderCovidToggle()}
+            {this.renderTransformToggle()}
           </div>
         </div>);
     }
   };
 
-  renderCovidToggle = () => {
-    let caption = "";
-    switch (this.state.codeType) {
-      case "UPNQR":
-        caption = "UPNQR";
-        break;
-      case "COVID":
-        caption = "COVID";
-        break;
-      default:
-        return "";
-    }
-
+  renderTransformToggle = () => {
+    if (this.state.codeType === CODE_TYPE.RAW) return "";
     return (
-      <a href="!#" style={this.covidToggleStyle()} className="myHref" onClick={this.onCovidToggleHandler}>{this.state.covidToggle === true ? caption : "RAW"}</a>
+      <a href="!#"
+         className="myHref"
+         style={this.transformToggleStyle()}
+         onClick={this.onTransformToggleHandler}>
+        {this.state.transformToggle === true ? this.state.codeType : "RAW"}
+      </a>
     );
   };
 
-  onCovidToggleHandler = (e) => {
+  onTransformToggleHandler = (e) => {
     e.preventDefault();
     const barcode = this.state.barcode;
-    this.setState({covidToggle: !this.state.covidToggle, barcode: this.state.rawCode, rawCode: barcode});
+    this.setState({transformToggle: !this.state.transformToggle, barcode: this.state.rawCode, rawCode: barcode});
   };
 
   renderQrCodeResult = () => {
@@ -339,7 +343,9 @@ Scan.propTypes = {
   worker: PropTypes.string,
   scanRate: PropTypes.number,
   bw: PropTypes.bool,
-  crosshair: PropTypes.bool
+  crosshair: PropTypes.bool,
+  upnqr: PropTypes.bool,
+  covid19: PropTypes.bool
 };
 
 Scan.defaultProps = {
@@ -349,7 +355,9 @@ Scan.defaultProps = {
   worker: WORKER_TYPE.QR,
   scanRate: 250,
   bw: false,
-  crosshair: true
+  crosshair: true,
+  upnqr: false,
+  covid19: false
 };
 
 export default Scan;

@@ -6,7 +6,7 @@ import Scan from "./components/scan";
 
 ReactDom.render((
     <div className="main">
-      <Scan scanRate={250}/>
+      <Scan scanRate={250} covid19={true} upnqr={true}/>
     </div>
 ), document.getElementById("app"));
 
