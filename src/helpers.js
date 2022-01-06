@@ -25,6 +25,12 @@ const WORKER_TYPE = {
   JS: "jsQr"
 };
 
+const CODE_TYPE = {
+  UPNQR: "UPNQR",
+  COVID19: "COVID",
+  RAW: "RAW"
+};
+
 const formatUpnQr = (obj) => {
   let res = "";
   let rok = "";
@@ -177,4 +183,4 @@ const formatCovidCert = (json) => {
 
 
 
-export {beep, WORKER_TYPE, formatUpnQr, fetchCovidCertDetails, formatCovidCert};
+export {beep, WORKER_TYPE, CODE_TYPE, formatUpnQr, fetchCovidCertDetails, formatCovidCert};
