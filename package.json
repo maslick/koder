@@ -15,6 +15,9 @@
     "upnqr": "1.1.0",
     "@pathcheck/dcc-sdk": "^0.0.23"
   },
+  "resolutions": {
+    "react-error-overlay": "6.0.9"
+  },
   "scripts": {
     "start": "HTTPS=true PORT=8080 HOST=0.0.0.0 react-scripts start",
     "build": "react-scripts build && npm run build-sw && npm run clean-cra-sw",
