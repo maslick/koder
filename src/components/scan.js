@@ -291,8 +291,14 @@ class Scan extends React.Component {
   };
 
   renderTransformToggle = () => {
+    if (this.state.codeType === CODE_TYPE.RAW) return "";
     return (
-      <a href="!#" style={this.transformToggleStyle()} className="myHref" onClick={this.onTransformToggleHandler}>{this.state.codeType}</a>
+      <a href="!#"
+         className="myHref"
+         style={this.transformToggleStyle()}
+         onClick={this.onTransformToggleHandler}>
+        {this.state.transformToggle === true ? this.state.codeType : "RAW"}
+      </a>
     );
   };
 
