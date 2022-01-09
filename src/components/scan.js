@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import {beep, CODE_TYPE, WORKER_TYPE} from "../helpers";
+import {beep, WORKER_TYPE} from "../helpers";
+import {CODE_TYPE} from "../transformers/base";
 import {Upnqr} from "../transformers/upnqr";
 import {Covid19} from "../transformers/covid19";
 import "../css/scan.css";

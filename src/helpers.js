@@ -22,10 +22,4 @@ const WORKER_TYPE = {
   JS: "jsQr"
 };
 
-const CODE_TYPE = {
-  UPNQR: "UPNQR",
-  COVID19: "COVID",
-  RAW: "RAW"
-};
-
-export {beep, WORKER_TYPE, CODE_TYPE};
+export {beep, WORKER_TYPE};
