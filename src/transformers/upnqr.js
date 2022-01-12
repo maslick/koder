@@ -1,7 +1,7 @@
-import {CODE_TYPE} from "../helpers";
+import {CODE_TYPE, Transformer} from "./base";
 import {decode} from "upnqr";
 
-class Upnqr {
+class Upnqr extends Transformer {
   recognizer = "UPNQR";
 
   codeType() {
