@@ -17,9 +17,8 @@ const beep = (freq = 750, duration = 150, vol = 5) => {
 };
 
 const WORKER_TYPE = {
-  BARCODE: "wasmBarcode",
-  QR: "wasmQr",
-  JS: "jsQr"
+  WASM: "wasm",
+  JS_QR: "jsQr"
 };
 
 export {beep, WORKER_TYPE};

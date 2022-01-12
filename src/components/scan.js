@@ -218,15 +218,6 @@ class Scan extends React.Component {
     this.setState({bw: !this.state.bw});
   };
 
-  onWorkerHandler = (e) => {
-    e.preventDefault();
-    let w = WORKER_TYPE.QR;
-    if (this.state.worker === WORKER_TYPE.QR) w = WORKER_TYPE.BARCODE;
-    else if (this.state.worker === WORKER_TYPE.BARCODE) w = WORKER_TYPE.QR;
-    this.setState({worker: w});
-    this.stopScan();
-  };
-
   startStyle = () => {
     const style = {width: 64, textAlign: "center"};
     if (this.state.scanning) return { backgroundColor: "red", ...style };
@@ -245,11 +236,6 @@ class Scan extends React.Component {
 
   bwStyle = () => {
     if (this.state.bw) return { backgroundColor: "green" };
-    else return { backgroundColor: "" };
-  };
-
-  workerStyle = () => {
-    if (this.state.worker === WORKER_TYPE.QR) return { backgroundColor: "green" };
     else return { backgroundColor: "" };
   };
 
@@ -328,7 +314,6 @@ class Scan extends React.Component {
       <a href="!#" className="myHref" onClick={this.onCrossHairClickHandler} style={this.xHairStyle()}>X-hair</a>
       <a href="!#" className="myHref" onClick={this.onFPSClickHandler} style={this.fpsStyle()}>FPS</a>
       <a href="!#" className="myHref" onClick={this.onBWClickHandler} style={this.bwStyle()}>B/W</a>
-      <a href="!#" className="myHref" onClick={this.onWorkerHandler} style={this.workerStyle()}>{this.state.worker === WORKER_TYPE.QR ? "QR": "BAR"}</a>
     </div>;
   };
 
@@ -353,7 +338,7 @@ Scan.defaultProps = {
   beep: true,
   fps: false,
   decode: true,
-  worker: WORKER_TYPE.QR,
+  worker: WORKER_TYPE.WASM,
   scanRate: 250,
   bw: false,
   crosshair: true,
