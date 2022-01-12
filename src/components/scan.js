@@ -49,11 +49,11 @@ class Scan extends React.Component {
       worker: this.props.worker,
       transformToggle: true,
       rawCode: "",
-      codeType: CODE_TYPE.RAW
+      codeType: CODE_TYPE.RAW,
+      beep: this.props.beep
     };
 
     this.decodeQR = this.props.decode;
-    this.allowBeep = this.props.beep;
     this.scanRate = this.props.scanRate;
     this.upnqr = this.props.upnqr;
     this.covid19 = this.props.covid19;
@@ -94,7 +94,7 @@ class Scan extends React.Component {
         }
 
         this.setState({barcode: res, resultOpen: true, rawCode, codeType});
-        if (this.allowBeep) beep();
+        if (this.state.beep) beep();
       }
     };
   };
@@ -218,6 +218,11 @@ class Scan extends React.Component {
     this.setState({bw: !this.state.bw});
   };
 
+  onBeepClickHandler = (e) => {
+    e.preventDefault();
+    this.setState({beep: !this.state.beep});
+  };
+
   startStyle = () => {
     const style = {width: 64, textAlign: "center"};
     if (this.state.scanning) return { backgroundColor: "red", ...style };
@@ -236,6 +241,11 @@ class Scan extends React.Component {
 
   bwStyle = () => {
     if (this.state.bw) return { backgroundColor: "green" };
+    else return { backgroundColor: "" };
+  };
+
+  beepStyle = () => {
+    if (this.state.beep) return { backgroundColor: "green" };
     else return { backgroundColor: "" };
   };
 
@@ -314,6 +324,7 @@ class Scan extends React.Component {
       <a href="!#" className="myHref" onClick={this.onCrossHairClickHandler} style={this.xHairStyle()}>X-hair</a>
       <a href="!#" className="myHref" onClick={this.onFPSClickHandler} style={this.fpsStyle()}>FPS</a>
       <a href="!#" className="myHref" onClick={this.onBWClickHandler} style={this.bwStyle()}>B/W</a>
+      <a href="!#" className="myHref" onClick={this.onBeepClickHandler} style={this.beepStyle()}>Beep</a>
     </div>;
   };
 
