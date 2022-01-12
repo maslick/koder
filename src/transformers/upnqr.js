@@ -46,6 +46,7 @@ class Upnqr extends Transformer {
     if (rok.length > 0) res += `Rok plačila: ${rok}\n`;
     if (obj.IBAN_prejemnika != null) res += `IBAN: ${obj.IBAN_prejemnika}\n`;
     if (obj.nujno != null) res += `Nujno: ${obj.nujno ? "da" : "ne"}\n\n`;
+    if (obj.ime_prejemnika != null) res += `Prejemnik: ${obj.ime_prejemnika}\n`;
     if (obj.referenca_prejemnika != null) res += `Referenca: ${obj.referenca_prejemnika}\n`;
     if (obj.ulica_prejemnika != null) res += `Naslov: ${obj.ulica_prejemnika}\n`;
     if (obj.kraj_prejemnika != null) res += `Kraj: ${obj.kraj_prejemnika}`;
