@@ -1,3 +1,38 @@
+////////////////////////
+// Fix iOS AudioContext
+////////////////////////
+(function() {
+  window.AudioContext = window.AudioContext || window.webkitAudioContext;
+  if (window.AudioContext) {
+    window.audioContext = new window.AudioContext();
+  }
+  const fixAudioContext = function (e) {
+    if (window.audioContext) {
+      // Create empty buffer
+      const buffer = window.audioContext.createBuffer(1, 1, 22050);
+      const source = window.audioContext.createBufferSource();
+      source.buffer = buffer;
+      // Connect to output (speakers)
+      source.connect(window.audioContext.destination);
+      // Play sound
+      if (source.start) {
+        source.start(0);
+      } else if (source.play) {
+        source.play(0);
+      } else if (source.noteOn) {
+        source.noteOn(0);
+      }
+    }
+    // Remove events
+    document.removeEventListener('touchstart', fixAudioContext);
+    document.removeEventListener('touchend', fixAudioContext);
+  };
+  // iOS 6-8
+  document.addEventListener('touchstart', fixAudioContext);
+  // iOS 9
+  document.addEventListener('touchend', fixAudioContext);
+})();
+
 ////////////////
 // Worker
 ////////////////
@@ -115,23 +150,23 @@ function stopVideo() {
   init();
 }
 
-function beep(freq = 750, duration = 150, vol = 5) {
-  const AudioContext = window.AudioContext || window.webkitAudioContext || false;
-  if (!AudioContext) {
-    console.warn("Sorry, but the Web Audio API is not supported by your browser");
-    return;
+const beep = (freq = 750, duration = 150, vol = 5) => {
+  try {
+    const context = window.audioContext;
+    const oscillator = context.createOscillator();
+    const gain = context.createGain();
+    oscillator.connect(gain);
+    oscillator.frequency.value = freq;
+    oscillator.type = "square";
+    gain.connect(context.destination);
+    gain.gain.value = vol * 0.01;
+    oscillator.start(context.currentTime);
+    oscillator.stop(context.currentTime + duration * 0.001);
+  } catch (e) {
+    console.warn("Sorry, Web Audio API is not supported by your browser");
+    console.warn(e.toString());
   }
-  const context = new AudioContext();
-  const oscillator = context.createOscillator();
-  const gain = context.createGain();
-  oscillator.connect(gain);
-  oscillator.frequency.value = freq;
-  oscillator.type = "square";
-  gain.connect(context.destination);
-  gain.gain.value = vol * 0.01;
-  oscillator.start(context.currentTime);
-  oscillator.stop(context.currentTime + duration * 0.001);
-}
+};
 
 ////////////////
 // DOM
