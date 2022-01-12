@@ -12,10 +12,8 @@ jobs:
         uses: actions/checkout@master
       - name: pull emscripten-zbar-sdk
         run: docker pull maslick/emscripten-zbar-sdk
-      - name: build QR wasm
-        run: docker run -e INPUT_FILE=zbar/qr.cpp -e OUTPUT_FILE=qr -v $(pwd):/app maslick/emscripten-zbar-sdk make
-      - name: build BAR wasm
-        run: docker run -e INPUT_FILE=zbar/barcode.cpp -e OUTPUT_FILE=barcode -v $(pwd):/app maslick/emscripten-zbar-sdk make
+      - name: build wasm
+        run: docker run -e INPUT_FILE=zbar/all.cpp -e OUTPUT_FILE=all -v $(pwd):/app maslick/emscripten-zbar-sdk make
       - name: upload wasm artifact
         uses: actions/upload-artifact@v1
         with:
@@ -38,7 +36,7 @@ jobs:
       - name: pull emscripten-zbar-sdk
         run: docker pull maslick/emscripten-zbar-sdk
       - name: build ALL wasm
-        run: docker run -e INPUT_FILE=zbar/all.cpp -e OUTPUT_FILE=all -e OUTPUT_DIR=docs/wasm -v $(pwd):/app maslick/emscripten-zbar-sdk make vanilla-js -B
+        run: docker run -e INPUT_FILE=zbar/all.cpp -e OUTPUT_FILE=all -e OUTPUT_DIR=docs/wasm -v $(pwd):/app maslick/emscripten-zbar-sdk make vanilla-js
       - name: upload vanilla-js artifact
         uses: actions/upload-artifact@v1
         with:
