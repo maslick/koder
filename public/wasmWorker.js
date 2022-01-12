@@ -1,7 +1,7 @@
-importScripts("wasm/barcode.js");
+importScripts("wasm/all.js");
 importScripts("wasm/helper.js");
 
-const scanner = Scanner({ locateFile: file => 'wasm/' + file });
+const scanner = Scanner({locateFile: file => 'wasm/' + file});
 let width = 0, height = 0;
 
 self.addEventListener('message', event => {
@@ -20,5 +20,5 @@ self.addEventListener('message', event => {
       console.log(`Scanned in ${t1-t0} ms`);
       postMessage({data: scanRes[scanRes.length - 1]});
     }
-  });
+  })
 });
