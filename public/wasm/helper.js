@@ -22,20 +22,20 @@ const Scanner = config => {
   };
   const scanner = {
     scanCode: (imgData, width, height) => {
-      const buf = api.createBuffer(width * height * 4);
-      mod.HEAP8.set(imgData, buf);
+      const buffer = api.createBuffer(width * height * 4);
+      mod.HEAPU8.set(imgData, buffer);
       const results = [];
-      if (api.scanCode(buf, width, height)) {
-        const res_addr = api.getScanResults();
-        results.push(utf8BufferToString(mod.HEAP8, res_addr));
-        api.deleteBuffer(res_addr);
+      if (api.scanCode(buffer, width, height)) {
+        const resultAddress = api.getScanResults();
+        results.push(utf8BufferToString(mod.HEAPU8, resultAddress));
+        api.deleteBuffer(resultAddress);
       }
       return results;
     }
   };
-  return new Promise((resolv, reject) => {
+  return new Promise((resolve, _) => {
     mod.then(() => {
-      resolv(scanner);
+      resolve(scanner);
     });
   });
 };
