@@ -72,6 +72,7 @@ class Scan extends React.Component {
         this.stopScan();
 
         let res = result.data;
+        const milliseconds = ev.data.ms;
         const rawCode = res;
         let codeType = CODE_TYPE.RAW;
 
@@ -80,7 +81,7 @@ class Scan extends React.Component {
           const transformer = new Upnqr();
           if (transformer.identified(res)) {
             codeType = transformer.codeType();
-            res = transformer.transform(res);
+            res = await transformer.transform(res);
           }
         }
 
@@ -93,7 +94,7 @@ class Scan extends React.Component {
           }
         }
 
-        this.setState({barcode: res, resultOpen: true, rawCode, codeType});
+        this.setState({barcode: res, resultOpen: true, rawCode, codeType, milliseconds});
         if (this.state.beep) beep();
       }
     };

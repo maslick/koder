@@ -12,7 +12,7 @@ self.addEventListener('message', event => {
 
   const {data} = event.data;
   if (!data) return;
-  const scanRes = scanner.then(s => {
+  scanner.then(s => {
     const t0 = new Date().getTime();
     const scanRes = s.scanCode(data, this.width, this.height);
     const t1 = new Date().getTime();

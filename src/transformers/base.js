@@ -7,7 +7,7 @@ class Transformer {
     return false;
   }
 
-  transform(raw) {
+  async transform(raw) {
     return "TODO";
   }
 
