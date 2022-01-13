@@ -1,42 +1,43 @@
-const utf8BufferToString = (buffer, addr) => {
-  let end = addr;
-  while (buffer[end]) {
-    ++end;
-  }
-  const str = new Uint8Array(buffer.slice(addr, end));
-  const encodedString = String.fromCharCode.apply(null, str);
-  return decodeURIComponent(escape(encodedString));
-};
-
-const Scanner = config => {
+const WasmScanner = config => {
   const mod = Module(config);
+
+  // Initialize a glue API object (between JavaScript and C++ code)
   const api = {
     createBuffer: mod.cwrap('createBuffer', 'number', ['number']),
     deleteBuffer: mod.cwrap('deleteBuffer', '', ['number']),
-    scanCode: mod.cwrap('scanCode', 'number', [
-      'number',
-      'number',
-      'number'
-    ]),
+    triggerDecode: mod.cwrap('triggerDecode', 'number', ['number', 'number', 'number']),
     getScanResults: mod.cwrap('getScanResults', 'number', [])
   };
+
+  // Convert a utf8 buffer (char*) to Javascript string
+  const utf8BufferToString = (buffer, addr) => {
+    let end = addr;
+    while (buffer[end]) {
+      ++end;
+    }
+    const str = new Uint8Array(buffer.slice(addr, end));
+    const encodedString = String.fromCharCode.apply(null, str);
+    return decodeURIComponent(escape(encodedString));
+  };
+
+  // Main logic
   const scanner = {
-    scanCode: (imgData, width, height) => {
-      const buf = api.createBuffer(width * height * 4);
-      mod.HEAP8.set(imgData, buf);
+    scanAndDecode: (imgData, width, height) => {
+      const buffer = api.createBuffer(width * height * 4);
+      mod.HEAPU8.set(imgData, buffer);
       const results = [];
-      if (api.scanCode(buf, width, height)) {
-        const res_addr = api.getScanResults();
-        results.push(utf8BufferToString(mod.HEAP8, res_addr));
-        api.deleteBuffer(res_addr);
+      if (api.triggerDecode(buffer, width, height) > 0) {
+        const resultAddress = api.getScanResults();
+        results.push(utf8BufferToString(mod.HEAPU8, resultAddress));
+        api.deleteBuffer(resultAddress);
       }
       return results;
     }
   };
-  return new Promise((resolv, reject) => {
+
+  return new Promise((resolve, _) => {
     mod.then(() => {
-      resolv(scanner);
+      resolve(scanner);
     });
   });
 };
-

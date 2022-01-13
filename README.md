@@ -48,7 +48,7 @@ docker run \
 Override all defaults by specifying ``INPUT_FILE``, ``OUTPUT_FILE``, ``OUTPUT_DIR``, e.g. for barcode:
 ```shell
 docker run \
-  -e INPUT_FILE=zbar/barcode.cpp \
+  -e INPUT_FILE=zbar/myapp.cpp \
   -e OUTPUT_FILE=barcode \
   -e OUTPUT_DIR=test \
   -v $(pwd):/app \
