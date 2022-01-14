@@ -1,32 +1,30 @@
-const WasmScanner = config => {
-  const mod = Module(config);
-
-  // Initialize a glue API object (between JavaScript and C++ code)
-  const api = {
-    createBuffer: mod.cwrap('createBuffer', 'number', ['number']),
-    deleteBuffer: mod.cwrap('deleteBuffer', '', ['number']),
-    triggerDecode: mod.cwrap('triggerDecode', 'number', ['number', 'number', 'number']),
-    getScanResults: mod.cwrap('getScanResults', 'number', [])
-  };
-
-  // Main logic
-  const scanner = {
-    scanAndDecode: (imgData, width, height) => {
-      const buffer = api.createBuffer(width * height * 4);
-      mod.HEAPU8.set(imgData, buffer);
-      const results = [];
-      if (api.triggerDecode(buffer, width, height) > 0) {
-        const resultAddress = api.getScanResults();
-        results.push(mod.UTF8ToString(resultAddress));
-        api.deleteBuffer(resultAddress);
-      }
-      return results;
-    }
-  };
-
-  return new Promise((resolve, _) => {
-    mod.then(() => {
-      resolve(scanner);
+class Scanner {
+  async init() {
+    // Load WASM file
+    this.mod = await CreateKoder({
+      locateFile: file => `wasm/${file}`,
     });
-  });
-};
+
+    // Initialize a glue API object (between JavaScript and C++ code)
+    this.api = {
+      createBuffer: this.mod.cwrap('createBuffer', 'number', ['number']),
+      deleteBuffer: this.mod.cwrap('deleteBuffer', '', ['number']),
+      triggerDecode: this.mod.cwrap('triggerDecode', 'number', ['number', 'number', 'number']),
+      getScanResults: this.mod.cwrap('getScanResults', 'number', [])
+    };
+
+    return this;
+  }
+
+  decode(imgData, width, height) {
+    const buffer = this.api.createBuffer(width * height * 4);
+    this.mod.HEAPU8.set(imgData, buffer);
+    const results = [];
+    if (this.api.triggerDecode(buffer, width, height) > 0) {
+      const resultAddress = this.api.getScanResults();
+      results.push(this.mod.UTF8ToString(resultAddress));
+      this.api.deleteBuffer(resultAddress);
+    }
+    return results;
+  }
+}
