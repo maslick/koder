@@ -9,17 +9,6 @@ const WasmScanner = config => {
     getScanResults: mod.cwrap('getScanResults', 'number', [])
   };
 
-  // Convert a utf8 buffer (char*) to Javascript string
-  const utf8BufferToString = (buffer, addr) => {
-    let end = addr;
-    while (buffer[end]) {
-      ++end;
-    }
-    const str = new Uint8Array(buffer.slice(addr, end));
-    const encodedString = String.fromCharCode.apply(null, str);
-    return decodeURIComponent(escape(encodedString));
-  };
-
   // Main logic
   const scanner = {
     scanAndDecode: (imgData, width, height) => {
@@ -28,7 +17,7 @@ const WasmScanner = config => {
       const results = [];
       if (api.triggerDecode(buffer, width, height) > 0) {
         const resultAddress = api.getScanResults();
-        results.push(utf8BufferToString(mod.HEAPU8, resultAddress));
+        results.push(mod.UTF8ToString(resultAddress));
         api.deleteBuffer(resultAddress);
       }
       return results;

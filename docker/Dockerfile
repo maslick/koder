@@ -9,6 +9,8 @@ RUN apt-get update && \
     autoreconf -vfi && \
     emconfigure ./configure \
       --without-x \
+      --without-xv \
+      --without-libiconv-prefix \
       --without-jpeg \
       --without-imagemagick \
       --without-npapi \
@@ -17,7 +19,13 @@ RUN apt-get update && \
       --without-qt \
       --without-xshm \
       --disable-video \
-      --disable-pthread && \
+      --disable-pthread \
+      --disable-x86asm \
+      --disable-inline-asm \
+      --disable-stripping \
+      --disable-programs \
+      --disable-doc \
+      --disable-assert && \
     emmake make && \
     apt-get purge autoconf autopoint pkg-config libtool -y
 

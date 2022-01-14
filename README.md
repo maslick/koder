@@ -45,20 +45,9 @@ docker run \
   maslick/emscripten-zbar-sdk make -B
 ```
 
-Override all defaults by specifying ``INPUT_FILE``, ``OUTPUT_FILE``, ``OUTPUT_DIR``, e.g. for barcode:
-```shell
-docker run \
-  -e INPUT_FILE=zbar/myapp.cpp \
-  -e OUTPUT_FILE=barcode \
-  -e OUTPUT_DIR=test \
-  -v $(pwd):/app \
-  maslick/emscripten-zbar-sdk make -B
-```
-
 Clean the build artifacts:
 ```shell
-OUTPUT_DIR=public/wasm OUTPUT_FILE=qr make clean
-OUTPUT_DIR=public/wasm OUTPUT_FILE=barcode make clean
+OUTPUT_DIR=public/wasm OUTPUT_FILE=all make clean
 ```
 
 ### 3. Use the resulting WASM artifacts
@@ -86,7 +75,7 @@ docker run \
   -e OUTPUT_FILE=all \
   -e OUTPUT_DIR=docs/wasm \
   -v $(pwd):/app \
-  maslick/emscripten-zbar-sdk make vanilla-js -B
+  maslick/emscripten-zbar-sdk make -B
 
 # Serve static HTML app (TODO: should serve via https)
 yarn run vanilla-js-live
@@ -95,7 +84,7 @@ open http://localhost:8081
 
 Clean the build artifacts:
 ```shell
-OUTPUT_DIR=docs/wasm OUTPUT_FILE=all make clean-vanilla-js
+OUTPUT_DIR=docs/wasm OUTPUT_FILE=all make clean
 ```
 
 ## 🔭 References
