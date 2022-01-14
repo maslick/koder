@@ -35,7 +35,7 @@ QR/bar code scanner for the Browser
 docker build -t maslick/emscripten-zbar-sdk -f docker/Dockerfile docker
 ```
 
-### 2. Build WASM artifacts (qr, barcode):
+### 2. Build WASM artifacts:
 ```shell
 docker run \
   -e INPUT_FILE=zbar/all.cpp \
@@ -45,7 +45,7 @@ docker run \
   maslick/emscripten-zbar-sdk make -B
 ```
 
-Clean the build artifacts:
+Clean the build artifacts (if necessary):
 ```shell
 OUTPUT_DIR=public/wasm OUTPUT_FILE=all make clean
 ```
@@ -82,7 +82,7 @@ yarn run vanilla-js-live
 open http://localhost:8081
 ```
 
-Clean the build artifacts:
+Clean the build artifacts (if necessary):
 ```shell
 OUTPUT_DIR=docs/wasm OUTPUT_FILE=all make clean
 ```
