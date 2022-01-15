@@ -1,4 +1,4 @@
-name: build
+name: prod
 
 on:
   push:
@@ -105,7 +105,7 @@ jobs:
     needs: build
     environment:
       name: koder.prod
-      url: https://koder-prod.web.app
+      url: https://qr.maslick.tech
     steps:
       - name: checkout source code
         uses: actions/checkout@master
