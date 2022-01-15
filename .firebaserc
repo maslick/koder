@@ -1,5 +1,17 @@
 {
   "projects": {
     "default": "qr-code-2fddd"
+  },
+  "targets": {
+    "qr-code-2fddd": {
+      "hosting": {
+        "koder-dev": [
+          "koder-dev"
+        ],
+        "koder-prod": [
+          "koder-prod"
+        ]
+      }
+    }
   }
 }

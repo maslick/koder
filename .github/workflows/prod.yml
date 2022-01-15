@@ -103,15 +103,10 @@ jobs:
     name: Deploy to prod
     runs-on: ubuntu-latest
     needs: build
+    environment:
+      name: koder.prod
+      url: https://koder-prod.web.app
     steps:
-      - name: Start deployment
-        uses: bobheadxi/deployments@v0.6.2
-        id: deployment
-        with:
-          step: start
-          token: ${{ secrets.GITHUB_TOKEN }}
-          env: react.js
-          ref: ${{ github.head_ref }}
       - name: checkout source code
         uses: actions/checkout@master
       - name: download js bundle artifact
@@ -147,12 +142,3 @@ jobs:
           message: |
             Oops! Build failed (deploy job) :(
             See https://github.com/maslick/koder-react/actions for more details
-      - name: Update deployment status
-        uses: bobheadxi/deployments@v0.6.2
-        if: always()
-        with:
-          step: finish
-          token: ${{ secrets.GITHUB_TOKEN }}
-          status: ${{ job.status }}
-          env_url: https://qr.maslick.tech
-          deployment_id: ${{ steps.deployment.outputs.deployment_id }}

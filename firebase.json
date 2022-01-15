@@ -1,7 +1,7 @@
 {
   "hosting": [{
     "public": "build",
-    "target": "koder-test",
+    "target": "koder-dev",
     "ignore": [
       "firebase.json",
       "**/.*",

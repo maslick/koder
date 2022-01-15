@@ -118,7 +118,7 @@ jobs:
       - name: push to Firebase
         uses: w9jds/firebase-action@v2.0.0
         with:
-          args: deploy --only hosting:koder-test
+          args: deploy --only hosting:koder-dev
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           PROJECT_ID: qr-code-2fddd
