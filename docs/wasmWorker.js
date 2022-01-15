@@ -1,10 +1,10 @@
 importScripts("wasm/all.js");
-importScripts("wasm/helper.js");
+importScripts("wasm/koder.js");
 
 
 (async () => {
   // Initialize Koder
-  const koder = await new Scanner().initialized;
+  const koder = await new Koder().initialized;
 
   // Listen for messages from JS main thread containing raw image data
   self.addEventListener('message', event => {

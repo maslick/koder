@@ -1,4 +1,4 @@
-class Scanner {
+class Koder {
   get initialized() {
     return (async () => {
       // Load WASM file

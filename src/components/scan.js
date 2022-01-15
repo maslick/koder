@@ -280,6 +280,9 @@ class Scan extends React.Component {
           <div className="result">
             {this.renderQrCodeResult()}
           </div>
+          <div style={{paddingTop: 10, alignItems: "right"}}>
+            Decoding took {this.state.milliseconds} ms
+          </div>
           <div style={{marginTop: 40}}>
             <a href="!#" style={{padding: 12}} className="myHref" onClick={this.onClickBackHandler}>BACK</a>
             {this.renderTransformToggle()}
