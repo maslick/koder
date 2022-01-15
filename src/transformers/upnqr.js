@@ -12,7 +12,7 @@ class Upnqr extends Transformer {
     return raw.includes(this.recognizer);
   }
 
-  transform(raw) {
+  async transform(raw) {
     try {
       return this.formatUpnQr(decode(raw));
     }

@@ -72,6 +72,7 @@ class Scan extends React.Component {
         this.stopScan();
 
         let res = result.data;
+        const milliseconds = ev.data.ms;
         const rawCode = res;
         let codeType = CODE_TYPE.RAW;
 
@@ -80,7 +81,7 @@ class Scan extends React.Component {
           const transformer = new Upnqr();
           if (transformer.identified(res)) {
             codeType = transformer.codeType();
-            res = transformer.transform(res);
+            res = await transformer.transform(res);
           }
         }
 
@@ -93,7 +94,7 @@ class Scan extends React.Component {
           }
         }
 
-        this.setState({barcode: res, resultOpen: true, rawCode, codeType});
+        this.setState({barcode: res, resultOpen: true, rawCode, codeType, milliseconds});
         if (this.state.beep) beep();
       }
     };
@@ -278,6 +279,9 @@ class Scan extends React.Component {
         <div className="resultModal">
           <div className="result">
             {this.renderQrCodeResult()}
+          </div>
+          <div style={{paddingTop: 10, alignItems: "right"}}>
+            Decoding took {this.state.milliseconds} ms
           </div>
           <div style={{marginTop: 40}}>
             <a href="!#" style={{padding: 12}} className="myHref" onClick={this.onClickBackHandler}>BACK</a>

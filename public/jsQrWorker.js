@@ -16,6 +16,9 @@ self.addEventListener('message', event => {
   const t1 = new Date().getTime();
   if (code != null) {
     console.log(`Scanned in ${t1-t0} ms`);
-    postMessage(code);
+    postMessage({
+      data: code.data,
+      ms: t1-t0
+    });
   }
 });

@@ -19,7 +19,8 @@ QR/bar code scanner for the Browser
 * Barcode support (UPC-A, UPC-E, EAN-8, EAN-13, I25, CODE-128)
 * Support for UPN QR (Slovenia only)
 * :new: EU Digital Covid Certificate validator (vaccination, test), works in ``offline`` mode!
-* Emscripten-zbar-sdk [Docker image](https://hub.docker.com/r/maslick/emscripten-zbar-sdk), [Dockerfile](./docker/Dockerfile)
+* :new: uses Emscripten v3.1.1
+* Emscripten-zbar-sdk [Docker image](https://hub.docker.com/r/maslick/emscripten-zbar-sdk) based on `emscripten/emsdk`, [Dockerfile](./docker/Dockerfile)
 * ReactJS [component](./src/components/scan.js)
 * Vanilla JS [example](./docs)
 
@@ -35,30 +36,19 @@ QR/bar code scanner for the Browser
 docker build -t maslick/emscripten-zbar-sdk -f docker/Dockerfile docker
 ```
 
-### 2. Build WASM artifacts (qr, barcode):
+### 2. Build WASM artifacts:
 ```shell
 docker run \
-  -e INPUT_FILE=zbar/all.cpp \
-  -e OUTPUT_FILE=all \
+  -e INPUT_FILE=zbar/qr.cpp \
+  -e OUTPUT_FILE=zbar \
   -e OUTPUT_DIR=public/wasm \
   -v $(pwd):/app \
   maslick/emscripten-zbar-sdk make -B
 ```
 
-Override all defaults by specifying ``INPUT_FILE``, ``OUTPUT_FILE``, ``OUTPUT_DIR``, e.g. for barcode:
+Clean the build artifacts (if necessary):
 ```shell
-docker run \
-  -e INPUT_FILE=zbar/barcode.cpp \
-  -e OUTPUT_FILE=barcode \
-  -e OUTPUT_DIR=test \
-  -v $(pwd):/app \
-  maslick/emscripten-zbar-sdk make -B
-```
-
-Clean the build artifacts:
-```shell
-OUTPUT_DIR=public/wasm OUTPUT_FILE=qr make clean
-OUTPUT_DIR=public/wasm OUTPUT_FILE=barcode make clean
+OUTPUT_DIR=public/wasm OUTPUT_FILE=zbar make clean
 ```
 
 ### 3. Use the resulting WASM artifacts
@@ -82,20 +72,20 @@ open http://localhost:8082
 ```shell
 # Build WASM artifacts
 docker run \
-  -e INPUT_FILE=zbar/all.cpp \
-  -e OUTPUT_FILE=all \
+  -e INPUT_FILE=zbar/qr.cpp \
+  -e OUTPUT_FILE=zbar \
   -e OUTPUT_DIR=docs/wasm \
   -v $(pwd):/app \
-  maslick/emscripten-zbar-sdk make vanilla-js -B
+  maslick/emscripten-zbar-sdk make -B
 
 # Serve static HTML app (TODO: should serve via https)
 yarn run vanilla-js-live
 open http://localhost:8081
 ```
 
-Clean the build artifacts:
+Clean the build artifacts (if necessary):
 ```shell
-OUTPUT_DIR=docs/wasm OUTPUT_FILE=all make clean-vanilla-js
+OUTPUT_DIR=docs/wasm OUTPUT_FILE=zbar make clean
 ```
 
 ## 🔭 References
