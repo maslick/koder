@@ -4,7 +4,7 @@ importScripts("wasm/helper.js");
 
 (async () => {
   // Initialize Koder
-  const koder = await new Scanner().init();
+  const koder = await new Scanner().initialized;
 
   // Listen for events from JS main thread containing raw image data
   self.addEventListener('message', event => {
