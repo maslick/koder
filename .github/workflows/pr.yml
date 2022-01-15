@@ -121,6 +121,7 @@ jobs:
           args: deploy --only hosting:koder-test
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          PROJECT_ID: qr-code-2fddd
       - name: send Telegram success message
         uses: appleboy/telegram-action@master
         with:
