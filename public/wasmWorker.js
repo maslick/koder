@@ -1,4 +1,4 @@
-importScripts("wasm/all.js");
+importScripts("wasm/zbar.js");
 importScripts("wasm/koder.js");
 
 

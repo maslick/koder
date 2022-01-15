@@ -38,8 +38,8 @@ docker build -t maslick/emscripten-zbar-sdk -f docker/Dockerfile docker
 ### 2. Build WASM artifacts:
 ```shell
 docker run \
-  -e INPUT_FILE=zbar/all.cpp \
-  -e OUTPUT_FILE=all \
+  -e INPUT_FILE=zbar/qr.cpp \
+  -e OUTPUT_FILE=zbar \
   -e OUTPUT_DIR=public/wasm \
   -v $(pwd):/app \
   maslick/emscripten-zbar-sdk make -B
@@ -47,7 +47,7 @@ docker run \
 
 Clean the build artifacts (if necessary):
 ```shell
-OUTPUT_DIR=public/wasm OUTPUT_FILE=all make clean
+OUTPUT_DIR=public/wasm OUTPUT_FILE=zbar make clean
 ```
 
 ### 3. Use the resulting WASM artifacts
@@ -71,8 +71,8 @@ open http://localhost:8082
 ```shell
 # Build WASM artifacts
 docker run \
-  -e INPUT_FILE=zbar/all.cpp \
-  -e OUTPUT_FILE=all \
+  -e INPUT_FILE=zbar/qr.cpp \
+  -e OUTPUT_FILE=zbar \
   -e OUTPUT_DIR=docs/wasm \
   -v $(pwd):/app \
   maslick/emscripten-zbar-sdk make -B
@@ -84,7 +84,7 @@ open http://localhost:8081
 
 Clean the build artifacts (if necessary):
 ```shell
-OUTPUT_DIR=docs/wasm OUTPUT_FILE=all make clean
+OUTPUT_DIR=docs/wasm OUTPUT_FILE=zbar make clean
 ```
 
 ## 🔭 References
