@@ -57,18 +57,18 @@ OUTPUT_DIR=public/wasm OUTPUT_FILE=zbar make clean
 # Fetch dependencies
 yarn install --frozen-lockfile
 
-# Development mode (can be accessed from any device on local wifi)
+# Development mode
 npm run start
 open https://locahost:8080
 
-# Production mode (build and serve static web app, localhost only)
+# Production mode
 npm run build
 npm run build-and-serve
 open http://localhost:8082
 ```
 
 
-## :gem: BONUS: vanilla js example (qr + barcode)
+## :gem: BONUS: vanilla js example
 ```shell
 # Build WASM artifacts
 docker run \
@@ -78,7 +78,7 @@ docker run \
   -v $(pwd):/app \
   maslick/emscripten-zbar-sdk make -B
 
-# Serve static HTML app (TODO: should serve via https)
+# Serve static HTML app
 yarn run vanilla-js-live
 open http://localhost:8081
 ```
