@@ -1,11 +1,12 @@
-name: build
+name: pr
 
 on:
-  push:
-    branches: [master]
+  pull_request:
+    types: [ opened, synchronize]
 
 jobs:
   wasm:
+    name: Build WASM (react)
     runs-on: ubuntu-latest
     steps:
       - name: checkout source code
@@ -13,7 +14,7 @@ jobs:
       - name: pull emscripten-zbar-sdk
         run: docker pull maslick/emscripten-zbar-sdk
       - name: build wasm
-        run: docker run -e INPUT_FILE=zbar/all.cpp -e OUTPUT_FILE=all -v $(pwd):/app maslick/emscripten-zbar-sdk make
+        run: docker run -e INPUT_FILE=zbar/qr.cpp -e OUTPUT_FILE=zbar -e OUTPUT_DIR=public/wasm -v $(pwd):/app maslick/emscripten-zbar-sdk make
       - name: upload wasm artifact
         uses: actions/upload-artifact@v1
         with:
@@ -29,6 +30,7 @@ jobs:
             Oops! Build failed (wasm job) :(
             See https://github.com/maslick/koder-react/actions for more details
   vanilla-js:
+    name: Build WASM (vanilla js)
     runs-on: ubuntu-latest
     steps:
       - name: checkout source code
@@ -36,7 +38,7 @@ jobs:
       - name: pull emscripten-zbar-sdk
         run: docker pull maslick/emscripten-zbar-sdk
       - name: build ALL wasm
-        run: docker run -e INPUT_FILE=zbar/all.cpp -e OUTPUT_FILE=all -e OUTPUT_DIR=docs/wasm -v $(pwd):/app maslick/emscripten-zbar-sdk make vanilla-js
+        run: docker run -e INPUT_FILE=zbar/qr.cpp -e OUTPUT_FILE=zbar -e OUTPUT_DIR=docs/wasm -v $(pwd):/app maslick/emscripten-zbar-sdk make
       - name: upload vanilla-js artifact
         uses: actions/upload-artifact@v1
         with:
@@ -52,6 +54,7 @@ jobs:
             Oops! Build failed (vanilla-js job) :(
             See https://github.com/maslick/koder-react/actions for more details
   build:
+    name: Build React app
     runs-on: ubuntu-latest
     needs: wasm
     steps:
@@ -97,17 +100,13 @@ jobs:
             Oops! Build failed (build job) :(
             See https://github.com/maslick/koder-react/actions for more details
   deploy:
+    name: Deploy to dev
     runs-on: ubuntu-latest
     needs: build
+    environment:
+      name: koder.dev
+      url: https://koder-test.web.app
     steps:
-      - name: Start deployment
-        uses: bobheadxi/deployments@v0.6.2
-        id: deployment
-        with:
-          step: start
-          token: ${{ secrets.GITHUB_TOKEN }}
-          env: react.js
-          ref: ${{ github.head_ref }}
       - name: checkout source code
         uses: actions/checkout@master
       - name: download js bundle artifact
@@ -119,7 +118,7 @@ jobs:
       - name: push to Firebase
         uses: w9jds/firebase-action@v2.0.0
         with:
-          args: deploy --only hosting
+          args: deploy --only hosting:koder-test
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       - name: send Telegram success message
@@ -142,12 +141,3 @@ jobs:
           message: |
             Oops! Build failed (deploy job) :(
             See https://github.com/maslick/koder-react/actions for more details
-      - name: Update deployment status
-        uses: bobheadxi/deployments@v0.6.2
-        if: always()
-        with:
-          step: finish
-          token: ${{ secrets.GITHUB_TOKEN }}
-          status: ${{ job.status }}
-          env_url: https://qr.maslick.tech
-          deployment_id: ${{ steps.deployment.outputs.deployment_id }}

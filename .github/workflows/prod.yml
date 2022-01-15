@@ -1,0 +1,157 @@
+name: build
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  wasm:
+    name: Build WASM (react)
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout source code
+        uses: actions/checkout@master
+      - name: pull emscripten-zbar-sdk
+        run: docker pull maslick/emscripten-zbar-sdk
+      - name: build wasm
+        run: docker run -e INPUT_FILE=zbar/qr.cpp -e OUTPUT_FILE=zbar -e OUTPUT_DIR=public/wasm -v $(pwd):/app maslick/emscripten-zbar-sdk make
+      - name: upload wasm artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: wasms
+          path: public/wasm
+      - name: job failed
+        if: failure()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            Oops! Build failed (wasm job) :(
+            See https://github.com/maslick/koder-react/actions for more details
+  vanilla-js:
+    name: Build WASM (vanilla js)
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout source code
+        uses: actions/checkout@master
+      - name: pull emscripten-zbar-sdk
+        run: docker pull maslick/emscripten-zbar-sdk
+      - name: build ALL wasm
+        run: docker run -e INPUT_FILE=zbar/qr.cpp -e OUTPUT_FILE=zbar -e OUTPUT_DIR=docs/wasm -v $(pwd):/app maslick/emscripten-zbar-sdk make
+      - name: upload vanilla-js artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: vanilla-js
+          path: docs
+      - name: job failed
+        if: failure()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            Oops! Build failed (vanilla-js job) :(
+            See https://github.com/maslick/koder-react/actions for more details
+  build:
+    name: Build React app
+    runs-on: ubuntu-latest
+    needs: wasm
+    steps:
+      - name: checkout source code
+        uses: actions/checkout@v2
+      - name: install node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Cache yarn modules
+        uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: download wasm artifact
+        uses: actions/download-artifact@v1
+        with:
+          name: wasms
+      - name: copy artifacts
+        run: cp -r wasms/* public/wasm/
+      - name: install npm dependencies
+        run: yarn install --frozen-lockfile
+      - name: build React bundle
+        run: npm run build
+      - name: upload js bundle artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: bundle
+          path: build
+      - name: job failed
+        if: failure()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            Oops! Build failed (build job) :(
+            See https://github.com/maslick/koder-react/actions for more details
+  deploy:
+    name: Deploy to prod
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Start deployment
+        uses: bobheadxi/deployments@v0.6.2
+        id: deployment
+        with:
+          step: start
+          token: ${{ secrets.GITHUB_TOKEN }}
+          env: react.js
+          ref: ${{ github.head_ref }}
+      - name: checkout source code
+        uses: actions/checkout@master
+      - name: download js bundle artifact
+        uses: actions/download-artifact@v1
+        with:
+          name: bundle
+      - name: copy artifacts
+        run: mv bundle build
+      - name: push to Firebase
+        uses: w9jds/firebase-action@v2.0.0
+        with:
+          args: deploy --only hosting
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      - name: send Telegram success message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            Success!
+            A ${{ github.event_name }} event triggered the pipeline.
+            Ref: ${{ github.ref }}
+            Commit hash: ${{ github.sha }}
+            See https://github.com/maslick/koder-react/actions for more details
+      - name: job failed
+        if: failure()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            Oops! Build failed (deploy job) :(
+            See https://github.com/maslick/koder-react/actions for more details
+      - name: Update deployment status
+        uses: bobheadxi/deployments@v0.6.2
+        if: always()
+        with:
+          step: finish
+          token: ${{ secrets.GITHUB_TOKEN }}
+          status: ${{ job.status }}
+          env_url: https://qr.maslick.tech
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
