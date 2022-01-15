@@ -1,4 +1,4 @@
-FROM emscripten/emsdk as builder
+FROM emscripten/emsdk:3.1.1 as builder
 ARG ZBAR_VERSION="0.23.90"
 
 ADD https://linuxtv.org/downloads/zbar/zbar-$ZBAR_VERSION.tar.gz ./
@@ -31,7 +31,7 @@ RUN apt-get update && \
     emmake make CFLAGS=-Os CXXFLAGS=-Os DEFS="-DZNO_MESSAGES -DHAVE_CONFIG_H" && \
     apt-get purge autoconf autopoint pkg-config libtool -y
 
-FROM emscripten/emsdk
+FROM emscripten/emsdk:3.1.1
 ARG ZBAR_VERSION="0.23.90"
 
 RUN apt-get update && apt-get install make

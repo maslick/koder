@@ -19,7 +19,8 @@ QR/bar code scanner for the Browser
 * Barcode support (UPC-A, UPC-E, EAN-8, EAN-13, I25, CODE-128)
 * Support for UPN QR (Slovenia only)
 * :new: EU Digital Covid Certificate validator (vaccination, test), works in ``offline`` mode!
-* Emscripten-zbar-sdk [Docker image](https://hub.docker.com/r/maslick/emscripten-zbar-sdk), [Dockerfile](./docker/Dockerfile)
+* :new: uses Emscripten v3.1.1
+* Emscripten-zbar-sdk [Docker image](https://hub.docker.com/r/maslick/emscripten-zbar-sdk) based on `emscripten/emsdk`, [Dockerfile](./docker/Dockerfile)
 * ReactJS [component](./src/components/scan.js)
 * Vanilla JS [example](./docs)
 
