@@ -123,9 +123,10 @@ jobs:
       - name: push to Firebase
         uses: w9jds/firebase-action@v2.0.0
         with:
-          args: deploy --only hosting
+          args: deploy --only hosting:koder-prod
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          PROJECT_ID: qr-code-2fddd
       - name: send Telegram success message
         uses: appleboy/telegram-action@master
         with:
