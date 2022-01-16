@@ -1,5 +1,5 @@
 ---
-name: "Issue: \U0001F41B Bug report"
+name: "\U0001F41B Bug report"
 about: Create a report to help us improve
 title: ''
 labels: bug
@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 Confirm by changing [ ] to [x] below to ensure that it's a bug:
-- [ ] I've gone though the [README.md file](https://github.com/maslick/koder/blob/master/README.md)
+- [ ] I've gone through the [README.md](https://github.com/maslick/koder/blob/master/README.md)
 - [ ] I've searched for [previous similar issues](https://github.com/maslick/koder/issues) and didn't find any solution
 
 
