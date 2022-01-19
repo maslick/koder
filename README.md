@@ -14,12 +14,13 @@ QR/bar code scanner for the Browser
 * Packaged as PWA (caching files with Service Worker, Add to Home Screen)
 * Mobile first (can be used on a Laptop as well)
 * Multiplatform (iOS, Android, Desktop)
-* QR recognition logic is performed off the browser's Main thread (i.e. Web Worker)
-* *koder* React component supports a [jsqr](https://www.npmjs.com/package/jsqr) based Web Worker (see [jsQrWorker.js](./public/jsQrWorker.js))  
+* QR/bar code recognition logic is performed off the browser's Main thread (i.e. Web Worker)
+* *koder* React component supports a [jsqr](https://www.npmjs.com/package/jsqr) based Web Worker (see [jsQrWorker.js](./public/jsQrWorker.js))
 * Barcode support (UPC-A, UPC-E, EAN-8, EAN-13, I25, CODE-128)
-* Support for UPN QR (Slovenia only)
+* :new: Turn on/off the beep sound
+* :new: Support for UPN QR (Slovenia only)
 * :new: EU Digital Covid Certificate validator (vaccination, test), works in ``offline`` mode!
-* :new: uses Emscripten v3.1.1
+* :new: Emscripten v3.1.1
 * Emscripten-zbar-sdk [Docker image](https://hub.docker.com/r/maslick/emscripten-zbar-sdk) based on `emscripten/emsdk`, [Dockerfile](./docker/Dockerfile)
 * ReactJS [component](./src/components/scan.js)
 * Vanilla JS [example](./docs)
@@ -29,64 +30,70 @@ QR/bar code scanner for the Browser
   <img src="./screenshots/app_2.png" width="400px" />
 </p>
 
-## ⚡ Installation
+## ⚡ Usage
 
-### 1. Builder image
+### 1. Install dependencies
 ```shell
-docker build -t maslick/emscripten-zbar-sdk -f docker/Dockerfile docker
+npm install --global yarn
+yarn install --frozen-lockfile
 ```
 
-### 2. Build WASM artifacts:
+### 2. Run React app (dev mode):
 ```shell
+npm run start
+open https://locahost:8080
+```
+
+### 3. Run React app (production):
+```shell
+npm run build                # -> builds React app into ./public
+npm run prod                 # -> serve static web app on port 8082
+open http://localhost:8082
+```
+
+## :spades: Development
+
+### Fetch or build the Builder image
+```shell
+docker pull maslick/emscripten-zbar-sdk
+docker build -t maslick/emscripten-zbar-sdk -f docker/Dockerfile docker
+
+```
+
+### Build WASM artifacts
+```shell
+# React app
 docker run \
   -e INPUT_FILE=zbar/qr.cpp \
   -e OUTPUT_FILE=zbar \
   -e OUTPUT_DIR=public/wasm \
   -v $(pwd):/app \
   maslick/emscripten-zbar-sdk make -B
-```
-
-Clean the build artifacts (if necessary):
-```shell
-OUTPUT_DIR=public/wasm OUTPUT_FILE=zbar make clean
-```
-
-### 3. Use the resulting WASM artifacts
-
-```shell
-# Fetch dependencies
-yarn install --frozen-lockfile
-
-# Development mode
-npm run start
-open https://locahost:8080
-
-# Production mode
-npm run build
-npm run build-and-serve
-open http://localhost:8082
-```
-
-
-## :gem: BONUS: vanilla js example
-```shell
-# Build WASM artifacts
+  
+# Vanilla JS
 docker run \
   -e INPUT_FILE=zbar/qr.cpp \
   -e OUTPUT_FILE=zbar \
   -e OUTPUT_DIR=docs/wasm \
   -v $(pwd):/app \
   maslick/emscripten-zbar-sdk make -B
-
-# Serve static HTML app
-yarn run vanilla-js-live
-open http://localhost:8081
 ```
 
-Clean the build artifacts (if necessary):
+### Clean the build artifacts (if necessary):
 ```shell
+# React app
+OUTPUT_DIR=public/wasm OUTPUT_FILE=zbar make clean
+
+# Vanilla JS
 OUTPUT_DIR=docs/wasm OUTPUT_FILE=zbar make clean
 ```
+
+## :gem: BONUS: vanilla js example
+```shell
+npm run vanilla-js
+open https://locahost:8081
+```
+
 
 ## 🔭 References
 * [WebAssembly at Ebay](https://tech.ebayinc.com/engineering/webassembly-at-ebay-a-real-world-use-case/)

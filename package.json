@@ -1,6 +1,6 @@
 {
   "name": "koder-react",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "homepage": "./",
   "private": true,
   "devDependencies": {
@@ -21,12 +21,12 @@
   "scripts": {
     "start": "HTTPS=true PORT=8080 HOST=0.0.0.0 react-scripts start",
     "build": "react-scripts build && npm run build-sw && npm run clean-cra-sw",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
     "build-sw": "node ./src/sw-build.js",
     "clean-cra-sw": "rm -f build/precache-manifest.*.js && rm -f build/service-worker.js",
-    "vanilla-js-live": "npx http-server ./docs/ -p 8081 -c-1",
-    "build-and-serve": "npx http-server ./build/ -p 8082 -c-1"
+    "prod": "npx http-server ./build/ -p 8082 -c-1",
+    "vanilla-js": "npx http-server ./docs/ -p 8081 -c-1",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
