@@ -1,6 +1,6 @@
 {
   "name": "koder-react",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "homepage": "./",
   "private": true,
   "devDependencies": {
@@ -23,8 +23,8 @@
     "build": "react-scripts build && npm run build-sw && npm run clean-cra-sw",
     "build-sw": "node ./src/sw-build.js",
     "clean-cra-sw": "rm -f build/precache-manifest.*.js && rm -f build/service-worker.js",
-    "prod": "npx http-server ./build/ -p 8082 -c-1",
-    "vanilla-js": "npx http-server ./docs/ -p 8081 -c-1",
+    "prod": "http-server ./build/ -p 8082 -c-1",
+    "vanilla-js": "http-server ./docs/ -p 8081 -c-1",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
