@@ -2,8 +2,6 @@ import React from "react";
 import PropTypes from 'prop-types';
 import {beep, WORKER_TYPE} from "../helpers";
 import {CODE_TYPE} from "../transformers/base";
-import {Upnqr} from "../transformers/upnqr";
-import {Covid19} from "../transformers/covid19";
 import "../css/scan.css";
 
 const BTN_TXT = {
@@ -55,8 +53,6 @@ class Scan extends React.Component {
 
     this.decodeQR = this.props.decode;
     this.scanRate = this.props.scanRate;
-    this.upnqr = this.props.upnqr;
-    this.covid19 = this.props.covid19;
 
     this.qrworker = null;
     this.oldTime = 0;
@@ -75,24 +71,6 @@ class Scan extends React.Component {
         const milliseconds = ev.data.ms;
         const rawCode = res;
         let codeType = CODE_TYPE.RAW;
-
-        // Transform raw to UPNQR
-        if (this.upnqr) {
-          const transformer = new Upnqr();
-          if (transformer.identified(res)) {
-            codeType = transformer.codeType();
-            res = await transformer.transform(res);
-          }
-        }
-
-        // Transform raw to COVID19 certificate
-        if (this.covid19) {
-          const transformer = new Covid19();
-          if (transformer.identified(res)) {
-            codeType = transformer.codeType();
-            res = await transformer.transform(res);
-          }
-        }
 
         this.setState({barcode: res, resultOpen: true, rawCode, codeType, milliseconds});
         if (this.state.beep) beep();
@@ -376,9 +354,7 @@ Scan.propTypes = {
   worker: PropTypes.string,
   scanRate: PropTypes.number,
   bw: PropTypes.bool,
-  crosshair: PropTypes.bool,
-  upnqr: PropTypes.bool,
-  covid19: PropTypes.bool
+  crosshair: PropTypes.bool
 };
 
 Scan.defaultProps = {
@@ -388,9 +364,7 @@ Scan.defaultProps = {
   worker: WORKER_TYPE.WASM,
   scanRate: 250,
   bw: false,
-  crosshair: true,
-  upnqr: false,
-  covid19: false
+  crosshair: true
 };
 
 export default Scan;
