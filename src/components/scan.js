@@ -373,7 +373,8 @@ class Scan extends React.Component {
     return <a href="!#" style={{padding: 12}} id="copyToClip" className="myHref" onClick={this.onClickCopyToClipboard}>COPY</a>
   }
 
-  onClickCopyToClipboard = async () => {
+  onClickCopyToClipboard = async (e) => {
+    e.preventDefault();
     await navigator.clipboard.writeText(this.state.barcode);
     const btnId = document.getElementById("copyToClip");
     btnId.innerText = "DONE";
