@@ -5,25 +5,26 @@ QR/bar code scanner for the Browser
 
 ## :bulb: Demo
 * React JS: https://qr.maslick.tech
-* Vanilla JS: https://maslick.github.io/koder/
+* Vanilla JS: https://maslick.github.io/koder
 
 
 ## 🚀 Features
 * QR/barcode module implemented in WebAssembly
+* Barcode support (UPC-A, UPC-E, EAN-8, EAN-13, I25, CODE-128)
 * Uses Zbar C++ library (version [0.23.90](https://github.com/mchehab/zbar))
 * Packaged as PWA (caching files with Service Worker, Add to Home Screen)
 * Mobile first (can be used on a Laptop as well)
 * Multiplatform (iOS, Android, Desktop)
 * QR/bar code recognition logic is performed off the browser's Main thread (i.e. Web Worker)
 * *koder* React component supports a [jsqr](https://www.npmjs.com/package/jsqr) based Web Worker (see [jsQrWorker.js](./public/jsQrWorker.js))
-* Barcode support (UPC-A, UPC-E, EAN-8, EAN-13, I25, CODE-128)
+* Emscripten-zbar-sdk [Docker image](https://hub.docker.com/r/maslick/emscripten-zbar-sdk) based on `emscripten/emsdk`, [Dockerfile](./docker/Dockerfile)
+* ReactJS [component](./src/components/scan.js)
+* Vanilla JS [example](./docs)
 * :new: Turn on/off the beep sound
 * :new: Support for UPN QR (Slovenia only)
 * :new: EU Digital Covid Certificate validator (vaccination, test), works in ``offline`` mode!
 * :new: Emscripten v3.1.1
-* Emscripten-zbar-sdk [Docker image](https://hub.docker.com/r/maslick/emscripten-zbar-sdk) based on `emscripten/emsdk`, [Dockerfile](./docker/Dockerfile)
-* ReactJS [component](./src/components/scan.js)
-* Vanilla JS [example](./docs)
+
 
 <p align="center" >
   <img src="./screenshots/app_1.png" width="400px" />
@@ -32,21 +33,21 @@ QR/bar code scanner for the Browser
 
 ## ⚡ Usage
 
-### 1. Install dependencies
+### Install dependencies
 ```shell
 npm install --global yarn
 yarn install --frozen-lockfile
 ```
 
-### 2. Run React app (dev mode):
+### Run React app
 ```shell
 npm run start
 open https://locahost:8080
 ```
 
-### 3. Run React app (production):
+### Productionize
 ```shell
-npm run build                # -> builds React app into ./public
+npm run build                # -> build React app into ./public
 npm run prod                 # -> serve static web app on port 8082
 open http://localhost:8082
 ```
