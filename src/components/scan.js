@@ -318,6 +318,7 @@ class Scan extends React.Component {
           <div style={{marginTop: 40}}>
             <a href="!#" style={{padding: 12}} className="myHref" onClick={this.onClickBackHandler}>BACK</a>
             {this.renderTransformToggle()}
+            {this.renderCopyToClipboardBtn()}
           </div>
         </div>);
     }
@@ -366,6 +367,22 @@ class Scan extends React.Component {
 
   componentWillUnmount() {
     if (this.state.scanning === true) this.stopScan();
+  }
+
+  renderCopyToClipboardBtn = () => {
+    return <a href="!#" style={{padding: 12}} id="copyToClip" className="myHref" onClick={this.onClickCopyToClipboard}>COPY</a>
+  }
+
+  onClickCopyToClipboard = async (e) => {
+    e.preventDefault();
+    await navigator.clipboard.writeText(this.state.barcode);
+    const btnId = document.getElementById("copyToClip");
+    btnId.innerText = "DONE";
+    btnId.style.backgroundColor = "green";
+    setTimeout(() => {
+      btnId.innerText = "COPY";
+      btnId.style.backgroundColor = "";
+    }, 3000);
   }
 }
 

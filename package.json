@@ -1,6 +1,6 @@
 {
   "name": "koder-react",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "homepage": "./",
   "private": true,
   "devDependencies": {
