@@ -14,7 +14,6 @@ build: $(INPUT_FILE)
 		-s INLINING_LIMIT=1 \
 		-s FILESYSTEM=0 \
 		-s MODULARIZE=1 \
-		-s ENVIRONMENT=worker \
 		-s EXPORT_NAME=CreateKoder \
 		-s WASM=1
 

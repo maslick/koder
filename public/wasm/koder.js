@@ -28,6 +28,7 @@ class Koder {
       results.push(this.mod.UTF8ToString(resultAddress));
       this.api.deleteBuffer(resultAddress);
     }
-    return results;
+    if (results.length > 0) return results[0];
+    else return null;
   }
 }
