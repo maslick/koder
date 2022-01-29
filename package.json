@@ -7,16 +7,16 @@
   "author": "Pavel Maslov",
   "license": "MIT",
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.16.1",
-    "@testing-library/react": "^12.1.2",
-    "@testing-library/user-event": "^13.5.0",
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-transform-react-jsx": "^7.16.7",
+    "@babel/preset-react": "^7.9.0",
+    "@pathcheck/dcc-sdk": "^0.0.23",
     "http-server": "^0.13.0",
     "prop-types": "^15.8.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "^4.0.3",
-    "upnqr": "1.1.0",
-    "@pathcheck/dcc-sdk": "^0.0.23"
+    "upnqr": "1.1.0"
   },
   "resolutions": {
     "react-error-overlay": "6.0.9"
@@ -67,5 +67,8 @@
     "i25",
     "upca",
     "upce"
-  ]
+  ],
+  "dependencies": {
+    "typescript": "^4.5.5"
+  }
 }
