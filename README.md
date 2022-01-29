@@ -24,7 +24,7 @@ QR/bar code scanner for the Browser
 * :new: Support for UPN QR (Slovenia only)
 * :new: EU Digital Covid Certificate validator (vaccination, test), works in ``offline`` mode!
 * :new: Emscripten v3.1.1
-* :new: NPM package https://www.npmjs.com/package/@maslick/koder
+* :new: [NPM package](https://www.npmjs.com/package/@maslick/koder)
 
 
 <p align="center" >
@@ -75,7 +75,7 @@ const getImageData = async (src) => {
 };
 
 (async () => {
-  const url = 'qr-code.png';
+  const url = 'https://raw.githubusercontent.com/maslick/koder/master/screenshots/app_1.png';
   const koder = await new Koder().initialized;
   const {data, width, height} = await getImageData(url);
 
