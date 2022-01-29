@@ -27,4 +27,3 @@ yarn-error.log*
 .idea/inspectionProfiles
 .idea/vcs.xml
 .idea/workspace.xml
-dist
