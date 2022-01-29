@@ -30,7 +30,7 @@
     "vanilla-js": "http-server ./docs/ -p 8081 -c-1",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "pre-publish-node": "rm -fr dist && mkdir dist && cp package-node.json dist/package.json && cp LICENSE dist && cp README.md dist && cp koder-node.js dist/index.js && cp public/wasm/zbar* dist"
+    "pre-publish-node": "cp LICENSE dist && cp README.md dist && cp public/wasm/zbar* dist"
   },
   "eslintConfig": {
     "extends": "react-app"
