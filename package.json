@@ -7,29 +7,28 @@
   "author": "Pavel Maslov",
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.9.0",
-    "@babel/plugin-transform-react-jsx": "^7.16.7",
-    "@babel/preset-react": "^7.9.0",
-    "@pathcheck/dcc-sdk": "^0.0.23",
-    "http-server": "^0.13.0",
-    "prop-types": "^15.8.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-scripts": "^4.0.3",
-    "upnqr": "1.1.0"
-  },
-  "resolutions": {
-    "react-error-overlay": "6.0.9"
+    "react-scripts": "5.0.0",
+    "react-app-rewired": "^2.1.11",
+    "prop-types": "^15.8.0",
+    "upnqr": "1.1.0",
+    "@pathcheck/dcc-sdk": "^0.0.23",
+    "buffer": "^6.0.3",
+    "util": "^0.12.4",
+    "stream-browserify": "^3.0.0",
+    "process": "^0.11.10",
+    "http-server": "^0.13.0"
   },
   "scripts": {
-    "start": "HTTPS=true PORT=8080 HOST=0.0.0.0 react-scripts start",
-    "build": "react-scripts build && npm run build-sw && npm run clean-cra-sw",
+    "start": "HTTPS=true PORT=8080 HOST=0.0.0.0 react-app-rewired start",
+    "build": "react-app-rewired build && npm run build-sw && npm run clean-cra-sw",
     "build-sw": "node ./src/sw-build.js",
     "clean-cra-sw": "rm -f build/precache-manifest.*.js && rm -f build/service-worker.js",
     "prod": "http-server ./build/ -p 8082 -c-1",
     "vanilla-js": "http-server ./docs/ -p 8081 -c-1",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "test": "react-app-rewired test",
+    "eject": "react-app-rewired eject",
     "pre-publish-node": "cp LICENSE dist && cp README.md dist && cp public/wasm/zbar* dist"
   },
   "eslintConfig": {
