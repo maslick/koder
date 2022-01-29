@@ -66,8 +66,5 @@
     "i25",
     "upca",
     "upce"
-  ],
-  "dependencies": {
-    "typescript": "^4.5.5"
-  }
+  ]
 }
