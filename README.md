@@ -52,13 +52,47 @@ npm run prod                 # -> serve static web app on port 8082
 open http://localhost:8082
 ```
 
+## ⚡ Node.js
+```
+npm install @maslick/koder
+```
+
+```javascript
+const Koder = require('@maslick/koder');
+const {loadImage, createCanvas} = require("canvas");
+
+const getImageData = async (src) => {
+  const img = await loadImage(src);
+  const canvas = createCanvas(img.width, img.height);
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(img, 0, 0);
+  return {
+    data: ctx.getImageData(0, 0, img.width, img.height).data,
+    width: img.width,
+    height: img.height
+  };
+};
+
+(async () => {
+  const url = 'qr-code.png';
+  const koder = await new Koder().initialized;
+  const {data, width, height} = await getImageData(url);
+
+  const t0 = new Date().getTime();
+  const res = koder.decode(data, width, height);
+  const t1 = new Date().getTime();
+
+  console.log(`Scanned in ${t1-t0} ms`);
+  console.log(res);
+})();
+```
+
 ## :spades: Development
 
 ### Fetch or build the Builder image
 ```shell
 docker pull maslick/emscripten-zbar-sdk
 docker build -t maslick/emscripten-zbar-sdk -f docker/Dockerfile docker
-
 ```
 
 ### Build WASM artifacts
