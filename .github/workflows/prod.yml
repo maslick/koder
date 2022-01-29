@@ -5,6 +5,7 @@ on:
     branches: [master]
 
 jobs:
+
   wasm:
     name: Build WASM (react)
     runs-on: ubuntu-latest
@@ -29,6 +30,7 @@ jobs:
           message: |
             Oops! Build failed (wasm job) :(
             See https://github.com/maslick/koder-react/actions for more details
+
   vanilla-js:
     name: Build WASM (vanilla js)
     runs-on: ubuntu-latest
@@ -53,6 +55,7 @@ jobs:
           message: |
             Oops! Build failed (vanilla-js job) :(
             See https://github.com/maslick/koder-react/actions for more details
+
   build:
     name: Build React app
     runs-on: ubuntu-latest
@@ -99,6 +102,45 @@ jobs:
           message: |
             Oops! Build failed (build job) :(
             See https://github.com/maslick/koder-react/actions for more details
+
+  npm:
+    name: Publish to NPM
+    runs-on: ubuntu-latest
+    needs: wasm
+    steps:
+      - name: checkout source code
+        uses: actions/checkout@v2
+      - name: install node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: download wasm artifact
+        uses: actions/download-artifact@v1
+        with:
+          name: wasms
+      - name: copy artifacts
+        run: cp -r wasms/* public/wasm/
+      - name: Prepare tarball
+        run: npm run pre-publish-node
+      - name: Publish to NPM
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: cd dist && npm publish --access public
+      - name: upload wasm artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: npm
+          path: dist
+      - name: job failed
+        if: failure()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            Oops! Build failed (build job) :(
+            See https://github.com/maslick/koder-react/actions for more details
+
   deploy:
     name: Deploy to prod
     runs-on: ubuntu-latest

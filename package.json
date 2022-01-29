@@ -1,8 +1,11 @@
 {
   "name": "koder-react",
-  "version": "1.5.3",
+  "version": "1.6.0",
   "homepage": "./",
   "private": true,
+  "description": "QR/bar code scanner for the Browser",
+  "author": "Pavel Maslov",
+  "license": "MIT",
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
@@ -26,7 +29,8 @@
     "prod": "http-server ./build/ -p 8082 -c-1",
     "vanilla-js": "http-server ./docs/ -p 8081 -c-1",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "pre-publish-node": "cp LICENSE dist && cp README.md dist && cp public/wasm/zbar* dist"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -42,5 +46,26 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maslick/koder.git"
+  },
+  "bugs": {
+    "url": "https://github.com/maslick/koder/issues"
+  },
+  "keywords": [
+    "qrcode",
+    "barcode",
+    "webassembly",
+    "wasm",
+    "emscripten",
+    "zbar",
+    "qr",
+    "ean13",
+    "ean8",
+    "i25",
+    "upca",
+    "upce"
+  ]
 }

@@ -1,35 +1,24 @@
 #include <iostream>
 #include <string.h>
 #include <zbar.h>
-
-
-#ifdef __EMSCRIPTEN__
-  #include <emscripten.h>
-#endif
+#include <emscripten.h>
 
 zbar::ImageScanner scanner;
 zbar::Image* image = NULL;
 zbar::Image::SymbolIterator symb_p;
 
+#define EXPORT EMSCRIPTEN_KEEPALIVE
+
 /*
  Tell compiler to not modify the names of  the functions
- that the JavaScript code will be calling
+ that JavaScript code will be calling
 */
-#ifdef __cplusplus
 extern "C" {
-#endif
-
-    #ifdef __EMSCRIPTEN__
-      EMSCRIPTEN_KEEPALIVE
-    #endif
-    void* createBuffer(const int length) {
+    EXPORT void* createBuffer(const int length) {
         return malloc(length * sizeof(uint8_t));
     }
 
-    #ifdef __EMSCRIPTEN__
-      EMSCRIPTEN_KEEPALIVE
-    #endif
-    void deleteBuffer(uint8_t* buf) {
+    EXPORT void deleteBuffer(uint8_t* buf) {
         free(buf);
     }
 
@@ -45,10 +34,7 @@ extern "C" {
      *         0 if no symbols were found or
      *         -1 if an error occurred
      */
-    #ifdef __EMSCRIPTEN__
-      EMSCRIPTEN_KEEPALIVE
-    #endif
-    int triggerDecode(uint8_t* imgBuf, uint16_t width, uint16_t height) {
+    EXPORT int triggerDecode(uint8_t* imgBuf, uint16_t width, uint16_t height) {
         uint8_t* grayImgBuf = (uint8_t*)malloc(width * height * sizeof(uint8_t));
         for (int i = 0; i < width; ++i) {
             for (int j = 0; j < height; ++j) {
@@ -72,10 +58,7 @@ extern "C" {
      *
      * @return char* containing a decoded QR/bar code
      */
-    #ifdef __EMSCRIPTEN__
-      EMSCRIPTEN_KEEPALIVE
-    #endif
-    const char* getScanResults() {
+    EXPORT const char* getScanResults() {
         if (!image) {
             std::cerr << "Call triggerDecode first to get scan result\n";
             return NULL;
@@ -91,9 +74,7 @@ extern "C" {
         return str;
     }
 
-#ifdef __cplusplus
 }
-#endif
 
 int main(int argc, char** argv) {
     scanner.set_config(zbar::ZBAR_NONE, zbar::ZBAR_CFG_ENABLE, 0);
