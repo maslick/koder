@@ -111,9 +111,9 @@ jobs:
       - name: checkout source code
         uses: actions/checkout@v2
       - name: install node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
-          node-version: 12.x
+          node-version: '14'
       - name: download wasm artifact
         uses: actions/download-artifact@v1
         with:
