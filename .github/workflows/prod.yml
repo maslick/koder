@@ -64,9 +64,9 @@ jobs:
       - name: checkout source code
         uses: actions/checkout@v2
       - name: install node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
-          node-version: 12.x
+          node-version: '14'
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -125,7 +125,7 @@ jobs:
       - name: Publish to NPM
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: cd dist && npm publish --access public
+        run: cd dist && npm publish --access public || true
       - name: upload wasm artifact
         uses: actions/upload-artifact@v1
         with:
