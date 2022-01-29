@@ -126,7 +126,7 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: cd dist && npm publish --access public || true
-      - name: upload wasm artifact
+      - name: upload NPM artifact
         uses: actions/upload-artifact@v1
         with:
           name: npm
