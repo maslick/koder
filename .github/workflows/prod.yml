@@ -87,7 +87,7 @@ jobs:
       - name: install npm dependencies
         run: yarn install --frozen-lockfile
       - name: build React bundle
-        run: npm run build
+        run: GENERATE_SOURCEMAP=false npm run build
       - name: upload js bundle artifact
         uses: actions/upload-artifact@v1
         with:
