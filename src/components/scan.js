@@ -382,7 +382,7 @@ class Scan extends React.Component {
     setTimeout(() => {
       btnId.innerText = "COPY";
       btnId.style.backgroundColor = "";
-    }, 3000);
+    }, 1000);
   }
 }
 
