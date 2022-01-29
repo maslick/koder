@@ -24,6 +24,7 @@ QR/bar code scanner for the Browser
 * :new: Support for UPN QR (Slovenia only)
 * :new: EU Digital Covid Certificate validator (vaccination, test), works in ``offline`` mode!
 * :new: Emscripten v3.1.1
+* :new: NPM package https://www.npmjs.com/package/@maslick/koder
 
 
 <p align="center" >
