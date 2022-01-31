@@ -15,6 +15,7 @@ build: $(INPUT_FILE)
 		-s FILESYSTEM=0 \
 		-s MODULARIZE=1 \
 		-s EXPORT_NAME=CreateKoder \
+		-s EXPORT_ES6=1 \
 		-s WASM=1
 
 clean:
