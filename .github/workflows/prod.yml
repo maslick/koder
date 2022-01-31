@@ -31,31 +31,6 @@ jobs:
             Oops! Build failed (wasm job) :(
             See https://github.com/maslick/koder-react/actions for more details
 
-  vanilla-js:
-    name: Build WASM (vanilla js)
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout source code
-        uses: actions/checkout@master
-      - name: pull emscripten-zbar-sdk
-        run: docker pull maslick/emscripten-zbar-sdk
-      - name: build ALL wasm
-        run: docker run -e INPUT_FILE=zbar/qr.cpp -e OUTPUT_FILE=zbar -e OUTPUT_DIR=docs/wasm -v $(pwd):/app maslick/emscripten-zbar-sdk make
-      - name: upload vanilla-js artifact
-        uses: actions/upload-artifact@v1
-        with:
-          name: vanilla-js
-          path: docs
-      - name: job failed
-        if: failure()
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_TO }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: |
-            Oops! Build failed (vanilla-js job) :(
-            See https://github.com/maslick/koder-react/actions for more details
-
   build:
     name: Build React app
     runs-on: ubuntu-latest

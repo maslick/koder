@@ -55,7 +55,6 @@ When you push to your remote, the output will contain a URL you can use to open 
 After you create a PR or push to a PR, a CI job will be triggered. This job will build:
 * WASM files
 * React static web app
-* Vanilla js example app
 
 A request will be sent to core maintainers to review your code and approve a deploy to a dev environment. Once deployed, you can check the resulting web-app at https://koder-dev.web.app
 
