@@ -26,7 +26,6 @@
     "build-sw": "node ./src/sw-build.js",
     "clean-cra-sw": "rm -f build/precache-manifest.*.js && rm -f build/service-worker.js",
     "prod": "http-server ./build/ -p 8082 -c-1",
-    "vanilla-js": "http-server ./docs/ -p 8081 -c-1",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject",
     "pre-publish-node": "cp LICENSE dist && cp README.md dist && cp public/wasm/zbar* dist"

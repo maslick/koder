@@ -6,8 +6,7 @@ QR/bar code scanner for the Browser
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 
 ## :bulb: Demo
-* React JS: https://qr.maslick.tech
-* Vanilla JS: https://maslick.github.io/koder
+https://qr.maslick.tech
 
 
 ## 🚀 Features
@@ -21,7 +20,7 @@ QR/bar code scanner for the Browser
 * *koder* React component supports a [jsqr](https://www.npmjs.com/package/jsqr) based Web Worker (see [jsQrWorker.js](./public/jsQrWorker.js))
 * Emscripten-zbar-sdk [Docker image](https://hub.docker.com/r/maslick/emscripten-zbar-sdk) based on `emscripten/emsdk`, [Dockerfile](./docker/Dockerfile)
 * ReactJS [component](./src/components/scan.js)
-* Vanilla JS [example](./docs)
+* Vanilla JS [example](https://github.com/maslick/koder-vanilla-js)
 * :new: Turn on/off the beep sound
 * :new: Support for UPN QR (Slovenia only)
 * :new: EU Digital Covid Certificate validator (vaccination, test), works in ``offline`` mode!
@@ -55,9 +54,17 @@ npm run prod                 # -> serve static web app on port 8082
 open http://localhost:8082
 ```
 
-## ⚡ Node.js
+## ⚡ NPM module
 ```
 npm install @maslick/koder
+```
+
+```javascript
+// CommonJS format
+const Koder = require('@maslick/koder');
+
+// ES6 modules
+import Koder from '@maslick/koder';
 ```
 
 ```javascript
@@ -107,29 +114,12 @@ docker run \
   -e OUTPUT_DIR=public/wasm \
   -v $(pwd):/app \
   maslick/emscripten-zbar-sdk make -B
-  
-# Vanilla JS
-docker run \
-  -e INPUT_FILE=zbar/qr.cpp \
-  -e OUTPUT_FILE=zbar \
-  -e OUTPUT_DIR=docs/wasm \
-  -v $(pwd):/app \
-  maslick/emscripten-zbar-sdk make -B
 ```
 
 ### Clean the build artifacts (if necessary):
 ```shell
 # React app
 OUTPUT_DIR=public/wasm OUTPUT_FILE=zbar make clean
-
-# Vanilla JS
-OUTPUT_DIR=docs/wasm OUTPUT_FILE=zbar make clean
-```
-
-## :gem: BONUS: vanilla js example
-```shell
-npm run vanilla-js
-open https://locahost:8081
 ```
 
 
