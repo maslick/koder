@@ -1,6 +1,6 @@
 {
   "name": "@maslick/koder",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "QR/bar code scanner for the Browser",
   "author": "Pavel Maslov",
   "license": "MIT",
