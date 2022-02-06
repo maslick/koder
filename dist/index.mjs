@@ -1,11 +1,11 @@
+import CreateKoder from './zbar.js';
+
 class Koder {
-  initialize(config) {
+  get initialized() {
     return (async () => {
       // Load WASM file
-      console.log("Browser");
-      config ||= {};
-      const directory = config.wasmDirectory || "./wasm";
-      this.mod = await CreateKoder({locateFile: file => `${directory}/${file}`});
+      console.log("ESM");
+      this.mod = await CreateKoder();
 
       // Initialize a glue API object (between JavaScript and C++ code)
       this.api = {
@@ -33,3 +33,5 @@ class Koder {
     else return null;
   }
 }
+
+export default Koder;

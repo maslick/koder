@@ -60,7 +60,7 @@ npm install @maslick/koder
 ```
 
 ```javascript
-// CommonJS format
+// CommonJS
 const Koder = require('@maslick/koder');
 
 // ES6 modules

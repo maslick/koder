@@ -4,6 +4,7 @@ class Koder {
   get initialized() {
     return (async () => {
       // Load WASM file
+      console.log("CJS");
       this.mod = await CreateKoder();
 
       // Initialize a glue API object (between JavaScript and C++ code)

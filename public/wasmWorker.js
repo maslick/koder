@@ -4,7 +4,7 @@ importScripts("wasm/koder.js");
 
 (async () => {
   // Initialize Koder
-  const koder = await new Koder().initialized;
+  const koder = await new Koder().initialize({wasmDirectory: "./wasm"});
 
   // Listen for messages from JS main thread containing raw image data
   self.addEventListener('message', event => {
