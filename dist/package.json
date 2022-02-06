@@ -1,6 +1,6 @@
 {
   "name": "@maslick/koder",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "QR/bar code scanner for the Browser",
   "author": "Pavel Maslov",
   "license": "MIT",
@@ -31,7 +31,7 @@
   ],
   "exports": {
     ".": {
-      "require": "./index.cjs",
+      "require": "./index.js",
       "import": "./index.mjs"
     }
   }
