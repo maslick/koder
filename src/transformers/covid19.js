@@ -108,6 +108,7 @@ class Covid19 extends Transformer {
       res += `Issuer: ${json.vaccination.issuer}\n\n`;
       res += `Vaccine: ${vaccine_type}\n`;
       res += `Dose: ${json.vaccination.doses}/${json.vaccination.dose_series}\n`;
+      res += `\n${json.vaccination.unique_cert_id}\n`;
     }
 
     if (json.test) {
@@ -143,6 +144,7 @@ class Covid19 extends Transformer {
       res += `Issuer: ${json.test.issuer}\n\n`;
       res += `Test type: ${test_type}\n`;
       res += `Test result: ${test_result}\n`;
+      res += `\n${json.test.unique_cert_id}\n`;
     }
 
     return res;
