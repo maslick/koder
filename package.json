@@ -1,6 +1,6 @@
 {
   "name": "koder-react",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "homepage": "./",
   "private": true,
   "description": "QR/bar code scanner for the Browser",
