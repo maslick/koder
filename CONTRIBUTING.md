@@ -58,7 +58,7 @@ After you create a PR or push to a PR, a CI job will be triggered. This job will
 
 A request will be sent to core maintainers to review your code and approve a deploy to a dev environment. Once deployed, you can check the resulting web-app at https://koder-dev.web.app
 
-After the PR is merged to `master` branch, the React web-app is deployed to the prodcution environment, which is accessible at https://qr.maslick.tech
+After the PR is merged to `master` branch, the React web-app is deployed to the prodcution environment, which is accessible at https://koder-prod.web.app
 
 
 

@@ -1,11 +1,11 @@
 server {
     listen 80;
-    server_name qr.maslick.ru;
+    server_name qr.maslick.tech;
     return 301 https://$server_name$request_uri;
 }
 
 server {
-    server_name qr.maslick.ru;
+    server_name qr.maslick.tech;
 
     gzip on;
     gzip_types      application/javascript application/json;

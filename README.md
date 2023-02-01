@@ -6,7 +6,7 @@ QR/bar code scanner for the Browser
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 
 ## :bulb: Demo
-https://qr.maslick.tech
+https://koder-prod.web.app
 
 
 ## 🚀 Features
