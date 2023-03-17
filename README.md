@@ -11,7 +11,7 @@ https://koder-prod.web.app
 
 ## 🚀 Features
 * QR/barcode module implemented in WebAssembly
-* Barcode support (UPC-A, UPC-E, EAN-8, EAN-13, I25, CODE-128, CODE-39, CODE-93, CODABAR, DATABAR)
+* Barcode support (ISBN, UPC-A, UPC-E, EAN-8, EAN-13, I25, ITF-14, CODE-128, CODE-39, CODE-93, CODABAR, DATABAR)
 * Uses Zbar C++ library (version [0.23.90](https://github.com/mchehab/zbar))
 * Packaged as PWA (caching files with Service Worker, Add to Home Screen)
 * Mobile first (can be used on a Laptop as well)
