@@ -226,7 +226,7 @@ class Scan extends React.Component {
 
   componentDidMount() {
     this.canvasElement = document.getElementById("canvas");
-    this.canvas = this.canvasElement.getContext("2d");
+    this.canvas = this.canvasElement.getContext("2d", {willReadFrequently: true});
     this.canvasElement.width = CANVAS_SIZE.WIDTH;
     this.canvasElement.height = CANVAS_SIZE.HEIGHT;
   }

@@ -1,5 +1,5 @@
 if ("function" === typeof importScripts) {
-  importScripts("https://storage.googleapis.com/workbox-cdn/releases/5.1.4/workbox-sw.js");
+  importScripts("https://storage.googleapis.com/workbox-cdn/releases/6.2.2/workbox-sw.js");
   if (workbox) {
     workbox.setConfig({debug: false});
     self.addEventListener("install", event => {
