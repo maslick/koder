@@ -2,7 +2,7 @@
 QR/bar code scanner for the Browser
 
 [![npm](https://img.shields.io/npm/v/@maslick/koder.svg)](https://www.npmjs.com/package/@maslick/koder)
-[![Build Status](https://github.com/maslick/koder-react/workflows/build/badge.svg)](https://github.com/maslick/koder-react/actions?query=workflow%3Abuild)
+[![Build Status](https://github.com/maslick/koder-react/actions/workflows/prod.yml/badge.svg)](https://github.com/maslick/koder-react/actions?query=workflow%3Abuild)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 
 ## :bulb: Demo
