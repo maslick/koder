@@ -240,9 +240,7 @@ export default function Scan({
     else return {backgroundColor: "", padding: 12};
   }
 
-  useEffect(() => {
-    console.log("init");
-  }, []);
+  useEffect(() => {}, []);
 
   const renderCanvas = () => {
     return <canvas id="canvas" className="scanCanvas" width={CANVAS_SIZE.WIDTH} height={CANVAS_SIZE.HEIGHT} />
