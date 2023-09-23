@@ -1,17 +1,18 @@
 {
   "name": "koder-react",
-  "version": "1.9.0",
+  "version": "1.10.0",
   "homepage": "./",
   "private": true,
   "description": "QR/bar code scanner for the Browser",
   "author": "Pavel Maslov",
   "license": "MIT",
-  "devDependencies": {
+  "dependencies": {
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-scripts": "5.0.0",
+    "react-scripts": "5.0.1",
     "react-app-rewired": "^2.1.11",
-    "prop-types": "^15.8.0",
+    "prop-types": "^15.8.1",
+    "react-usestateref": "^1.0.8",
     "upnqr": "1.1.0",
     "@pathcheck/dcc-sdk": "^0.0.23",
     "buffer": "^6.0.3",
