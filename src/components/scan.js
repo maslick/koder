@@ -144,7 +144,6 @@ export default function Scan({
     setBtnText(BTN_TXT.START);
     await video.pause();
     if (video.srcObject) {
-      console.log("stopping video...")
       video.srcObject.getVideoTracks().forEach(track => track.stop());
       video.srcObject = null;
     }

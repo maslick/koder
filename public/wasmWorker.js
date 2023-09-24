@@ -20,7 +20,6 @@ importScripts("wasm/koder.js");
     const scanResult = koder.decode(data, this.width, this.height);
     const t1 = new Date().getTime();
     if (scanResult) {
-      console.log(`Scanned in ${t1-t0} ms`);
       postMessage({
         data: scanResult.code,
         type: scanResult.type,
