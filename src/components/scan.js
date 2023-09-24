@@ -8,8 +8,7 @@ import "../css/scan.css";
 
 const BTN_TXT = {
   START: "START",
-  STOP: "STOP",
-  AGAIN: "START AGAIN"
+  STOP: "STOP"
 };
 
 const CANVAS_SIZE = {
