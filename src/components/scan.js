@@ -8,8 +8,7 @@ import "../css/scan.css";
 
 const BTN_TXT = {
   START: "START",
-  STOP: "STOP",
-  AGAIN: "START AGAIN"
+  STOP: "STOP"
 };
 
 const CANVAS_SIZE = {
@@ -145,7 +144,6 @@ export default function Scan({
     setBtnText(BTN_TXT.START);
     await video.pause();
     if (video.srcObject) {
-      console.log("stopping video...")
       video.srcObject.getVideoTracks().forEach(track => track.stop());
       video.srcObject = null;
     }
