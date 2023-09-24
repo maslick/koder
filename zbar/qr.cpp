@@ -65,15 +65,30 @@ extern "C" {
         }
         if (symb_p == image->symbol_end())
             return NULL;
-        std::cout << "decoded " << symb_p->get_type_name() << std::endl;
-        std::cout << symb_p->get_data() << std::endl;
         std::string data = symb_p->get_data();
         char* str = (char*)malloc(data.size() + 1);
         strcpy(str, data.c_str());
-        ++ symb_p;
         return str;
     }
 
+    /**
+     * Returns the type of the QR code
+     *
+     * @return char* containing the type of QR code
+     */
+    EXPORT const char* getResultType() {
+        if (!image) {
+            std::cerr << "Call triggerDecode first to get scan result\n";
+            return NULL;
+        }
+        if (symb_p == image->symbol_end())
+            return NULL;
+        std::string type = symb_p->get_type_name();
+        char* str = (char*)malloc(type.size() + 1);
+        strcpy(str, type.c_str());
+        ++ symb_p;
+        return str;
+    }
 }
 
 int main(int argc, char** argv) {
@@ -89,5 +104,4 @@ int main(int argc, char** argv) {
     scanner.set_config(zbar::ZBAR_CODE128, zbar::ZBAR_CFG_ENABLE, 1);
     scanner.set_config(zbar::ZBAR_CODABAR, zbar::ZBAR_CFG_ENABLE, 1);
     scanner.set_config(zbar::ZBAR_DATABAR, zbar::ZBAR_CFG_ENABLE, 1);
-    std::cout << "QR/Barcode scanner initialized" << std::endl;
 }

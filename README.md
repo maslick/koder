@@ -107,8 +107,17 @@ docker build -t maslick/emscripten-zbar-sdk -f docker/Dockerfile docker
 
 ### Build WASM artifacts
 ```shell
-# React app
+# Linux, Mac Intel
 docker run \
+  -e INPUT_FILE=zbar/qr.cpp \
+  -e OUTPUT_FILE=zbar \
+  -e OUTPUT_DIR=public/wasm \
+  -v $(pwd):/app \
+  maslick/emscripten-zbar-sdk make -B
+  
+# Mac M1/M2
+docker run \
+  --platform linux/amd64 \
   -e INPUT_FILE=zbar/qr.cpp \
   -e OUTPUT_FILE=zbar \
   -e OUTPUT_DIR=public/wasm \
@@ -118,7 +127,6 @@ docker run \
 
 ### Clean the build artifacts (if necessary):
 ```shell
-# React app
 OUTPUT_DIR=public/wasm OUTPUT_FILE=zbar make clean
 ```
 
