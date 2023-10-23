@@ -1,3 +1,4 @@
+<kbd style="background-color:#f03c15; color: white; padding: 10px;">🚀 Check Out Kameroon - [QR/Bar Code Scanner as a Service](https://github.com/maslick/kameroon) 🚀</kbd>
 # =koder=
 QR/bar code scanner for the Browser
 
