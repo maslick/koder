@@ -1,3 +1,10 @@
+<p align="right">
+  <kbd style="background-color:#f03c15; color: white; padding: 10px;">
+    🚀 NEW: Check Out <a style="text-decoration:none" href="https://github.com/maslick/kameroon">Kameroon</a> - QR/Bar Code Scanner as a Service 🚀 
+  </kbd>
+</p>
+
+
 # =koder=
 QR/bar code scanner for the Browser
 
